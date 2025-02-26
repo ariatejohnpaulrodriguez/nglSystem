@@ -3,7 +3,7 @@ include '../../includes/header.php';
 include '../../includes/session.php';
 ?>
 
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
 
         <!-- Navbar -->
@@ -47,12 +47,8 @@ include '../../includes/session.php';
                                             placeholder="Enter Product Brand" required>
                                         <br>
                                         <label for="description">Description</label>
-                                        <input class="form-control" type="text" id="description" name="description"
-                                            placeholder="Enter Description" required>
-                                        <br>
-                                        <label for="quantity">Quantity</label>
-                                        <input class="form-control" type="text" id="quantity" name="quantity"
-                                            placeholder="Enter Quantity" required>
+                                        <textarea class="form-control" id="description" name="description" rows="4"
+                                            placeholder="Enter Description" required></textarea>
                                         <br>
                                     </div>
                                     <div class="card-footer">
@@ -71,3 +67,5 @@ include '../../includes/session.php';
     </div><!-- /.wrapper -->
     <?php include '../../includes/script.php'; ?>
 </body>
+
+</html>

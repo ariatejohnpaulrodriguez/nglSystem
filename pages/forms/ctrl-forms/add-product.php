@@ -6,11 +6,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $product_code = $_POST['code'];
     $product_brand = $_POST['brand'];
     $description = $_POST['description'];
-    $quantity = $_POST['quantity'];
 
     // Prepare SQL query to insert into the database
-    $query = "INSERT INTO products (code, brand, description, quantity) 
-              VALUES ('$product_code', '$product_brand', '$description', '$quantity')";
+    $query = "INSERT INTO products (code, brand, description) 
+              VALUES ('$product_code', '$product_brand', '$description')";
 
     // Execute query
     if (mysqli_query($conn, $query)) {

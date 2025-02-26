@@ -7,18 +7,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $product_code = $_POST['code'];
     $product_brand = $_POST['brand'];
     $description = $_POST['description'];
-    $quantity = $_POST['quantity'];
 
     // Prepare SQL query using prepared statements
     $query = "UPDATE products 
               SET code = ?, 
                   brand = ?, 
-                  description = ?,  
-                  quantity = ? 
+                  description = ?
               WHERE product_id = ?";
 
     $stmt = $conn->prepare($query);
-    $stmt->bind_param("ssssi", $product_code, $product_brand, $description, $quantity, $product_id);
+    $stmt->bind_param("sssi", $product_code, $product_brand, $description, $product_id);
 
     // Execute query
     if ($stmt->execute()) {

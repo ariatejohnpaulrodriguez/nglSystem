@@ -6,7 +6,7 @@ include '../../includes/session.php';
 <link rel="stylesheet" href="../../../plugins/fontawesome-free/css/all.min.css">
 <link rel="stylesheet" href="../../../dist/css/adminlte.min.css">
 
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
 
         <!-- Navbar -->
@@ -162,3 +162,5 @@ include '../../includes/session.php';
 
     <?php include '../../includes/script.php'; ?>
 </body>
+
+</html>

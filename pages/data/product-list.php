@@ -10,7 +10,7 @@ $userRole = $_SESSION['role'];
 include '../../includes/header.php';
 ?>
 
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-mini layout-fixed">
   <div class="wrapper">
 
     <!-- Navbar -->
@@ -46,14 +46,13 @@ include '../../includes/header.php';
                         <th>Code</th>
                         <th>Brand</th>
                         <th>Description</th>
-                        <th>Quantity</th>
                         <th>Actions</th>
                       </tr>
                     </thead>
                     <tbody>
                       <?php
                       // SQL query to fetch data
-                      $sql = "SELECT product_id, code, brand, description, quantity FROM products";
+                      $sql = "SELECT product_id, code, brand, description FROM products";
                       $result = mysqli_query($conn, $sql);
 
                       // Check if there are any rows returned
@@ -65,7 +64,6 @@ include '../../includes/header.php';
                           echo "<td>" . $row["code"] . "</td>";
                           echo "<td>" . $row["brand"] . "</td>";
                           echo "<td>" . $row["description"] . "</td>";
-                          echo "<td>" . $row["quantity"] . "</td>";
                           echo "<td>";
 
                           // Show Edit and Delete buttons only if the user is not a Warehouse Man
@@ -79,7 +77,7 @@ include '../../includes/header.php';
                             echo "<input type='submit' value='Delete' class='btn btn-danger'>";
                             echo "</form>";
                           } else {
-                            echo "<form action='view-product.php' method='post' style='display:inline-block;'>";
+                            echo "<form action='#' method='post' style='display:inline-block;'>";
                             echo "<input type='hidden' name='product_id' value='" . $row["product_id"] . "'>";
                             echo "<input type='submit' value='View' class='btn btn-primary'>";
                             echo "</form>";

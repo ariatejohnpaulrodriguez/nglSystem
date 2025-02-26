@@ -6,7 +6,7 @@ include '../../includes/header.php';
 include '../../includes/session.php';
 ?>
 
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-mini layout-fixed">
     <!-- Site wrapper -->
     <div class="wrapper">
         <?php include '../../includes/navbar.php'; ?>

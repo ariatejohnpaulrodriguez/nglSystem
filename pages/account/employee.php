@@ -3,7 +3,7 @@ include '../../includes/header.php';
 include '../../includes/session.php';
 ?>
 
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
 
         <?php include '../../includes/navbar.php'; ?>
@@ -148,3 +148,5 @@ include '../../includes/session.php';
 
     <?php include '../../includes/script.php'; ?>
 </body>
+
+</html>

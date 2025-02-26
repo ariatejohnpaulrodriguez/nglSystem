@@ -3,7 +3,7 @@ include '../../includes/header.php';
 include '../../includes/session.php';
 ?>
 
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
 
         <!-- Navbar -->
@@ -72,10 +72,6 @@ include '../../includes/session.php';
                                             name="product_description"
                                             value="<?php echo $product['description']; ?>" required>
                                         <br>
-                                        <label for="quantity">Quantity</label>
-                                        <input class="form-control" type="text" id="size" name="product_quantity"
-                                            value="<?php echo $product['quantity']; ?>" required readonly>
-                                        <br>
                                     </div>
                                     <div class="card-footer">
                                         <button type="submit" class="btn btn-primary">Update</button>
@@ -94,3 +90,4 @@ include '../../includes/session.php';
 
   <?php include '../../includes/script.php'; ?>
 </body>
+</html>

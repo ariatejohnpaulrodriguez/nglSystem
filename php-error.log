@@ -1,0 +1,8 @@
+[26-Feb-2025 09:04:07 Europe/Berlin] update-invoice-status.php - Error: No products found for invoice ID 2.
+Data: {"invoice_id":"2","action":"Approve"}
+[26-Feb-2025 09:14:51 Europe/Berlin] update-invoice-status.php - Error: No products found for invoice ID 4.
+Data: {"invoice_id":"4","action":"Approve"}
+[26-Feb-2025 09:20:05 Europe/Berlin] update-invoice-status.php - Error: No products found for invoice ID 5.
+Data: {"invoice_id":"5","action":"Approve"}
+[26-Feb-2025 09:45:37 Europe/Berlin] update-transfer-status.php - Error: No products found for transfer ID 38.
+Data: {"transfer_id":"38","action":"Approve"}

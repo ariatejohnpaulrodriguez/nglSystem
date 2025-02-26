@@ -16,7 +16,7 @@ include '../../includes/session.php';
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1>Invoice Page</h1>
+                            <h1>Transfer Page</h1>
                         </div>
                     </div>
                 </div><!-- /.container-fluid -->
@@ -33,7 +33,7 @@ include '../../includes/session.php';
                             <!-- Form Element sizes -->
                             <div class="card card-gray">
                                 <div class="card-header">
-                                    <h5 class="card-title"><i class="fas fa-file-invoice"></i> Request Incoming Delivery
+                                    <h5 class="card-title"><i class="fas fa-file-invoice"></i> Request Transfer Delivery
                                         Form</h5>
                                 </div>
 
@@ -52,16 +52,26 @@ include '../../includes/session.php';
                                     }
                                 }
 
+                                $sql = "SELECT status_id, status_name FROM statuses";
+                                $result = $conn->query($sql);
+
+                                $statuses = [];
+                                if ($result->num_rows > 0) {
+                                    while ($row = $result->fetch_assoc()) {
+                                        $statuses[] = $row;
+                                    }
+                                }
+
                                 $conn->close();
                                 ?>
 
-                                <form id="invoice-form" action="javascript:void(0)">
+                                <form id="transfer-form" action="javascript:void(0)">
                                     <div class="card-body">
 
                                         <div class="container-fluid">
                                             <div class="row">
                                                 <div class="col-md-6 mb-4">
-                                                    <div class="card card-info">
+                                                    <div class="card card-purple">
                                                         <div class="card-header">
                                                             <h3 class="card-title">From Company</h3>
                                                         </div>
@@ -70,6 +80,8 @@ include '../../includes/session.php';
                                                                 class="form-control">
                                                                 <?php foreach ($companies as $company): ?>
                                                                     <option value="<?php echo $company['company_id']; ?>"
+                                                                        data-plant="<?php echo $company['plant']; ?>"
+                                                                        data-plant-name="<?php echo $company['plant_name']; ?>"
                                                                         data-address="<?php echo $company['address']; ?>"
                                                                         data-attention="<?php echo $company['attention']; ?>"
                                                                         data-phone=" <?php echo $company['phone_number']; ?>">
@@ -85,7 +97,7 @@ include '../../includes/session.php';
                                                 </div>
 
                                                 <div class="col-md-6 mb-4">
-                                                    <div class="card card-info">
+                                                    <div class="card card-purple">
                                                         <div class="card-header">
                                                             <h3 class="card-title">To Company</h3>
                                                         </div>
@@ -94,8 +106,6 @@ include '../../includes/session.php';
                                                                 class="form-control">
                                                                 <?php foreach ($companies as $company): ?>
                                                                     <option value="<?php echo $company['company_id']; ?>"
-                                                                        data-plant="<?php echo $company['plant']; ?>"
-                                                                        data-plant-name="<?php echo $company['plant_name']; ?>"
                                                                         data-address="<?php echo $company['address']; ?>"
                                                                         data-attention="<?php echo $company['attention']; ?>"
                                                                         data-phone="<?php echo $company['phone_number']; ?>">
@@ -116,7 +126,7 @@ include '../../includes/session.php';
                                             <div class="row">
                                                 <!-- Your existing content for Date and Employee Information -->
                                                 <div class="col-md-12 mb-4">
-                                                    <div class="card card-info">
+                                                    <div class="card card-purple">
                                                         <div class="card-header">
                                                             <h3 class="card-title">Fill Up Information</h3>
                                                         </div>
@@ -126,7 +136,7 @@ include '../../includes/session.php';
                                                                 <div class="col-md-6">
                                                                     <label for="postingDate">Posting Date</label>
                                                                     <div class="input-group">
-                                                                        <input type="text" id="datepicker"
+                                                                        <input type="text" id="datepicker3"
                                                                             class="form-control form-control-sm"
                                                                             name="postingDate" readonly>
                                                                         <div class="input-group-append">
@@ -155,7 +165,7 @@ include '../../includes/session.php';
                                                                 <div class="col-md-6">
                                                                     <label for="deliveryDate">Delivery Date</label>
                                                                     <div class="input-group">
-                                                                        <input type="text" id="datepicker2"
+                                                                        <input type="text" id="datepicker4"
                                                                             name="deliveryDate"
                                                                             class="form-control form-control-sm"
                                                                             readonly>
@@ -179,9 +189,15 @@ include '../../includes/session.php';
 
                                                                     <!-- Status field -->
                                                                     <label for="status">Status:</label>
-                                                                    <input type="text" id="status" name="status"
-                                                                        value="5" class="form-control form-control-sm"
-                                                                        readonly>
+                                                                    <select id="status" name="status"
+                                                                        class="form-control form-control-sm">
+                                                                        <?php foreach ($statuses as $status): ?>
+                                                                            <option
+                                                                                value="<?php echo htmlspecialchars($status['status_id']); ?>">
+                                                                                <?php echo htmlspecialchars($status['status_name']); ?>
+                                                                            </option>
+                                                                        <?php endforeach; ?>
+                                                                    </select>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -200,6 +216,7 @@ include '../../includes/session.php';
                                                     <thead>
                                                         <tr>
                                                             <th>Qty</th>
+                                                            <th>Stock</th>
                                                             <th>Code</th>
                                                             <th>Brand</th>
                                                             <th>Description</th>
@@ -211,8 +228,8 @@ include '../../includes/session.php';
                                                     <!-- Table rows will be dynamically added here -->
                                                     <tfoot>
                                                         <tr>
-                                                            <td colspan="5" class="text-center">
-                                                                <button type="button" id="add-products"
+                                                            <td colspan="6" class="text-center">
+                                                                <button type="button" id="add-t-products"
                                                                     class="btn btn-primary btn-sm">
                                                                     <i class="fas fa-plus"></i> Add Product
                                                                 </button>
@@ -226,7 +243,7 @@ include '../../includes/session.php';
 
                                         <div class="card-footer d-flex justify-content-center"
                                             style="background: transparent;">
-                                            <button type="submit" class="btn btn-primary">Request Incoming
+                                            <button type="submit" class="btn btn-primary">Request Transfer
                                                 Delivery</button>
                                         </div>
                                 </form>
@@ -241,6 +258,7 @@ include '../../includes/session.php';
         <?php include '../../includes/footer.php'; ?>
 
         <?php include '../../includes/script.php'; ?>
+        <script src="../../dist/js/custom-transfer.js"></script>
     </div>
 </body>
 

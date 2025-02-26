@@ -11,6 +11,7 @@ $toCompanyID = $postData['to_company_id'];
 $poNumber = $postData['po_number'];
 $referencePo = $postData['reference_po'];
 $drNumber = $postData['dr_number'];
+$statusID = $postData['status_id'];
 
 // Add error handling
 try {
@@ -49,15 +50,15 @@ try {
     }
     $drID = mysqli_insert_id($conn);  // Get DR ID
 
-    // Step 6: Insert invoice record into invoices table
-    $queryInvoice = "INSERT INTO invoices (from_company_id, to_company_id, po_id, reference_po_id, dr_id, posting_date, delivery_date) 
-                     VALUES ('$fromCompanyID', '$toCompanyID', '$poID', '$referenceID', '$drID', '$postingDateID', '$deliveryDateID')";
-    if (!mysqli_query($conn, $queryInvoice)) {
-        throw new Exception("Error inserting invoice: " . mysqli_error($conn));
+    // Step 6: Insert transfer record into transfers table
+    $queryTransfer = "INSERT INTO transfers (from_company_id, to_company_id, po_id, reference_po_id, dr_id, posting_date, delivery_date, status_id) 
+    VALUES ('$fromCompanyID', '$toCompanyID', '$poID', '$referenceID', '$drID', '$postingDateID', '$deliveryDateID', '$statusID')";
+    if (!mysqli_query($conn, $queryTransfer)) {
+        throw new Exception("Error inserting Transfer: " . mysqli_error($conn));
     }
-    $invoiceID = mysqli_insert_id($conn);  // Get invoice ID
+    $transferID = mysqli_insert_id($conn); // Get transfer ID
 
-    // Step 7: Loop through the products and insert them into the invoice_products table
+    // Step 7: Loop through the products and insert them into the transfer_products table
     foreach ($products as $product) {
         $productID = $product['product_id'];
         $quantity = $product['quantity'];
@@ -65,16 +66,16 @@ try {
         $code = $product['code'];
         $description = $product['description'];
 
-        // Insert product details into invoice_products table
-        $queryProduct = "INSERT INTO invoice_products (invoice_id, product_id, quantity, brand, code, description) 
-                         VALUES ('$invoiceID', '$productID', '$quantity', '$brand', '$code', '$description')";
+        // Insert product details into transfer_products table
+        $queryProduct = "INSERT INTO transfer_products (transfer_id, product_id, quantity, brand, code, description) 
+                         VALUES ('$transferID', '$productID', '$quantity', '$brand', '$code', '$description')";
         if (!mysqli_query($conn, $queryProduct)) {
             throw new Exception("Error inserting product: " . mysqli_error($conn));
         }
     }
 
     // Return success response
-    echo json_encode(['status' => 'success', 'message' => 'Invoice and products saved successfully']);
+    echo json_encode(['status' => 'success', 'message' => 'Transfer and products saved successfully']);
 } catch (Exception $e) {
     echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
 }
