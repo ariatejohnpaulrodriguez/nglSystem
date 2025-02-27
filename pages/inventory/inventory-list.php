@@ -37,8 +37,8 @@ include '../../includes/header.php';
                             include '../../includes/conn.php'; // Database connection
                             
                             // Fetch inventory data from the database
-                            $query = "SELECT i.invoice_product_id, 
-                 ip.product_id, 
+                            $query = "SELECT 
+                 p.product_id, 
                  p.description, 
                  p.brand, 
                  p.code, 
@@ -51,8 +51,7 @@ include '../../includes/header.php';
                  CONCAT(e2.first_name, ' ', e2.last_name) AS approved_by, 
                  i.notes
           FROM inventories i
-          JOIN invoice_products ip ON i.invoice_product_id = ip.invoice_product_id
-          JOIN products p ON ip.product_id = p.product_id
+          JOIN products p ON p.product_id = p.product_id
           JOIN dates d ON i.date_id = d.date_id
           LEFT JOIN employees e1 ON i.checked_by = e1.employee_id
           LEFT JOIN employees e2 ON i.approved_by = e2.employee_id";

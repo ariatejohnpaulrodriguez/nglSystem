@@ -38,10 +38,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                       gender_id = ?,
                       status_id = ?,
                       username = ?,
-                      password = ?
+                      password_hash = ?
                   WHERE employee_id = ?";
         $stmt = $conn->prepare($query);
-        $stmt->bind_param("sssssi", $firstName, $lastName, $email, $phoneNumber, $gender, $status, $username, $hashedPassword, $employee_id);
+        $stmt->bind_param("ssssiissi", $firstName, $lastName, $email, $phoneNumber, $gender, $status, $username, $hashedPassword, $employee_id);
     } else {
         // If password was not provided, update other fields but leave the password unchanged
         $query = "UPDATE employees 

@@ -36,4 +36,28 @@
     <link rel="stylesheet" href="../../plugins/jquery/css/jquery-ui.structure.min.css">
     <link rel="stylesheet" href="../../plugins/jquery/css/jquery-ui.theme.css">
     <link rel="stylesheet" href="../../plugins/jquery/css/jquery-ui.theme.min.css">
+
+    <style>
+        .small-box {
+            transition: transform 0.2s ease-in-out;
+            /* Smooth animation */
+        }
+
+        .small-box:hover {
+            transform: scale(1.05);
+            /* Slightly enlarge the box */
+        }
+    </style>
+
+    <style>
+        .icon i {
+            transition: transform 0.3s ease-in-out;
+            /* Smooth animation */
+        }
+
+        .icon:hover i {
+            transform: scaleX(-1) scale(1.2);
+            /* Flip and enlarge slightly */
+        }
+    </style>
 </head>

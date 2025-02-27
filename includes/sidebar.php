@@ -649,7 +649,7 @@
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-file-invoice"></i>
                         <p>
-                            Invoice Form
+                            Transaction Form
                             <i class="fas fa-angle-left right"></i>
                         </p>
                     </a>
@@ -665,7 +665,7 @@
                         <li class="nav-item">
                             <a href="../../pages/transfer/transfer-request-form.php" class="nav-link">
                                 <i class="fas fa-truck nav-icon" style="transform: scaleX(-1);"></i>
-                                <p>Transfer Delivery</p>
+                                <p>Transfer</p>
                             </a>
                         </li>
                     </ul>
