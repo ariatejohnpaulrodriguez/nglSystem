@@ -48,16 +48,17 @@ include '../../includes/session.php';
                                 $plant = '';
                                 $plant_name = '';
                                 $attention = '';
+                                $image = '';
 
                                 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     $company_id = $_POST['company_id'];
 
                                     // Fetch the president data based on the ID
-                                    $query = "SELECT name, address, phone_number, email, plant, plant_name, attention FROM companies WHERE company_id = ?";
+                                    $query = "SELECT name, address, phone_number, email, plant, plant_name, attention, image FROM companies WHERE company_id = ?";
                                     $stmt = $conn->prepare($query);
                                     $stmt->bind_param("i", $company_id);
                                     $stmt->execute();
-                                    $stmt->bind_result($name, $address, $phoneNumber, $email, $plant, $plant_name, $attention);
+                                    $stmt->bind_result($name, $address, $phoneNumber, $email, $plant, $plant_name, $attention, $image);
                                     $stmt->fetch();
                                     $stmt->close();
                                     $conn->close();
@@ -68,10 +69,31 @@ include '../../includes/session.php';
                                 </div>
                                 <form action="ctrl-company/update-ctrl-company.php" method="POST"
                                     enctype="multipart/form-data">
-                                    <div class="card-body">
+                                    <div class="card-body text-center">
+                                        <!-- Centered Current Company Image -->
+                                        <div class="mb-3">
+                                            <?php if (!empty($image)): ?>
+                                                <img id="companyLogo" src="../../<?php echo htmlspecialchars($image); ?>"
+                                                    alt="Company Image" class="img-fluid rounded-circle" width="150"
+                                                    height="150">
+                                            <?php else: ?>
+                                                <p>No image available</p>
+                                            <?php endif; ?>
+                                        </div>
+
+                                        <!-- Upload New Image -->
+                                        <div class="form-group text-center">
+                                            <label for="image">Upload New Image</label>
+                                            <div class="custom-file">
+                                                <input type="file" class="custom-file-input" id="image" name="image"
+                                                    onchange="previewImage(event)">
+                                                <label class="custom-file-label" for="image">Choose file</label>
+                                            </div>
+                                        </div>
+
                                         <div class="row">
                                             <!-- Left Column -->
-                                            <div class="col-md-6 d-flex flex-column">
+                                            <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label for="company_id">Company ID</label>
                                                     <input class="form-control" type="text" id="company_id"
@@ -79,7 +101,6 @@ include '../../includes/session.php';
                                                         value="<?php echo htmlspecialchars($company_id); ?>" required
                                                         readonly>
                                                 </div>
-
                                                 <div class="form-group">
                                                     <label for="companyName">Company Name</label>
                                                     <input class="form-control" type="text" id="companyName"
@@ -87,14 +108,43 @@ include '../../includes/session.php';
                                                         value="<?php echo htmlspecialchars($name); ?>"
                                                         placeholder="Enter Company Name">
                                                 </div>
-
                                                 <div class="form-group">
                                                     <label for="companyAddress">Address</label>
                                                     <textarea class="form-control" id="companyAddress"
                                                         name="companyAddress" placeholder="Enter Address"
                                                         required><?php echo htmlspecialchars($address); ?></textarea>
                                                 </div>
+                                            </div>
 
+                                            <!-- Right Column -->
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="companyEmail">Email</label>
+                                                    <input class="form-control" type="text" id="companyEmail"
+                                                        name="companyEmail"
+                                                        value="<?php echo htmlspecialchars($email); ?>"
+                                                        placeholder="Enter Email">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="companyPlant">Plant</label>
+                                                    <input class="form-control" type="text" id="companyPlant"
+                                                        name="companyPlant"
+                                                        value="<?php echo htmlspecialchars($plant); ?>"
+                                                        placeholder="Enter Plant" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="companyPlantname">Plant Name</label>
+                                                    <input class="form-control" type="text" id="companyPlantname"
+                                                        name="companyPlantname"
+                                                        value="<?php echo htmlspecialchars($plant_name); ?>"
+                                                        placeholder="Enter Plant Name" required>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Footer Section -->
+                                        <div class="row mt-4">
+                                            <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label for="companyPhoneNumber">Phone Number</label>
                                                     <input class="form-control" type="text" id="companyPhoneNumber"
@@ -103,33 +153,7 @@ include '../../includes/session.php';
                                                         placeholder="Enter Phone Number" required>
                                                 </div>
                                             </div>
-
-                                            <!-- Right Column -->
-                                            <div class="col-md-6 d-flex flex-column">
-                                                <div class="form-group">
-                                                    <label for="companyEmail">Email</label>
-                                                    <input class="form-control" type="text" id="companyEmail"
-                                                        name="companyEmail"
-                                                        value="<?php echo htmlspecialchars($email); ?>"
-                                                        placeholder="Enter Email">
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label for="companyPlant">Plant</label>
-                                                    <input class="form-control" type="text" id="companyPlant"
-                                                        name="companyPlant"
-                                                        value="<?php echo htmlspecialchars($plant); ?>"
-                                                        placeholder="Enter Plant" required>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label for="companyPlantname">Plant Name</label>
-                                                    <input class="form-control" type="text" id="companyPlantname"
-                                                        name="companyPlantname"
-                                                        value="<?php echo htmlspecialchars($plant_name); ?>"
-                                                        placeholder="Enter Plant Name" required>
-                                                </div>
-
+                                            <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label for="companyAttention">Attention</label>
                                                     <input class="form-control" type="text" id="companyAttention"
@@ -141,7 +165,7 @@ include '../../includes/session.php';
                                         </div>
                                     </div>
 
-
+                                    <!-- Submit Button Centered -->
                                     <div class="card-footer text-center">
                                         <button type="submit" class="btn btn-primary">Update Company
                                             Information</button>

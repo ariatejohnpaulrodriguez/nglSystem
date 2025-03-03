@@ -54,7 +54,7 @@ include '../../includes/header.php';
                                                     echo "<td>" . $row["role_id"] . "</td>";
                                                     echo "<td>" . $row["role_name"] . "</td>";
                                                     echo "<td>";
-                                                    echo "<form action='update-role.php' method='post' style='display:inline-block;'>";
+                                                    echo "<form action='update-role.php' method='post' style='display:inline-block; margin-right:5px;'>";
                                                     echo "<input type='hidden' name='role_id' value='" . $row["role_id"] . "'>";
                                                     echo "<input type='submit' value='Edit' class='btn btn-primary'>";
                                                     echo "</form>";

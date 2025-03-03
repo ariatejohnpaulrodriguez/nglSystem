@@ -59,6 +59,40 @@
                         </li>
                     </ul>
                 </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-boxes"></i>
+                        <p>
+                            Inventory
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="../../pages/inventory/inventory-form.php" class="nav-link">
+                                <i class="fas fa-plus nav-icon"></i>
+                                <p>Add Inventory</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-edit nav-icon"></i>
+                        <p>
+                            Manage Stock
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="../../pages/inventory/inventory-list.php" class="nav-link">
+                                 <i class="fas fa-list nav-icon"></i>
+                                <p>Inventory</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                 <li class="nav-header">Event</li>
                 <li class="nav-item">
                     <a href="pages/calendar.php" class="nav-link">
@@ -317,332 +351,6 @@
                     </a>
                 </li>
                 ';
-                } elseif (isset($_SESSION['role']) && $_SESSION['role'] == "Vice President") {
-                    echo '<li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-user-plus"></i>
-                        <p>
-                            Create Roles
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="../../pages/account/role.php" class="nav-link">
-                                <i class="fas fa-plus nav-icon"></i>
-                                <p>Add Role</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-list"></i>
-                        <p>
-                            Roles List
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="../../pages/account/role-list.php" class="nav-link">
-                                <i class="fas fa-user-tag nav-icon"></i>
-                                <p>Role</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                    <li class="nav-item">
-                    <a href="../../pages/account/employee.php" class="nav-link">
-                        <i class="nav-icon fas fa-user-plus"></i>
-                        <p>
-                            Create Account
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="../../pages/account/employee.php" class="nav-link">
-                                <i class="fas fa-plus nav-icon"></i>
-                                <p>Add Employee</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a href="pages/account/president-list.php" class="nav-link">
-                        <i class="nav-icon fas fa-users"></i>
-                        <p>
-                            Account List
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="../../pages/account/employee-list.php" class="nav-link">
-                                <i class="fas fa-database nav-icon"></i>
-                                <p>Employee </p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-edit"></i>
-                        <p>
-                            Register Item
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="../../pages/forms/add-product-form.php" class="nav-link">
-                                <i class="fas fa-plus nav-icon"></i>
-                                <p>Add Item</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-table"></i>
-                        <p>
-                            Item List
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="../../pages/data/product-list.php" class="nav-link">
-                                <i class="fas fa-database nav-icon"></i>
-                                <p>Inventory Data</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-table"></i>
-                        <p>
-                            Invoice
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="../../pages/transaction/delivered-in.php" class="nav-link">
-                                <i class="fas fa-database nav-icon"></i>
-                                <p>Delivered In</p>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="../../pages/transaction/delivered-in.php" class="nav-link">
-                                <i class="fas fa-database nav-icon"></i>
-                                <p>Delivered Out</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-table"></i>
-                        <p>
-                            Transaction History
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="../../pages/transaction/delivered-in.php" class="nav-link">
-                                <i class="fas fa-database nav-icon"></i>
-                                <p>Delivered In</p>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="../../pages/transaction/delivered-in.php" class="nav-link">
-                                <i class="fas fa-database nav-icon"></i>
-                                <p>Delivered Out</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-header">Event</li>
-                <li class="nav-item">
-                    <a href="pages/calendar.php" class="nav-link">
-                        <i class="nav-icon far fa-calendar-alt"></i>
-                        <p>
-                            Calendar
-                        </p>
-                    </a>
-                </li>
-                ';
-                } elseif (isset($_SESSION['role']) && $_SESSION['role'] == "Secretary") {
-                    echo '<li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-user-plus"></i>
-                        <p>
-                            Create Roles
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="../../pages/account/role.php" class="nav-link">
-                                <i class="fas fa-plus nav-icon"></i>
-                                <p>Add Role</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-list"></i>
-                        <p>
-                            Roles List
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="../../pages/account/role-list.php" class="nav-link">
-                                <i class="fas fa-user-tag nav-icon"></i>
-                                <p>Role</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                    <li class="nav-item">
-                    <a href="../../pages/account/employee.php" class="nav-link">
-                        <i class="nav-icon fas fa-user-plus"></i>
-                        <p>
-                            Create Account
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="../../pages/account/employee.php" class="nav-link">
-                                <i class="fas fa-plus nav-icon"></i>
-                                <p>Add Employee</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a href="pages/account/president-list.php" class="nav-link">
-                        <i class="nav-icon fas fa-users"></i>
-                        <p>
-                            Account List
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="../../pages/account/employee-list.php" class="nav-link">
-                                <i class="fas fa-database nav-icon"></i>
-                                <p>Employee </p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-edit"></i>
-                        <p>
-                            Register Item
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="../../pages/forms/add-product-form.php" class="nav-link">
-                                <i class="fas fa-plus nav-icon"></i>
-                                <p>Add Item</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-table"></i>
-                        <p>
-                            Item List
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="../../pages/data/product-list.php" class="nav-link">
-                                <i class="fas fa-database nav-icon"></i>
-                                <p>Inventory Data</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-table"></i>
-                        <p>
-                            Invoice
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="../../pages/transaction/delivered-in.php" class="nav-link">
-                                <i class="fas fa-database nav-icon"></i>
-                                <p>Delivered In</p>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="../../pages/transaction/delivered-in.php" class="nav-link">
-                                <i class="fas fa-database nav-icon"></i>
-                                <p>Delivered Out</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-table"></i>
-                        <p>
-                            Transaction History
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="../../pages/transaction/delivered-in.php" class="nav-link">
-                                <i class="fas fa-database nav-icon"></i>
-                                <p>Delivered In</p>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="../../pages/transaction/delivered-in.php" class="nav-link">
-                                <i class="fas fa-database nav-icon"></i>
-                                <p>Delivered Out</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-header">Event</li>
-                <li class="nav-item">
-                    <a href="pages/calendar.php" class="nav-link">
-                        <i class="nav-icon far fa-calendar-alt"></i>
-                        <p>
-                            Calendar
-                        </p>
-                    </a>
-                </li>
-                ';
                 } elseif (isset($_SESSION['role']) && $_SESSION['role'] == "Warehouse Man") {
                     echo '
                 <li class="nav-item">
@@ -657,7 +365,7 @@
                         <li class="nav-item">
                             <a href="../../pages/invoice/inv-request-form.php" class="nav-link">
                                 <i class="fas fa-truck nav-icon"></i>
-                                <p>Invoice</p>
+                                <p>Re Stock Form</p>
                             </a>
                         </li>
                     </ul>
@@ -665,7 +373,7 @@
                         <li class="nav-item">
                             <a href="../../pages/transfer/transfer-request-form.php" class="nav-link">
                                 <i class="fas fa-truck nav-icon" style="transform: scaleX(-1);"></i>
-                                <p>Transfer</p>
+                                <p>Delivery Receipt</p>
                             </a>
                         </li>
                     </ul>
@@ -708,40 +416,6 @@
                             <a href="../../pages/data/product-list.php" class="nav-link">
                                 <i class="fas fa-list nav-icon"></i>
                                 <p>View Product</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-boxes"></i>
-                        <p>
-                            Inventory
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="../../pages/inventory/inventory-form.php" class="nav-link">
-                                <i class="fas fa-plus nav-icon"></i>
-                                <p>Add Inventory</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="fas fa-edit nav-icon"></i>
-                        <p>
-                            Manage Inventory
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="../../pages/inventory/inventory-list.php" class="nav-link">
-                                 <i class="fas fa-list nav-icon"></i>
-                                <p>Inventory</p>
                             </a>
                         </li>
                     </ul>

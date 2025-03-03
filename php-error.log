@@ -12,3 +12,5 @@ Data: {"transfer_id":"39","action":"Approve"}
 Data: {"invoice_id":"6","action":"Approve"}
 [27-Feb-2025 06:04:44 Europe/Berlin] update-transfer-status.php - Error: No products found for transfer ID 40.
 Data: {"transfer_id":"40","action":"Approve"}
+[27-Feb-2025 07:36:18 Europe/Berlin] update-transfer-status.php - Error: No products found for transfer ID 1.
+Data: {"transfer_id":"1","action":"Approve"}

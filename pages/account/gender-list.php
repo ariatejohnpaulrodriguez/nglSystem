@@ -54,7 +54,7 @@ include '../../includes/header.php';
                                                     echo "<td>" . $row["gender_id"] . "</td>";
                                                     echo "<td>" . $row["gender_name"] . "</td>";
                                                     echo "<td>";
-                                                    echo "<form action='update-gender.php' method='post' style='display:inline-block;'>";
+                                                    echo "<form action='update-gender.php' method='post' style='display:inline-block; margin-right:5px;'>";
                                                     echo "<input type='hidden' name='gender_id' value='" . $row["gender_id"] . "'>";
                                                     echo "<input type='submit' value='Edit' class='btn btn-primary'>";
                                                     echo "</form>";

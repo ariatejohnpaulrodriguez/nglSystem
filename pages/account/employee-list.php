@@ -74,7 +74,7 @@ include '../../includes/header.php';
                                                     echo "<td>" . $row["gender_name"] . "</td>";
                                                     echo "<td>" . $row["status_name"] . "</td>";
                                                     echo "<td>";
-                                                    echo "<form action='update-employee.php' method='post' style='display:inline-block;'>";
+                                                    echo "<form action='update-employee.php' method='post' style='display:inline-block; margin-right:5px;'>";
                                                     echo "<input type='hidden' name='employee_id' value='" . $row["employee_id"] . "'>";
                                                     echo "<input type='submit' value='Edit' class='btn btn-primary'>";
                                                     echo "</form>";

@@ -32,29 +32,64 @@
         </li>
 
         <!-- Notifications Dropdown Menu -->
+        <?php
+        // Define the status to check for (e.g., "Pending")
+        $attentionStatus = "Pending";
+
+        // Fetch pending transfers
+        $sqlTransfers = "SELECT transfer_id FROM transfers t INNER JOIN statuses s ON t.status_id = s.status_id WHERE s.status_name = ? LIMIT 5";
+        $stmtTransfers = $conn->prepare($sqlTransfers);
+        $transferNotifications = [];
+
+        if ($stmtTransfers) {
+            $stmtTransfers->bind_param("s", $attentionStatus);
+            $stmtTransfers->execute();
+            $resultTransfers = $stmtTransfers->get_result();
+
+            if ($resultTransfers) {
+                while ($row = $resultTransfers->fetch_assoc()) {
+                    $transferNotifications[] = [
+                        'id' => htmlspecialchars($row['transfer_id']),
+                        'type' => 'transfer'
+                    ];
+                }
+            } else {
+                error_log("Error fetching transfer notifications: " . $conn->error);
+            }
+            $stmtTransfers->close();
+        } else {
+            error_log("Error preparing transfer notifications statement: " . $conn->error);
+        }
+
+        $notificationCount = count($transferNotifications);
+        ?>
         <li class="nav-item dropdown d-flex align-items-center">
             <a class="nav-link d-flex align-items-center" data-toggle="dropdown" href="#">
-                <i class="far fa-bell"></i>
-                <span class="badge badge-danger navbar-badge">15</span>
+                <i class="fas fa-bell" style="color: black; font-size: 20px;"></i>
+                <?php if ($notificationCount > 0): ?>
+                <span class="badge badge-danger navbar-badge"><?php echo htmlspecialchars($notificationCount); ?></span>
+                <?php endif; ?>
             </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                <span class="dropdown-item dropdown-header">15 Notifications</span>
+                <span class="dropdown-item dropdown-header"><?php echo htmlspecialchars($notificationCount); ?>
+                    Transfer Notifications</span>
                 <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item">
-                    <i class="fas fa-envelope mr-2"></i> 4 new messages
-                    <span class="float-right text-muted text-sm">3 mins</span>
-                </a>
-                <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item">
-                    <i class="fas fa-users mr-2"></i> 8 friend requests
-                    <span class="float-right text-muted text-sm">12 hours</span>
-                </a>
-                <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item">
-                    <i class="fas fa-file mr-2"></i> 3 new reports
-                    <span class="float-right text-muted text-sm">2 days</span>
-                </a>
-                <div class="dropdown-divider"></div>
+                <?php
+                // Display notifications (maximum of 15)
+                $displayedCount = 0;
+                foreach ($transferNotifications as $notification) {
+                    if ($displayedCount >= 15)
+                        break;
+
+                    $icon = 'fas fa-truck nav-icon" style="transform: scaleX(-1);';
+                    $url = '../../pages/transaction/transfer-deliveries.php';
+                    $text = 'Transfer Delivery';
+                    echo "<a href=\"{$url}\" class=\"dropdown-item\">
+                            <i class=\"{$icon} mr-2\"></i> {$text} - {$notification['id']}
+                            </a><div class=\"dropdown-divider\"></div>";
+                    $displayedCount++;
+                }
+                ?>
                 <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
             </div>
         </li>
@@ -64,10 +99,10 @@
             <a class="nav-link d-flex align-items-center" data-toggle="dropdown" href="#">
                 <img src="../../dist/img/boyIcon.jpg" class="img-circle" alt="User Image"
                     style="width: 20px; height: 20px;">
-                <i class="fas fa-caret-down ml-1"></i>
+                <i class="fas fa-caret-down ml-1" style="font-size: 24px;"></i>
             </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                <a href="../../pages/account/update-president.php" class="dropdown-item">
+                <a href="../../pages/account/update-employee.php" class="dropdown-item">
                     <i class="fas fa-cog mr-2"></i> Edit Profile
                 </a>
                 <div class="dropdown-divider"></div>

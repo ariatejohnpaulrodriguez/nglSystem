@@ -36,7 +36,6 @@ try {
     $poNumber = sanitize($conn, $data['po_number']);
     $referencePo = sanitize($conn, $data['reference_po']);
     $drNumber = sanitize($conn, $data['dr_number']);
-    $statusID = intval($data['status_id']); // Convert to integer
 
     // --------------------------------------------------------------------
     //  DATABASE INSERTION SECTION
@@ -81,8 +80,8 @@ try {
     $drID = mysqli_insert_id($conn);  // Get DR ID
 
     // Step 6: Insert invoice record into invoices table
-    $queryInvoice = "INSERT INTO invoices (from_company_id, to_company_id, po_id, reference_po_id, dr_id, posting_date, delivery_date, status_id)
-    VALUES ('$fromCompanyID', '$toCompanyID', '$poID', '$referenceID', '$drID', '$postingDateID', '$deliveryDateID', '$statusID')";
+    $queryInvoice = "INSERT INTO invoices (from_company_id, to_company_id, po_id, reference_po_id, dr_id, posting_date, delivery_date)
+    VALUES ('$fromCompanyID', '$toCompanyID', '$poID', '$referenceID', '$drID', '$postingDateID', '$deliveryDateID')";
     if (!mysqli_query($conn, $queryInvoice)) {
         throw new Exception("Error inserting invoice: " . mysqli_error($conn));
     }
@@ -101,6 +100,24 @@ try {
                          VALUES ('$invoiceID', '$productID', '$quantity', '$brand', '$code', '$description')";
         if (!mysqli_query($conn, $queryProduct)) {
             throw new Exception("Error inserting product: " . mysqli_error($conn));
+        }
+
+        // Check if the product exists in the stocks table
+        $checkStockQuery = "SELECT * FROM stocks WHERE product_id = '$productID'";
+        $checkStockResult = mysqli_query($conn, $checkStockQuery);
+
+        if (mysqli_num_rows($checkStockResult) > 0) {
+            // If it does, update the current_quantity
+            $updateStockQuery = "UPDATE stocks SET current_quantity = current_quantity + $quantity WHERE product_id = $productID";
+            if (!mysqli_query($conn, $updateStockQuery)) {
+                throw new Exception("Error updating stock: " . mysqli_error($conn));
+            }
+        } else {
+            // If it doesn't, insert a new row
+            $insertStockQuery = "INSERT INTO stocks (product_id, current_quantity) VALUES ('$productID', '$quantity')";
+            if (!mysqli_query($conn, $insertStockQuery)) {
+                throw new Exception("Error inserting stock: " . mysqli_error($conn));
+            }
         }
     }
 

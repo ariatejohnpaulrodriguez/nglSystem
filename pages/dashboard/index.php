@@ -51,31 +51,6 @@ if ($resultTransferCount) {
   error_log("Error fetching transfer count: " . $conn->error);
 }
 
-// Fetch the count of invoices with the specified status
-$sqlAttentionCount = "SELECT COUNT(invoice_id) AS attention_count 
-                        FROM invoices i
-                        INNER JOIN statuses s ON i.status_id = s.status_id
-                        WHERE s.status_name = ?";
-$stmtAttentionCount = $conn->prepare($sqlAttentionCount);
-
-if ($stmtAttentionCount) {
-  $stmtAttentionCount->bind_param("s", $attentionStatus);
-  $stmtAttentionCount->execute();
-  $resultAttentionCount = $stmtAttentionCount->get_result();
-
-  if ($resultAttentionCount) {
-    $rowAttentionCount = $resultAttentionCount->fetch_assoc();
-    $attentionCount = $rowAttentionCount['attention_count'];
-  } else {
-    $attentionCount = 0; // Or some default value
-    error_log("Error fetching attention invoice count: " . $conn->error);
-  }
-  $stmtAttentionCount->close();
-} else {
-  $attentionCount = 0;
-  error_log("Error preparing attention invoice count statement: " . $conn->error);
-}
-
 // Fetch the count of transfers with the specified status
 $sqlTransferAttentionCount = "SELECT COUNT(t.transfer_id) AS transfer_attention_count
                                 FROM transfers t
@@ -129,13 +104,9 @@ if ($stmtTransferAttentionCount) {
             <div class="col-lg-3 col-6">
               <div class="small-box bg-info" style="cursor: pointer;"
                 onclick="window.location.href='../../pages/transaction/received-deliveries.php'">
-                <?php if ($attentionCount > 0): ?>
-                  <span class="badge badge-danger"
-                    style="position: absolute; top: -5px; right: -5px;"><?php echo htmlspecialchars($attentionCount); ?></span>
-                <?php endif; ?>
                 <div class="inner">
                   <h3><?php echo htmlspecialchars($totalInvoices); ?></h3>
-                  <p>Incoming Delivery</p>
+                  <p>Re Stock</p>
                 </div>
                 <div class="icon">
                   <i class="fas fa-truck"></i>
@@ -154,7 +125,7 @@ if ($stmtTransferAttentionCount) {
 
                 <div class="inner">
                   <h3><?php echo htmlspecialchars($totalTransfers); ?></h3>
-                  <p>Transfer Delivery</p>
+                  <p>Delivery Receipt</p>
                 </div>
 
                 <div class="icon">
@@ -165,10 +136,140 @@ if ($stmtTransferAttentionCount) {
 
           </div>
         </div>
+
+        <div class="container-fluid">
+          <div class="col-md-13">
+            <div class="card">
+              <div class="card-header bg-primary">
+                <h3 class="card-title"><i class="fas fa-info-circle"></i> <strong>Note:</strong> Stocks Status</h3>
+              </div>
+
+              <?php
+              include '../../includes/conn.php'; // Database connection
+              
+              $query = "SELECT 
+              p.product_id, 
+              p.description, 
+              p.brand, 
+              p.code,
+              s.current_quantity
+              FROM products p
+              JOIN stocks s ON p.product_id = s.product_id";
+
+              $result = $conn->query($query);
+
+              if (!$result) {
+                die("Query failed: " . $conn->error);
+              }
+              ?>
+
+              <!-- /.card-header -->
+              <div class="card-body p-0">
+                <div class="table-responsive">
+                  <table class="table table-bordered table-hover">
+                    <thead>
+                      <tr>
+                        <th>Product ID</th>
+                        <th>Description</th>
+                        <th>Brand</th>
+                        <th>Code</th>
+                        <th>Availability</th>
+                        <th>Stock</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php
+                      if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+
+                          // Ensure quantity exists in the row
+                          $quantity = isset($row['current_quantity']) ? $row['current_quantity'] : 0;
+
+                          // Determine progress bar and badge color based on quantity
+                          if ($quantity <= 25) {
+                            $colorClass = 'bg-danger'; // Red
+                          } elseif ($quantity <= 75) {
+                            $colorClass = 'bg-warning'; // Orange
+                          } else {
+                            $colorClass = 'bg-success'; // Green
+                          }
+
+                          // Calculate percentage for progress bar (ensuring it doesn't exceed 100%)
+                          $progressPercentage = min($quantity, 100);
+
+                          echo "<tr class='clickable-row' data-toggle='collapse' data-target='#details" . $row['product_id'] . "'>";
+                          echo "<td>" . htmlspecialchars($row['product_id']) . "</td>";
+                          echo "<td>" . htmlspecialchars($row['description']) . "</td>";
+                          echo "<td>" . htmlspecialchars($row['brand']) . "</td>";
+                          echo "<td>" . htmlspecialchars($row['code']) . "</td>";
+
+                          // Progress Bar (AdminLTE 3.2.0 supports bg-danger, bg-warning, bg-success)
+                          echo "<td>";
+                          echo "<div class='progress progress-xs' style='height: 10px; margin-bottom: 0;'>";
+                          echo "<div class='progress-bar " . $colorClass . "' style='width: " . $progressPercentage . "%;'></div>";
+                          echo "</div>";
+                          echo "</td>";
+
+                          // Quantity Badge with the same background color
+                          echo "<td><span class='badge " . $colorClass . "'>" . $quantity . "</span></td>";
+                          echo "</tr>";
+
+                          // Hidden Row for Product Details
+                          echo "<tr id='details" . $row['product_id'] . "' class='collapse'>";
+                          echo "<td colspan='12'>";
+                          echo "<div class='card wrapper'>";
+                          echo "<div class='card-header bg-dark d-flex align-items-center justify-content-between'>";
+                          echo "<h3 class='card-title text-white'>Product Details</h3>";
+                          echo "</div>";
+                          echo "<div class='card-body'>";
+
+                          // Two-column centered layout with card bodies
+                          echo "<div class='row d-flex justify-content-center text-center'>";
+
+                          // Column 1
+                          echo "<div class='col-12 col-md-6 mb-3'>";
+                          echo "<div class='card h-500'>";
+                          echo "<div class='card-header bg-info text-white'>Re Stock Info</div>";
+                          echo "<div class='card-body'>";
+                          echo "<p>Content for the first column...</p>";
+                          echo "</div>"; // End of card-body
+                          echo "</div>"; // End of card
+                          echo "</div>"; // End of col-md-5
+                      
+                          // Column 2
+                          echo "<div class='col-12 col-md-6 mb-3'>";
+                          echo "<div class='card h-500'>";
+                          echo "<div class='card-header bg-purple text-white'>Delivery Info</div>";
+                          echo "<div class='card-body'>";
+                          echo "<p>Content for the second column...</p>";
+                          echo "</div>"; // End of card-body
+                          echo "</div>"; // End of card
+                          echo "</div>"; // End of col-md-5
+                      
+                          echo "</div>"; // End of row
+                      
+                          echo "</div>"; // End of main card-body
+                          echo "</div>"; // End of main card wrapper
+                          echo "</td>";
+                          echo "</tr>";
+                        }
+                      } else {
+                        echo "<tr><td colspan='12'>No records found.</td></tr>";
+                      }
+                      ?>
+                    </tbody>
+
+                  </table>
+                </div>
+              </div>
+              <!-- /.card -->
+
+            </div>
+            <!-- /.col -->
+          </div>
+        </div>
       </section>
-
-    </div> <!-- /.content-wrapper -->
-
+    </div><!-- /.content-wrapper -->
     <?php include '../../includes/footer.php'; ?>
     <?php include '../../includes/script.php'; ?>
   </div> <!-- /.wrapper -->

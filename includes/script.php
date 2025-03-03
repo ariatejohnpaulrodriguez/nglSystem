@@ -16,7 +16,6 @@
 <script src="../../plugins/jquery-mapael/maps/usa_states.min.js"></script>
 <!-- ChartJS -->
 <script src="../../plugins/chart.js/Chart.min.js"></script>
-
 <!-- DataTables & Plugins -->
 <script src="../../plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="../../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
@@ -87,6 +86,16 @@
             { "orderable": false, "targets": [5] } // Disable sorting for the "Action" column
         ]
     });
+</script>
+
+<script>
+    function previewImage(event) {
+        const output = document.getElementById('companyLogo');
+        output.src = URL.createObjectURL(event.target.files[0]);
+        output.onload = function () {
+            URL.revokeObjectURL(output.src) // Free memory
+        }
+    }
 </script>
 
 <script src="../../plugins/custom/custom-transfer.js"></script>

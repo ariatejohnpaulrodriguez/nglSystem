@@ -176,12 +176,6 @@ include '../../includes/session.php';
                                                                     <label for="plantName">Plant Name:</label>
                                                                     <input type="text" id="plantName" name="plantName"
                                                                         class="form-control form-control-sm" readonly>
-
-                                                                    <!-- Status field -->
-                                                                    <label for="status">Status:</label>
-                                                                    <input type="text" id="status" name="status"
-                                                                        value="5" class="form-control form-control-sm"
-                                                                        readonly>
                                                                 </div>
                                                             </div>
                                                         </div>

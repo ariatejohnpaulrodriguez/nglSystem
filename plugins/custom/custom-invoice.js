@@ -173,12 +173,9 @@ $(document).ready(function () {
             delivery_date: $("#datepicker2").val(),
             from_company_id: $("#company-from").val(),
             to_company_id: $("#company-to").val(),
-            plant: $("#plant").val(),
             po_number: $("#poNumber").val(),
             reference_po: $("#reference-po").val(),
-            dr_number: $("#drNumber").val(),
-            plant_name: $("#plantName").val(),
-            status_id: $("#status").val()
+            dr_number: $("#drNumber").val()
         };
 
         $.ajax({
@@ -346,45 +343,6 @@ $(document).ready(function () {
                 $('#product-list').html('<tr><td colspan="4">Error loading products.</td></tr>');
                 $('#status-banner').html('');
             }
-        });
-    });
-
-    $(document).ready(function () {
-        $(document).on('click', '.approve-btn, .reject-btn, .pending-btn, .cancel-btn', function () {
-            let invoiceID = $(this).data('id');
-            let action = $(this).hasClass('approve-btn') ? 'Approve' :
-                $(this).hasClass('reject-btn') ? 'Reject' :
-                    $(this).hasClass('pending-btn') ? 'Pending' : 'Cancelled';
-
-            if (!confirm(`Are you sure you want to mark this invoice as ${action}?`)) return;
-
-            let $button = $(this);
-            $button.prop('disabled', true);
-
-            $.ajax({
-                url: '../../pages/invoice/ctrl-recieve/update-invoice-status.php',
-                type: 'POST',
-                data: { invoice_id: invoiceID, action: action },
-                dataType: 'json',
-            })
-                .done(function (response) {
-                    console.log('Server Response:', response);
-
-                    if (response.status === 'success') {
-                        alert(response.message);
-                        location.reload();
-                    } else {
-                        console.error('Server Error:', response.message);
-                        alert("Error: " + response.message);
-                    }
-                })
-                .fail(function (jqXHR, textStatus, errorThrown) {
-                    console.error('AJAX Error:', textStatus, errorThrown, jqXHR.responseText);
-                    alert("An unexpected error occurred. Check console for details.");
-                })
-                .always(function () {
-                    $button.prop('disabled', false);
-                });
         });
     });
 });

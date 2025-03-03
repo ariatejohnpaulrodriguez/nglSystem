@@ -68,7 +68,7 @@ include '../../includes/header.php';
                                                     echo "<td>" . $row["plant_name"] . "</td>";
                                                     echo "<td>" . $row["attention"] . "</td>";
                                                     echo "<td>";
-                                                    echo "<form action='update-company.php' method='post' style='display:inline-block;'>";
+                                                    echo "<form action='update-company.php' method='post' style='display:inline-block; margin-bottom:5px;'>";
                                                     echo "<input type='hidden' name='company_id' value='" . $row["company_id"] . "'>";
                                                     echo "<input type='submit' value='Edit' class='btn btn-primary'>";
                                                     echo "</form>";

@@ -5,7 +5,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['product_id'])) {
     $product_id = $_POST['product_id'];
 
     // Use prepared statement for security
-    $stmt = $conn->prepare("DELETE FROM tbl_product WHERE product_id = ?");
+    $stmt = $conn->prepare("DELETE FROM products WHERE product_id = ?");
     $stmt->bind_param("i", $product_id);
     $stmt->execute();
     $stmt->close();

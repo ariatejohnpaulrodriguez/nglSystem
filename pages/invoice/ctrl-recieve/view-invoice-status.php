@@ -39,7 +39,6 @@ try {
             delivery_receipts.dr_number AS dr_number,
             purchase_orders.po_number AS po_number,
             reference_pos.reference_po AS reference_po_number,
-            statuses.status_name,
             invoice_products.invoice_product_id,
             invoice_products.invoice_id AS product_invoice_id,
             invoice_products.product_id,
@@ -55,7 +54,6 @@ try {
         LEFT JOIN reference_pos ON invoices.reference_po_id = reference_pos.reference_po_id
         LEFT JOIN dates AS posting_dates ON invoices.posting_date = posting_dates.date_id
         LEFT JOIN dates AS delivery_dates ON invoices.delivery_date = delivery_dates.date_id
-        LEFT JOIN statuses ON invoices.status_id = statuses.status_id
         LEFT JOIN invoice_products ON invoices.invoice_id = invoice_products.invoice_id
         WHERE invoices.invoice_id = ?
         ORDER BY invoices.invoice_id DESC, invoice_products.invoice_product_id ASC
@@ -102,8 +100,7 @@ try {
                     "to_company_name" => $row["to_company_name"],
                     "to_company_address" => $row["to_company_address"],
                     "to_company_phone" => $row["to_company_phone"],
-                    "to_company_attention" => $row["to_company_attention"],
-                    "status_name" => $row["status_name"]
+                    "to_company_attention" => $row["to_company_attention"]
                 ];
             }
 

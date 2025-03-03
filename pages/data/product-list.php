@@ -68,7 +68,7 @@ include '../../includes/header.php';
 
                           // Show Edit and Delete buttons only if the user is not a Warehouse Man
                           if ($userRole != "Warehouse Man") {
-                            echo "<form action='update-product.php' method='post' style='display:inline-block;'>";
+                            echo "<form action='update-product.php' method='post' style='display:inline-block; margin-right:5px;'>";
                             echo "<input type='hidden' name='product_id' value='" . $row["product_id"] . "'>";
                             echo "<input type='submit' value='Edit' class='btn btn-primary'>";
                             echo "</form>";

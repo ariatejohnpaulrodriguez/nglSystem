@@ -40,7 +40,16 @@ include '../../includes/session.php';
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    <form action="ctrl-company/add-company.php" method="POST">
+                                    <form action="ctrl-company/add-company.php" method="POST"
+                                        enctype="multipart/form-data">
+                                        <div class=" form-group">
+                                            <label for="image">Upload Company Image</label>
+                                            <div class="custom-file">
+                                                <input type="file" class="custom-file-input" id="image" name="image"
+                                                    required>
+                                                <label class="custom-file-label" for="image">Choose file</label>
+                                            </div>
+                                        </div>
                                         <div class="form-group">
                                             <label for="companyName">Company Name:</label>
                                             <input type="text" id="companyName" class="form-control" name="companyName">

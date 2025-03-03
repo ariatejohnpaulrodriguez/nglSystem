@@ -50,12 +50,10 @@ include '../../includes/session.php';
                                     <table id="invoiceTable" class="table table-head-fixed text-nowrap">
                                         <thead>
                                             <tr>
-                                                <th>Invoice ID <i class="fas fa-arrow-up fa-sm"></i> <i
-                                                        class="fas fa-arrow-down fa-sm"></i></th>
+                                                <th>Invoice ID</th>
                                                 <th>From Company</th>
                                                 <th>To Company</th>
                                                 <th>Delivery Date</th>
-                                                <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -66,25 +64,23 @@ include '../../includes/session.php';
                                             $sql = "SELECT i.invoice_id,
                                                     fc.name AS from_company,
                                                     tc.name AS to_company,
-                                                    d.date_value AS delivery_date,
-                                                    s.status_name
+                                                    d.date_value AS delivery_date
                                                     FROM invoices i
                                                     JOIN companies fc ON i.from_company_id = fc.company_id
                                                     JOIN companies tc ON i.to_company_id = tc.company_id
-                                                    JOIN dates d ON i.delivery_date = d.date_id
-                                                    JOIN statuses s ON i.status_id = s.status_id";
+                                                    JOIN dates d ON i.delivery_date = d.date_id";
 
                                             $stmt = $conn->prepare($sql);
                                             if (!$stmt) {
                                                 error_log("Prepare failed: " . $conn->error);
-                                                echo "<tr><td colspan='6' class='text-center'>Error fetching invoices. Please check the logs.</td></tr>";
+                                                echo "<tr><td colspan='5' class='text-center'>Error fetching invoices. Please check the logs.</td></tr>";
                                             } else {
                                                 $stmt->execute();
                                                 $result = $stmt->get_result();
 
                                                 if (!$result) {
                                                     error_log("Query failed: " . $stmt->error);
-                                                    echo "<tr><td colspan='6' class='text-center'>Error fetching invoices. Please check the logs.</td></tr>";
+                                                    echo "<tr><td colspan='5' class='text-center'>Error fetching invoices. Please check the logs.</td></tr>";
                                                 } else {
                                                     if ($result->num_rows > 0) {
                                                         while ($row = $result->fetch_assoc()) {
@@ -92,48 +88,19 @@ include '../../includes/session.php';
                                                             $from_company = htmlspecialchars($row['from_company']);
                                                             $to_company = htmlspecialchars($row['to_company']);
                                                             $delivery_date = htmlspecialchars($row['delivery_date']);
-                                                            $status = htmlspecialchars($row['status_name']);
-
-                                                            $statusClass = '';
-                                                            switch ($status) {
-                                                                case 'Approved':
-                                                                    $statusClass = 'bg-success text-white';
-                                                                    break;
-                                                                case 'Rejected':
-                                                                    $statusClass = 'bg-danger text-white';
-                                                                    break;
-                                                                case 'Pending':
-                                                                    $statusClass = 'bg-warning text-white';
-                                                                    break;
-                                                                case 'Cancelled':
-                                                                    $statusClass = 'bg-dark text-white';
-                                                                    break;
-                                                                default:
-                                                                    $statusClass = 'bg-secondary text-white';
-                                                                    break;
-                                                            }
 
                                                             echo "<tr>";
                                                             echo "<td>{$invoice_id}</td>";
                                                             echo "<td>{$from_company}</td>";
                                                             echo "<td>{$to_company}</td>";
                                                             echo "<td>{$delivery_date}</td>";
-                                                            echo "<td><span class='badge {$statusClass}'>{$status}</span></td>";
                                                             echo "<td>";
-                                                            if ($_SESSION['role'] == 'President') {
-                                                                echo "<button class='btn btn-primary btn-sm view-btn mr-1' data-id='{$invoice_id}' data-status='{$status}' data-toggle='modal' data-target='#viewModal'>View</button>";
-                                                                echo "<button class='btn btn-success btn-sm approve-btn mr-1' data-id='{$invoice_id}'>Approve</button>";
-                                                                echo "<button class='btn btn-danger btn-sm reject-btn mr-1' data-id='{$invoice_id}'>Reject</button>";
-                                                                echo "<button class='btn btn-warning btn-sm pending-btn mr-1' data-id='{$invoice_id}'>Pending</button>";
-                                                                echo "<button class='btn btn-dark btn-sm cancel-btn' data-id='{$invoice_id}'>Cancelled</button>";
-                                                            } else {
-                                                                echo "<button class='btn btn-primary btn-sm view-btn' data-id='{$invoice_id}' data-status='{$status}' data-toggle='modal' data-target='#viewModal'>View</button>";
-                                                            }
+                                                            echo "<button class='btn btn-primary btn-sm view-btn' data-id='{$invoice_id}' data-toggle='modal' data-target='#viewModal'>View</button>";
                                                             echo "</td>";
                                                             echo "</tr>";
                                                         }
                                                     } else {
-                                                        echo "<tr><td colspan='6' class='text-center'>No invoices found</td></tr>";
+                                                        echo "<tr><td colspan='5' class='text-center'>No invoices found</td></tr>";
                                                     }
                                                 }
                                                 $stmt->close();
@@ -168,8 +135,6 @@ include '../../includes/session.php';
                                         <div class="row">
                                             <div class="col-12">
                                                 <div class="position-relative">
-                                                    <div id="status-banner"></div>
-                                                    <!-- The banner status will display here -->
                                                     <div class="callout callout-info">
                                                         <h5><i class="fas fa-info"></i> Note:</h5>
                                                         This page has been processed by Warehouse Staff, requesting
@@ -226,7 +191,7 @@ include '../../includes/session.php';
                                                     <!-- Table row -->
                                                     <div class="row">
                                                         <div class="col-12 table-responsive">
-                                                            <table id="invoiceTable" class="table">
+                                                            <table id="invoiceDetailsTable" class="table">
                                                                 <thead>
                                                                     <tr>
                                                                         <th>Quantity</th>
