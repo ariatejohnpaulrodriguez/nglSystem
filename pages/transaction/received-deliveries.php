@@ -47,7 +47,7 @@ include '../../includes/session.php';
                                 </div>
 
                                 <div class="card-body table-responsive p-0" style="height: 500px;">
-                                    <table id="invoiceTable" class="table table-head-fixed text-nowrap">
+                                    <table id="invoiceTables" class="table table-head-fixed text-nowrap">
                                         <thead>
                                             <tr>
                                                 <th>Invoice ID</th>
@@ -62,13 +62,13 @@ include '../../includes/session.php';
                                             include '../../includes/conn.php';
 
                                             $sql = "SELECT i.invoice_id,
-                                                    fc.name AS from_company,
-                                                    tc.name AS to_company,
-                                                    d.date_value AS delivery_date
-                                                    FROM invoices i
-                                                    JOIN companies fc ON i.from_company_id = fc.company_id
-                                                    JOIN companies tc ON i.to_company_id = tc.company_id
-                                                    JOIN dates d ON i.delivery_date = d.date_id";
+                                            fc.name AS from_company,
+                                            tc.name AS to_company,
+                                            d.date_value AS delivery_date
+                                            FROM invoices i
+                                            JOIN companies fc ON i.from_company_id = fc.company_id
+                                            JOIN companies tc ON i.to_company_id = tc.company_id
+                                            JOIN dates d ON i.delivery_date = d.date_id";
 
                                             $stmt = $conn->prepare($sql);
                                             if (!$stmt) {
@@ -95,7 +95,8 @@ include '../../includes/session.php';
                                                             echo "<td>{$to_company}</td>";
                                                             echo "<td>{$delivery_date}</td>";
                                                             echo "<td>";
-                                                            echo "<button class='btn btn-primary btn-sm view-btn' data-id='{$invoice_id}' data-toggle='modal' data-target='#viewModal'>View</button>";
+                                                            echo "<button class='btn btn-primary btn-sm view-btn mr-1' data-id='{$invoice_id}' data-toggle='modal' data-target='#viewModal'>View</button>";
+                                                            echo "<button class='btn btn-danger btn-sm pdf-btn mr-1' data-id='{$invoice_id}'>PDF</button>";
                                                             echo "</td>";
                                                             echo "</tr>";
                                                         }
@@ -210,15 +211,6 @@ include '../../includes/session.php';
                                                         <!-- /.col -->
                                                     </div>
                                                     <!-- /.row -->
-
-                                                    <!-- this row will not appear when printing -->
-                                                    <div class="row no-print">
-                                                        <div class="col-12">
-                                                            <a href="invoice-print.php" rel="noopener" target="_blank"
-                                                                class="btn btn-default"><i class="fas fa-print"></i>
-                                                                Print</a>
-                                                        </div>
-                                                    </div>
                                                 </div>
                                                 <!-- /.invoice -->
                                             </div><!-- /.col -->

@@ -58,6 +58,14 @@
 <script src="../../plugins/custom/custom-invoice.js"></script>
 
 <script>
+    $(document).on('click', '.pdf-btn', function () {
+        let invoiceId = $(this).data('id');
+        console.log("PDF button clicked for invoice ID: " + invoiceId);
+        window.open('../../pages/invoice/invoice-print.php?invoice_id=' + invoiceId, '_blank');
+    });
+</script>
+
+<script>
     $(document).ready(function () {
         $("#datepicker3").datepicker({
             dateFormat: "yy-mm-dd",
