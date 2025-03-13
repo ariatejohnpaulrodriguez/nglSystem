@@ -1,36 +1,29 @@
 <?php
 include '../../includes/conn.php';
 include '../../includes/session.php';
-?>
-
-<?php
 include '../../includes/header.php';
 ?>
 
 <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
-
-        <!-- Navbar -->
+        <!-- Navbar and Sidebar -->
         <?php include '../../includes/navbar.php'; ?>
-        <!-- /.navbar -->
         <?php include '../../includes/sidebar.php'; ?>
 
-        <!-- Content Wrapper. Contains page content -->
+        <!-- Content Wrapper -->
         <div class="content-wrapper">
-            <!-- Content Header (Page header) -->
             <section class="content-header">
+                <h1>Roles List</h1>
             </section>
 
-            <!-- Main content -->
             <section class="content">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">Roles List</h3>
+                                    <h3 class="card-title">Roles</h3>
                                 </div>
-                                <!-- /.card-header -->
                                 <div class="card-body">
                                     <table id="example2" class="table table-bordered table-hover">
                                         <thead>
@@ -46,9 +39,7 @@ include '../../includes/header.php';
                                             $sql = "SELECT role_id, role_name FROM roles";
                                             $result = mysqli_query($conn, $sql);
 
-                                            // Check if there are any rows returned
                                             if (mysqli_num_rows($result) > 0) {
-                                                // Loop through the rows and display them in the table
                                                 while ($row = mysqli_fetch_assoc($result)) {
                                                     echo "<tr>";
                                                     echo "<td>" . $row["role_id"] . "</td>";
@@ -58,46 +49,54 @@ include '../../includes/header.php';
                                                     echo "<input type='hidden' name='role_id' value='" . $row["role_id"] . "'>";
                                                     echo "<input type='submit' value='Edit' class='btn btn-primary'>";
                                                     echo "</form>";
-                                                    echo "<form action='ctrl-account/delete-role.php' method='post' style='display:inline-block;' onsubmit='return confirmDelete()'>";
-                                                    echo "<input type='hidden' name='role_id' value='" . $row["role_id"] . "'>";
-                                                    echo "<input type='submit' value='Delete' class='btn btn-danger'>";
-                                                    echo "</form>";
+                                                    echo "<button type='button' class='btn btn-danger' onclick='deleteRoleModal(" . $row["role_id"] . ")'>Delete</button>";
                                                     echo "</td>";
                                                     echo "</tr>";
                                                 }
                                             } else {
-                                                echo "<tr><td colspan='8'>No data found</td></tr>";
+                                                echo "<tr><td colspan='3'>No data found</td></tr>";
                                             }
 
                                             mysqli_close($conn);
                                             ?>
                                         </tbody>
-                                        <!-- JavaScript for Confirmation -->
-                                        <script>
-                                            function confirmDelete() {
-                                                return confirm("Are you sure you want to delete this role?");
-                                            }
-                                        </script>
                                     </table>
                                 </div>
-                                <!-- /.card-body -->
                             </div>
-                            <!-- /.card -->
                         </div>
-                        <!-- /.col -->
                     </div>
-                    <!-- /.row -->
                 </div>
-                <!-- /.container-fluid -->
             </section>
-            <!-- /.content -->
         </div>
-        <!-- /.content-wrapper -->
+
+        <div class="modal fade" id="roleDeleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header bg-danger">
+                        <h5 class="modal-title text-white" id="deleteModalLabel">Confirm Deletion</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to delete this role? This action cannot be undone.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <form id="deleteForm" action="ctrl-account/delete-role.php" method="post">
+                            <input type="hidden" name="role_id" id="role_id_to_delete">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer and Scripts -->
         <?php include '../../includes/footer.php'; ?>
-        <!-- /.control-sidebar -->
+        <?php include '../../includes/script.php'; ?>
     </div>
-    <!-- ./wrapper -->
-    <?php include '../../includes/script.php'; ?>
 </body>
 
 </html>

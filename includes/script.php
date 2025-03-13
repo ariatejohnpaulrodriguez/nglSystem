@@ -54,14 +54,96 @@
 <!-- jsGrid -->
 <script src="../../plugins/jsgrid/demos/db.js"></script>
 <script src="../../plugins/jsgrid/jsgrid.min.js"></script>
-
-<script src="../../plugins/custom/custom-invoice.js"></script>
+<script src="../../plugins/toastr/toastr.min.js"></script>
 
 <script>
-    $(document).on('click', '.pdf-btn', function () {
+    function deleteRoleModal(role_id) {
+        // Set the role_id in the hidden input field
+        document.getElementById('role_id_to_delete').value = role_id;
+        // Show the modal with the updated ID
+        $('#roleDeleteModal').modal('show');
+    }
+
+    function deleteGenderModal(gender_id) {
+        // Set the role_id in the hidden input field
+        document.getElementById('gender_id_to_delete').value = gender_id;
+        // Show the modal with the updated ID
+        $('#genderDeleteModal').modal('show');
+    }
+
+    function deleteStatusModal(status_id) {
+        // Set the role_id in the hidden input field
+        document.getElementById('status_id_to_delete').value = status_id;
+        // Show the modal with the updated ID
+        $('#statusDeleteModal').modal('show');
+    }
+
+    function deleteEmployeeModal(employee_id) {
+        // Set the role_id in the hidden input field
+        document.getElementById('employee_id_to_delete').value = employee_id;
+        // Show the modal with the updated ID
+        $('#employeeDeleteModal').modal('show');
+    }
+
+    function deleteProductModal(product_id) {
+        // Set the role_id in the hidden input field
+        document.getElementById('product_id_to_delete').value = product_id;
+        // Show the modal with the updated ID
+        $('#productDeleteModal').modal('show');
+    }
+
+    function deleteCompanyModal(company_id) {
+        // Set the role_id in the hidden input field
+        document.getElementById('company_id_to_delete').value = company_id;
+        // Show the modal with the updated ID
+        $('#companyDeleteModal').modal('show');
+    }
+
+    function deletePermissionModal(role_id, permission_id) {
+        // Set the role_id and permission_id in the hidden input fields
+        document.getElementById('role_id_to_delete').value = role_id;
+        document.getElementById('permission_id_to_delete').value = permission_id;
+        // Show the modal
+        $('#permissionDeleteModal').modal('show');
+    }
+
+    // Toastr configuration
+    toastr.options = {
+        "closeButton": true,
+        "progressBar": true,
+        "positionClass": "toast-top-right",
+        "timeOut": "5000", // Duration in milliseconds
+        "extendedTimeOut": "1000"
+    };
+
+    // Handle Toastr notifications for success and error session messages
+    <?php if (isset($_SESSION['success'])): ?>
+        toastr.success("<?php echo $_SESSION['success']; ?>");
+        <?php unset($_SESSION['success']); // Clear success message ?>
+    <?php endif; ?>
+
+    <?php if (isset($_SESSION['error'])): ?>
+        toastr.error("<?php echo $_SESSION['error']; ?>");
+        <?php unset($_SESSION['error']); // Clear error message ?>
+    <?php endif; ?>
+</script>
+
+<script src="../../plugins/custom/custom-invoice.js"></script>
+<script src="../../plugins/custom/custom-transfer.js"></script>
+
+<script>
+    $(document).on('click', '.invoice-pdf-btn', function () {
         let invoiceId = $(this).data('id');
         console.log("PDF button clicked for invoice ID: " + invoiceId);
         window.open('../../pages/invoice/invoice-print.php?invoice_id=' + invoiceId, '_blank');
+    });
+</script>
+
+<script>
+    $(document).on('click', '.transfer-pdf-btn', function () {
+        let transferID = $(this).data('id');
+        console.log("PDF button clicked for transfer ID: " + transferID);
+        window.open('../../pages/transfer/transfer-print.php?transfer_id=' + transferID, '_blank');
     });
 </script>
 
@@ -105,5 +187,3 @@
         }
     }
 </script>
-
-<script src="../../plugins/custom/custom-transfer.js"></script>

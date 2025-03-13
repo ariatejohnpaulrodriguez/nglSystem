@@ -1,10 +1,8 @@
 <?php
+include '../../includes/conn.php';
 include '../../includes/header.php';
 include '../../includes/session.php';
 ?>
-
-<link rel="stylesheet" href="../../../plugins/fontawesome-free/css/all.min.css">
-<link rel="stylesheet" href="../../../dist/css/adminlte.min.css">
 
 <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
@@ -53,19 +51,26 @@ include '../../includes/session.php';
                                 $currentGender = '';
                                 $currentStatuses = '';
 
-                                if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                                    $employee_id = $_POST['employee_id'];
+                                // Check if employee_id is provided via POST or session
+                                if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['employee_id'])) {
+                                    $employee_id = $_POST['employee_id']; // From the "Edit" button in employee-list.php
+                                } elseif (isset($_SESSION['employee_id'])) {
+                                    $employee_id = $_SESSION['employee_id']; // From the session (logged-in user)
+                                }
 
-                                    // Fetch the president data based on the ID
-                                    $query = "SELECT first_name, last_name, email, phone_number, gender_id, status_id, username, password_hash, role_id FROM employees WHERE employee_id = ?";
+                                // If an employee_id is available, fetch the data
+                                if (!empty($employee_id)) {
+                                    $query = "SELECT first_name, last_name, email, phone_number, gender_id, status_id, username, password_hash, role_id 
+              FROM employees 
+              WHERE employee_id = ?";
                                     $stmt = $conn->prepare($query);
                                     $stmt->bind_param("i", $employee_id);
                                     $stmt->execute();
                                     $stmt->bind_result($firstName, $lastName, $email, $phoneNumber, $gender, $status, $username, $password, $currentRole);
                                     $stmt->fetch();
                                     $stmt->close();
-                                    $conn->close();
                                 }
+                                $conn->close();
                                 ?>
                                 <div class="card-header">
                                     <h5 class="card-title">Change Employee Information</h5>
@@ -79,7 +84,7 @@ include '../../includes/session.php';
 
                                                 <div class="form-group">
                                                     <label for="role_id">Select New Role</label>
-                                                    <select class="form-control" id="role" name="role" required>
+                                                    <select class="form-control" id="roles" name="roles" required>
                                                         <option value="" disabled>-- Select --</option>
 
                                                         <?php

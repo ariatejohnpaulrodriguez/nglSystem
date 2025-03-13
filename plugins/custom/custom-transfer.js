@@ -159,37 +159,35 @@ $(document).ready(function () {
     // Update add-products to add-t-products
     $("#add-t-products").click(addProductRow); // UPDATED SELECTOR
 
-    // Form Submission - Update #invoice-form to #transfer-form and URLs
-    $("#transfer-form").submit(function (e) { // UPDATED SELECTOR
+    $("#transfer-form").submit(function (e) {
         e.preventDefault();
-
+    
         var quantities = $("input[name='quantity[]']");
         var productCodes = $("select[name='product_code[]']");
-
+    
         var hasErrors = false;
         quantities.each(function (index) {
             var qty = $(this).val();
             var code = productCodes.eq(index).val();
-
+    
             if (!qty || qty <= 0 || !code) {
                 hasErrors = true;
                 return false;
             }
         });
-
+    
         if (hasErrors) {
-            alert('Please fill in all product details (quantity and code).');
+            toastr.error('Please fill in all product details (quantity and code).');
             return;
         }
-
+    
         var productData = [];
-
         quantities.each(function (index) {
             var qty = $(this).val();
             var productId = productCodes.eq(index).val();
             var brand = $(this).closest("tr").find(".product-brand").text().trim();
             var description = $(this).closest("tr").find(".product-description").text().trim();
-
+    
             productData.push({
                 product_id: productId,
                 quantity: qty,
@@ -198,11 +196,11 @@ $(document).ready(function () {
                 description: description
             });
         });
-
+    
         var data = {
             products: productData,
-            posting_date: $("#datepicker3").val(), // UPDATED SELECTOR
-            delivery_date: $("#datepicker4").val(), // UPDATED SELECTOR
+            posting_date: $("#datepicker3").val(),
+            delivery_date: $("#datepicker4").val(),
             from_company_id: $("#company-from").val(),
             to_company_id: $("#company-to").val(),
             plant: $("#plant").val(),
@@ -212,28 +210,29 @@ $(document).ready(function () {
             plant_name: $("#plantName").val(),
             status_id: $("#status").val()
         };
-
+    
         $.ajax({
-            url: "../../pages/transfer/ctrl-transfer/save-transfer.php", // UPDATED URL
+            url: "../../pages/transfer/ctrl-transfer/save-transfer.php",
             type: "POST",
             data: JSON.stringify(data),
             contentType: "application/json",
             dataType: "json",
             success: function (response) {
                 if (response.status === 'success') {
-                    alert(response.message);
-                    window.location.href = "transfer-request-form.php"; // UPDATED URL
+                    toastr.success(response.message); // Show success notification
+                    window.location.href = "transfer-request-form.php"; // Redirect on success
                 } else {
                     console.error("Error saving transfer:", response.message);
-                    alert("Error saving transfer: " + response.message + ". Check console for details.");
+                    toastr.error("Error saving transfer: " + response.message + ". Check console for details."); // Show error notification
                 }
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.error("Error saving transfer:", textStatus, errorThrown, jqXHR.responseText);
-                alert("Error saving transfer. Check console for details.");
+                toastr.error("Error saving transfer. Check console for details."); // Show error notification
             }
         });
-    });
+    });        
+    
     
     $("#company-from").change(function () { //Updated selector to company-from
         var companyID = $(this).val();
@@ -392,24 +391,17 @@ $(document).ready(function () {
                 data: { transfer_id: transferID, action: action },
                 dataType: 'json',
                 success: function (response) {
-                    console.log('Server Response:', response);
-
                     if (response.status === 'success') {
-                        alert(response.message);
+                        toastr.success(response.message); // Show success notification
                         location.reload();
                     } else {
-                        console.error('Server Error:', response.message);
-                        alert("Error: " + response.message);
+                        toastr.error("Error: " + response.message); // Show error notification
                     }
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
-                    console.error('AJAX Error:', textStatus, errorThrown, jqXHR.responseText);
-                    alert("An unexpected error occurred. Check console for details.");
-                },
-                complete: function () {
-                    $button.prop('disabled', false);
+                    toastr.error("An unexpected error occurred. Check console for details."); // Show error notification
                 }
-            });
+            });            
         });
     });
 });

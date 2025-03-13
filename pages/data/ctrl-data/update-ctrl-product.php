@@ -1,12 +1,13 @@
 <?php
-include '../../../includes/conn.php';
+include '../../../includes/conn.php'; // Include database connection
+session_start(); // Start session to handle Toastr notifications
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Capture data from the form
-    $product_id = $_POST['product_id']; // Make sure this is passed from the form
-    $product_code = $_POST['code'];
-    $product_brand = $_POST['brand'];
-    $description = $_POST['description'];
+    $product_id = trim($_POST['product_id']);
+    $product_code = trim($_POST['code']);
+    $product_brand = trim($_POST['brand']);
+    $description = trim($_POST['description']);
 
     // Prepare SQL query using prepared statements
     $query = "UPDATE products 
@@ -14,20 +15,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                   brand = ?, 
                   description = ?
               WHERE product_id = ?";
-
     $stmt = $conn->prepare($query);
     $stmt->bind_param("sssi", $product_code, $product_brand, $description, $product_id);
 
-    // Execute query
+    // Execute query and handle feedback
     if ($stmt->execute()) {
-        header("Location: ../product-list.php"); // Adjust path if necessary
-        exit();
+        $_SESSION['success'] = "Product updated successfully!";
     } else {
-        echo "Error: " . $stmt->error;
+        $_SESSION['error'] = "Error: Unable to update product. " . $stmt->error;
     }
 
     // Close statement and connection
     $stmt->close();
     $conn->close();
+
+    // Redirect to the product list page with feedback
+    header("Location: ../product-list.php");
+    exit(); // Ensure no further code is executed
 }
 ?>

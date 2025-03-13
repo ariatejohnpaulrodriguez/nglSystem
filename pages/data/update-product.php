@@ -57,21 +57,25 @@ include '../../includes/session.php';
 
                                         <label for="product_id">Product ID</label>
                                         <input class="form-control" type="text" id="product_id" name="product_id"
-                                            value="<?php echo $product['product_id']; ?>" required readonly>
+                                            value="<?php echo htmlspecialchars($product['product_id']); ?>" required
+                                            readonly>
                                         <br>
+
                                         <label for="code">Product Code</label>
-                                        <input class="form-control" type="text" id="code" name="product_code"
-                                            value="<?php echo $product['code']; ?>" required>
+                                        <input class="form-control" type="text" id="code" name="code"
+                                            value="<?php echo htmlspecialchars($product['code']); ?>" required>
                                         <br>
+
                                         <label for="brand">Product Brand</label>
-                                        <input class="form-control" type="text" id="brand" name="product_brand"
-                                            value="<?php echo $product['brand']; ?>" required>
+                                        <input class="form-control" type="text" id="brand" name="brand"
+                                            value="<?php echo htmlspecialchars($product['brand']); ?>" required>
                                         <br>
+
                                         <label for="description">Description</label>
-                                        <input class="form-control" type="text" id="description"
-                                            name="product_description"
-                                            value="<?php echo $product['description']; ?>" required>
+                                        <input class="form-control" type="text" id="description" name="description"
+                                            value="<?php echo htmlspecialchars($product['description']); ?>" required>
                                         <br>
+
                                     </div>
                                     <div class="card-footer">
                                         <button type="submit" class="btn btn-primary">Update</button>
@@ -88,6 +92,7 @@ include '../../includes/session.php';
         <!-- /.content-wrapper -->
     </div><!-- /.wrapper -->
 
-  <?php include '../../includes/script.php'; ?>
+    <?php include '../../includes/script.php'; ?>
 </body>
+
 </html>

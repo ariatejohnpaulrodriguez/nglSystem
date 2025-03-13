@@ -1,16 +1,17 @@
 <?php
-include '../../../includes/conn.php';
+include '../../../includes/conn.php'; // Include database connection
+session_start(); // Start session to handle Toastr notifications
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Capture data from the form
     $company_id = $_POST['company_id'];
-    $name = $_POST['companyName'];
-    $address = $_POST['companyAddress'];
-    $phoneNumber = $_POST['companyPhoneNumber'];
-    $email = $_POST['companyEmail'];
-    $plant = $_POST['companyPlant'];
-    $plant_name = $_POST['companyPlantname'];
-    $attention = $_POST['companyAttention'];
+    $name = trim($_POST['companyName']);
+    $address = trim($_POST['companyAddress']);
+    $phoneNumber = trim($_POST['companyPhoneNumber']);
+    $email = trim($_POST['companyEmail']);
+    $plant = trim($_POST['companyPlant']);
+    $plant_name = trim($_POST['companyPlantname']);
+    $attention = trim($_POST['companyAttention']);
 
     // Fetch the current image path before updating
     $query = "SELECT image FROM companies WHERE company_id = ?";
@@ -44,12 +45,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Validate image
         $check = getimagesize($_FILES["image"]["tmp_name"]);
         if ($check === false) {
-            echo "File is not an image.";
+            $_SESSION['error'] = "File is not an image.";
+            header("Location: ../company-list.php");
             exit();
         }
 
         if (!in_array($imageFileType, ['jpg', 'jpeg', 'png', 'gif'])) {
-            echo "Only JPG, JPEG, PNG & GIF files are allowed.";
+            $_SESSION['error'] = "Only JPG, JPEG, PNG & GIF files are allowed.";
+            header("Location: ../company-list.php");
             exit();
         }
 
@@ -66,7 +69,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $params[] = $image_path;
             $types .= "s"; // Add one more string parameter
         } else {
-            echo "Error uploading file.";
+            $_SESSION['error'] = "Error uploading file.";
+            header("Location: ../company-list.php");
             exit();
         }
     }
@@ -80,16 +84,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt = $conn->prepare($query);
     $stmt->bind_param($types, ...$params);
 
-    // Execute query
+    // Execute query and handle feedback
     if ($stmt->execute()) {
-        header("Location: ../company-list.php"); // Redirect after successful update
-        exit();
+        $_SESSION['success'] = "Company updated successfully!";
     } else {
-        echo "Error: " . $stmt->error;
+        $_SESSION['error'] = "Error: Unable to update company. " . $stmt->error;
     }
 
     // Close statement and connection
     $stmt->close();
     $conn->close();
+
+    // Redirect to the company list page with feedback
+    header("Location: ../company-list.php");
+    exit();
 }
 ?>

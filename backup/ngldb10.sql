@@ -4,13 +4,13 @@ Navicat MySQL Data Transfer
 Source Server         : localhost_3308
 Source Server Version : 50505
 Source Host           : localhost:3308
-Source Database       : ngldb6
+Source Database       : ngldb8
 
 Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2025-03-03 11:07:38
+Date: 2025-03-13 19:50:03
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -33,7 +33,7 @@ PRIMARY KEY (`company_id`)
 )
 ENGINE=InnoDB
 DEFAULT CHARACTER SET=utf8mb4 COLLATE=utf8mb4_general_ci
-AUTO_INCREMENT=9
+AUTO_INCREMENT=11
 
 ;
 
@@ -41,7 +41,7 @@ AUTO_INCREMENT=9
 -- Records of companies
 -- ----------------------------
 BEGIN;
-INSERT INTO `companies` VALUES ('1', 'Admin, Inc', '795 Folsom Ave, Suite 600\r\nSan Francisco, CA 94107', '(804) 123-5432', 'info@almasaeedstudio.com', 'plant1', 'asdwd', 'attention1', null), ('3', 'New Generation Link', '795 Folsom Ave, Suite 600\r\nSan Francisco, CA 94107', '(02) 8546 1184', 'newgenlink.com.ph', 'plant3', 'New Gen Plant 3', 'attention3', null), ('5', 'PLDT Inc.', '795 Folsom Ave, Suite 600\r\nSan Francisco, CA 94107sssssssssssss', '(804) 123-5432', 'info@almasaeedstudio.com', 'plant5', 'PLDT plant', 'plant5', null), ('6', 'Amkor Technology Philippines', '119 N Science Ave LTI SPEZ Binan Laguna', '09178321932', '', 'Plant6', 'Amkor Plant', 'plant6', null), ('7', 'Trends and Technologies Inc', '6F Trafalgar Plaza, 105 HV Dela Costa St 1727 Salcedo Village, Makati City Philippines', '09178321932', '', 'P3', 'Pldt', 'Michael John Sumalinog', null), ('8', 'Nico RObin', 'Ohara', '09123456789', 'nico@gmail.com', 'Plant Nico', 'Nico Plant', 'Luffy', 'dist/img/companies/1740644959_Amkor_Technology-Logo.wine.png');
+INSERT INTO `companies` VALUES ('1', 'Admin, Inc', '795 Folsom Ave, Suite 600\r\nSan Francisco, CA 94107', '(804) 123-5432', 'info@almasaeedstudio.com', 'plant1', 'asdwd', 'attention1', 'dist/img/companies/1740975524_520.jpg'), ('3', 'New Generation Link', '795 Folsom Ave, Suite 600\r\nSan Francisco, CA 94107', '(02) 8546 1184', 'newgenlink.com.ph', 'plant3', 'New Gen Plant 3', 'attention3', 'dist/img/companies/1740988756_photo_6210951326733550250_m.jpg'), ('5', 'PLDT Inc.', '795 Folsom Ave, Suite 600\r\nSan Francisco, CA 94107sssssssssssss', '(804) 123-5432', 'info@almasaeedstudio.com', 'plant5', 'PLDT plant', 'plant5', 'dist/img/companies/1740975617_pldt-logo.png'), ('6', 'Amkor Technology Philippines', '119 N Science Ave LTI SPEZ Binan Laguna', '09178321932', '', 'Plant6', 'Amkor Plant', 'plant6', 'dist/img/companies/1741409720_resizeAmkor.png'), ('7', 'Trends and Technologies Inc', '6F Trafalgar Plaza, 105 HV Dela Costa St 1727 Salcedo Village, Makati City Philippines', '09178321932', '', 'P3', 'Pldt', 'Michael John Sumalinog', 'dist/img/companies/1740975674_trends_and_technologies_inc.png'), ('8', 'Nico RObin', 'Ohara', '09123456789', 'nico@gmail.com', 'Plant Nico', 'Nico Plant', 'Luffy', 'dist/img/companies/1740644959_Amkor_Technology-Logo.wine.png');
 COMMIT;
 
 -- ----------------------------
@@ -55,16 +55,14 @@ PRIMARY KEY (`date_id`)
 )
 ENGINE=InnoDB
 DEFAULT CHARACTER SET=utf8mb4 COLLATE=utf8mb4_general_ci
-AUTO_INCREMENT=9
+AUTO_INCREMENT=1
 
 ;
 
 -- ----------------------------
 -- Records of dates
 -- ----------------------------
-BEGIN;
-INSERT INTO `dates` VALUES ('1', '2025-02-28'), ('2', '2025-02-28'), ('3', '2025-03-01'), ('4', '2025-03-01'), ('5', '2025-03-01'), ('6', '2025-03-02'), ('7', '2025-03-03'), ('8', '2025-03-04');
-COMMIT;
+TRUNCATE TABLE `dates`;
 
 -- ----------------------------
 -- Table structure for `delivery_receipts`
@@ -78,16 +76,14 @@ UNIQUE INDEX `dr_number` (`dr_number`) USING BTREE
 )
 ENGINE=InnoDB
 DEFAULT CHARACTER SET=utf8mb4 COLLATE=utf8mb4_general_ci
-AUTO_INCREMENT=5
+AUTO_INCREMENT=1
 
 ;
 
 -- ----------------------------
 -- Records of delivery_receipts
 -- ----------------------------
-BEGIN;
-INSERT INTO `delivery_receipts` VALUES ('1', '1'), ('4', '12331'), ('2', '3'), ('3', '5');
-COMMIT;
+TRUNCATE TABLE `delivery_receipts`;
 
 -- ----------------------------
 -- Table structure for `employees`
@@ -114,7 +110,7 @@ INDEX `statuses.employees` (`status_id`) USING BTREE
 )
 ENGINE=InnoDB
 DEFAULT CHARACTER SET=utf8mb4 COLLATE=utf8mb4_general_ci
-AUTO_INCREMENT=5
+AUTO_INCREMENT=9
 
 ;
 
@@ -122,7 +118,7 @@ AUTO_INCREMENT=5
 -- Records of employees
 -- ----------------------------
 BEGIN;
-INSERT INTO `employees` VALUES ('3', '7', 'Trafalgar', 'Law', 'law@gmail.com', '09123456789', '1', '2', 'president', '$2y$10$M337xoC34uHL0MxxKpqyCOO.FbK5c0jnKFJ0Z1LPMXCOpgn7/STpe'), ('4', '9', 'Israel', 'New Gen', 'israel@gmail.com', '09123456789', '1', '2', 'warehouse', '$2y$10$ZQxKc0wEMtikW2C9.SN5g..h8/hZrqhaBbemVX4djUN4oFvzRKS9G');
+INSERT INTO `employees` VALUES ('3', '7', 'Trafalgar', 'Law', 'law@gmail.com', '09123456789', '1', '2', 'president', '$2y$10$M337xoC34uHL0MxxKpqyCOO.FbK5c0jnKFJ0Z1LPMXCOpgn7/STpe'), ('4', '9', 'Israel', 'New Gen', 'israel@gmail.com', '09123456789', '1', '2', 'warehouse', '$2y$10$ZQxKc0wEMtikW2C9.SN5g..h8/hZrqhaBbemVX4djUN4oFvzRKS9G'), ('5', '12', 'John Paul', 'Ariate', 'pongjep1@gmail.com', '09123456789', '1', '2', 'programmer', '$2y$10$uFUd9q.HA/m7aKkT3PGj6.bEuMGfYUWW3S/WOIdoZwlIf8V9UYypS'), ('6', '13', 'Firstname', 'Lastname', 'saNGL@gmail.com', '09123456789', '1', '2', 'sa', '$2y$10$KKbYgQoNpDVwi1Jobr.2cefmujVcPC32XYuq47ntqggcVXzEnn0cK'), ('7', '14', 'Firstname', 'Lastname', 'admin123@gmail.com', '09123456789', '2', '2', 'admin', '$2y$10$Oe779G3Us8nbj1.rADsMvuKtH2xsxfqK8oBem6GRAjv5Jfxl8c1be');
 COMMIT;
 
 -- ----------------------------
@@ -136,7 +132,7 @@ PRIMARY KEY (`gender_id`)
 )
 ENGINE=InnoDB
 DEFAULT CHARACTER SET=utf8mb4 COLLATE=utf8mb4_general_ci
-AUTO_INCREMENT=4
+AUTO_INCREMENT=9
 
 ;
 
@@ -166,16 +162,14 @@ INDEX `product.invoice_products` (`product_id`) USING BTREE
 )
 ENGINE=InnoDB
 DEFAULT CHARACTER SET=utf8mb4 COLLATE=utf8mb4_general_ci
-AUTO_INCREMENT=4
+AUTO_INCREMENT=1
 
 ;
 
 -- ----------------------------
 -- Records of invoice_products
 -- ----------------------------
-BEGIN;
-INSERT INTO `invoice_products` VALUES ('1', '1', '1', '59', 'CJ688TGBL', 'PAN-NET', 'TX6 PLUS JACK MODULE WITH ENHANCED GIGA TX TERMINATION STYLE T567 A/B WIRING, RJ45 PATENT #RE38, 519 BLACK'), ('2', '2', '13', '1', 'CJ5E88TGBU', 'PANE-NET', 'TX6 PLUS JACK MODULE WITH ENHANCED GIGA TX TERMINATION STYLE T567 A/B WIRING, RJ45 PATENT #RE38, BLUE'), ('3', '3', '1', '20', 'CJ688TGBL', 'PAN-NET', 'TX6 PLUS JACK MODULE WITH ENHANCED GIGA TX TERMINATION STYLE T567 A/B WIRING, RJ45 PATENT #RE38, 519 BLACK');
-COMMIT;
+TRUNCATE TABLE `invoice_products`;
 
 -- ----------------------------
 -- Table structure for `invoices`
@@ -208,15 +202,35 @@ INDEX `companiesTo.invoices` (`to_company_id`) USING BTREE
 )
 ENGINE=InnoDB
 DEFAULT CHARACTER SET=utf8mb4 COLLATE=utf8mb4_general_ci
-AUTO_INCREMENT=4
+AUTO_INCREMENT=1
 
 ;
 
 -- ----------------------------
 -- Records of invoices
 -- ----------------------------
+TRUNCATE TABLE `invoices`;
+
+-- ----------------------------
+-- Table structure for `permissions`
+-- ----------------------------
+DROP TABLE IF EXISTS `permissions`;
+CREATE TABLE `permissions` (
+`permission_id`  int(11) NOT NULL AUTO_INCREMENT ,
+`permission_name`  varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL ,
+PRIMARY KEY (`permission_id`)
+)
+ENGINE=InnoDB
+DEFAULT CHARACTER SET=utf8mb4 COLLATE=utf8mb4_general_ci
+AUTO_INCREMENT=18
+
+;
+
+-- ----------------------------
+-- Records of permissions
+-- ----------------------------
 BEGIN;
-INSERT INTO `invoices` VALUES ('1', '5', '3', '1', '2', '1', '1', '1'), ('2', '5', '6', '3', '4', '2', '2', '2'), ('3', '7', '5', '7', '8', '4', '4', '4');
+INSERT INTO `permissions` VALUES ('1', 'Create Roles'), ('2', 'Roles'), ('3', 'Create Gender'), ('4', 'Gender'), ('5', 'Create Status'), ('6', 'Status'), ('7', 'Create Employee'), ('8', 'Employee'), ('9', 'Register Product'), ('10', 'Product'), ('11', 'Transaction Status'), ('12', 'Register Company'), ('13', 'Company'), ('14', 'Register Permission'), ('15', 'Manage Permission'), ('16', 'Transaction Form'), ('17', 'Transaction History');
 COMMIT;
 
 -- ----------------------------
@@ -228,22 +242,18 @@ CREATE TABLE `products` (
 `code`  varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL ,
 `brand`  varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL ,
 `description`  varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL ,
-`unit_id`  int(11) NOT NULL ,
-PRIMARY KEY (`product_id`),
-FOREIGN KEY (`unit_id`) REFERENCES `units` (`unit_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+PRIMARY KEY (`product_id`)
 )
 ENGINE=InnoDB
 DEFAULT CHARACTER SET=utf8mb4 COLLATE=utf8mb4_general_ci
-AUTO_INCREMENT=33
+AUTO_INCREMENT=1
 
 ;
 
 -- ----------------------------
 -- Records of products
 -- ----------------------------
-BEGIN;
-INSERT INTO `products` VALUES ('1', 'CJ688TGBL', 'PAN-NET', 'TX6 PLUS JACK MODULE WITH ENHANCED GIGA TX TERMINATION STYLE T567 A/B WIRING, RJ45 PATENT #RE38, 519 BLACK'), ('4', 'C688TGWH', 'PAN-NET', 'TX6 PLUS JACK MODULE WITH ENHANCED GIGA TX TERMINATION STYLE T567 A/B WIRING, RJ45 PATENT #RE38, 519 WHITE'), ('5', 'CJ688TPYL', 'PAN-NET', 'TX6 PLUS JACK MODULE WITH ENHANCED GIGA TX TERMINATION STYLE T567 A/B WIRING, RJ45 PATENT #RE38, 519 YELLOW'), ('6', 'CJ688TPYL', 'PAN-NET', 'TX6 PLUS JACK MODULE WITH ENHANCED GIGA TX TERMINATION STYLE T567 A/B WIRING, RJ45 PATENT #RE38, 519 YELLOW'), ('7', 'CJ688TPBU', 'PAN-NET', 'TX6 PLUS JACK MODULE WITH ENHANCED GIGA TX TERMINATION STYLE T567 A/B WIRING, RJ45 PATENT #RE38, 519 BLUE'), ('8', 'CJ688TGBU', 'PAN-NET', 'TX6 PLUS JACK MODULE WITH ENHANCED TX TERMINATION STYLE T567 A/B WIRING, RJ45 PATENT #RE38, 519 BLUE'), ('9', 'CJ688TGRD', 'PAN-NET', 'TX6 PLUS JACK MODULE WITH ENHANCED GIGA TX TERMINATION STYLE T567 A/B WIRING, RJ45 PATENT #RE38, RED'), ('10', 'CJ688TGIW', 'PAN-NET', 'TX6 PLUS JACK MODULE WITH ENHANCED GIGA TX TERMINATION STYLE T567 A/B WIRING, RJ45 PATENT #RE38, WHITE'), ('11', 'CJ688TPRD', 'PAN-NET', 'TX6 PLUS JACK MODULE WITH ENHANCED GIGA TX TERMINATION STYLE T567 A/B WIRING, RJ45 PATENT #RE38, RED'), ('12', 'CJ688TPIU', 'PAN-NET', 'TX6 PLUS JACK MODULE WITH ENHANCED GIGA TX TERMINATION STYLE T567 A/B WIRING, RJ45 PATENT #RE38, WHITE'), ('13', 'CJ5E88TGBU', 'PANE-NET', 'TX6 PLUS JACK MODULE WITH ENHANCED GIGA TX TERMINATION STYLE T567 A/B WIRING, RJ45 PATENT #RE38, BLUE'), ('14', 'CFP1LW', 'PAN-NET', 'MINI - COM FACEPLATE CLASSIC SERIES SINGLE GANG 1 MODULE SPACE'), ('15', 'CFP2LW', 'PAN-NET', 'MINI - COM FACEPLATE CLASSIC SERIES SINGLE GANG 2 MODULE SPACE'), ('16', 'CFP4LW', 'PAN-NET', 'MINI - COM FACEPLATE CLASSIC SERIES GANG 4 MODULE SPACE'), ('17', 'CFPE2WHY', 'PAN-NET', 'MINI - COM FACEPLATE C EXECUTIVE SERIES SINGLE GANG 2 MODULE SPACE'), ('18', 'CFPE6WHY', 'PAN-NET', 'MINI - COM FACEPLATE EXECUTIVE SERIES SINGLE GANG 8 MODULE SPACE'), ('19', 'FX1BN1NNNSNM001', 'PANDUIT', 'OM3 MULTIMODE PATCH CORD - 1 FIBER SIMPLEX LC TO PIGTAIL - STD 1L 900M BUFFERED FIBER'), ('20', 'UTP28C43MBU', 'PAN-NET', 'CAT5E PERFORMANCE UTP BATCH CORD T568A, CM/LSZH, 28 AWG STRANDED BLUE'), ('21', 'UTP28CHZMRD', 'PAN-NET', 'CAT5E PERFORMANCE UTP PATCH CORD T568A, CM/LSZH, 28AWG STRANDED RED'), ('22', 'UTPSP3MBUY', 'PAN-NET', 'TX6 PLUS CABLE UTP PATCH CORD T568, CM, 24 AWG STRANDED BLUE'), ('23', 'CPPLZ4WMBLY', 'PAN-NET', 'MINI - COM MODULAR PATCH PANEL SUPPLIED WITH 6 CFFPL TYPE SWAP - IN FACEPLATE W/LABELS'), ('24', 'CFAPPBL1A', 'PAN-NET', 'FIBER ADAPTER PATCH PANEL ANGLED 1 RV FOR FMT1 A'), ('25', '1-1375055-3', 'COMMSCOPE', 'NET CONNECT JACK, SL110, RJ45 CAT6, A WHITE'), ('26', '1375055-1', 'COMMSCOPE', 'NET CONNECT JACK, SL110, RJ45, CAT6, L. ALD'), ('27', '1-1375191-1', 'COMMSCOPE', 'SL SERIES RJ45 JACK, CAT5E 568 A/B, A. WHITE'), ('28', '2-1427030-2', 'COMMSCOPE', 'FACEPLATE KIT SHUTTER, 2P, LABEL'), ('29', '2-1427030-1', 'COMMSCOPE', 'FACEPLATE KIT, SHUTTER, 1P, LABEL'), ('30', '272368-1', 'COMMSCOPE', 'FACEPLATE KIT, SHUTTER, 1P'), ('31', '2111011-1', 'COMMSCOPE', 'FACEPLATE, SINGLE GANG 4 PORT LT. ALMOND'), ('32', '1375055-2', 'COMMSCOPE', 'NET CONNECT JACK, SL110, RJ45, CAT6, BLACK');
-COMMIT;
+TRUNCATE TABLE `products`;
 
 -- ----------------------------
 -- Table structure for `purchase_orders`
@@ -257,16 +267,14 @@ UNIQUE INDEX `po_number` (`po_number`) USING BTREE
 )
 ENGINE=InnoDB
 DEFAULT CHARACTER SET=utf8mb4 COLLATE=utf8mb4_general_ci
-AUTO_INCREMENT=5
+AUTO_INCREMENT=1
 
 ;
 
 -- ----------------------------
 -- Records of purchase_orders
 -- ----------------------------
-BEGIN;
-INSERT INTO `purchase_orders` VALUES ('1', '1'), ('2', '3'), ('4', '31231'), ('3', '6');
-COMMIT;
+TRUNCATE TABLE `purchase_orders`;
 
 -- ----------------------------
 -- Table structure for `reference_pos`
@@ -280,15 +288,40 @@ UNIQUE INDEX `reference_po` (`reference_po`) USING BTREE
 )
 ENGINE=InnoDB
 DEFAULT CHARACTER SET=utf8mb4 COLLATE=utf8mb4_general_ci
-AUTO_INCREMENT=5
+AUTO_INCREMENT=1
 
 ;
 
 -- ----------------------------
 -- Records of reference_pos
 -- ----------------------------
+TRUNCATE TABLE `reference_pos`;
+
+-- ----------------------------
+-- Table structure for `rolepermissions`
+-- ----------------------------
+DROP TABLE IF EXISTS `rolepermissions`;
+CREATE TABLE `rolepermissions` (
+`role_permission_id`  int(11) NOT NULL AUTO_INCREMENT ,
+`role_id`  int(11) NOT NULL ,
+`permission_id`  int(11) NOT NULL ,
+PRIMARY KEY (`role_permission_id`),
+FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`permission_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+FOREIGN KEY (`role_id`) REFERENCES `roles` (`role_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+INDEX `roles.rolePermission` (`role_id`) USING BTREE ,
+INDEX `permissions.rolePermissions` (`permission_id`) USING BTREE 
+)
+ENGINE=InnoDB
+DEFAULT CHARACTER SET=utf8mb4 COLLATE=utf8mb4_general_ci
+AUTO_INCREMENT=49
+
+;
+
+-- ----------------------------
+-- Records of rolepermissions
+-- ----------------------------
 BEGIN;
-INSERT INTO `reference_pos` VALUES ('1', '1'), ('2', '3'), ('4', '31231'), ('3', '37');
+INSERT INTO `rolepermissions` VALUES ('22', '9', '16'), ('23', '9', '17'), ('25', '13', '1'), ('26', '13', '2'), ('27', '13', '3'), ('28', '13', '4'), ('29', '13', '5'), ('30', '13', '6'), ('31', '13', '7'), ('32', '13', '8'), ('33', '13', '9'), ('34', '13', '10'), ('35', '13', '11'), ('36', '13', '12'), ('37', '13', '13'), ('38', '13', '14'), ('39', '13', '15'), ('40', '13', '16'), ('41', '13', '17'), ('42', '14', '16'), ('43', '14', '17');
 COMMIT;
 
 -- ----------------------------
@@ -302,7 +335,7 @@ PRIMARY KEY (`role_id`)
 )
 ENGINE=InnoDB
 DEFAULT CHARACTER SET=utf8mb4 COLLATE=utf8mb4_general_ci
-AUTO_INCREMENT=13
+AUTO_INCREMENT=25
 
 ;
 
@@ -310,7 +343,7 @@ AUTO_INCREMENT=13
 -- Records of roles
 -- ----------------------------
 BEGIN;
-INSERT INTO `roles` VALUES ('3', 'Vice President'), ('4', 'Secretary'), ('6', 'Clerk'), ('7', 'President'), ('8', 'Master Key'), ('9', 'Warehouse Man'), ('10', 'Manager'), ('12', 'Programmer');
+INSERT INTO `roles` VALUES ('3', 'Vice President'), ('4', 'Secretary'), ('6', 'Clerk'), ('7', 'President'), ('8', 'Master Key'), ('9', 'Warehouse Man'), ('10', 'Manager'), ('12', 'Programmer'), ('13', 'Super Admin'), ('14', 'Admin');
 COMMIT;
 
 -- ----------------------------
@@ -324,7 +357,7 @@ PRIMARY KEY (`status_id`)
 )
 ENGINE=InnoDB
 DEFAULT CHARACTER SET=utf8mb4 COLLATE=utf8mb4_general_ci
-AUTO_INCREMENT=8
+AUTO_INCREMENT=10
 
 ;
 
@@ -349,16 +382,14 @@ INDEX `products.stocks` (`product_id`) USING BTREE
 )
 ENGINE=InnoDB
 DEFAULT CHARACTER SET=utf8mb4 COLLATE=utf8mb4_general_ci
-AUTO_INCREMENT=3
+AUTO_INCREMENT=1
 
 ;
 
 -- ----------------------------
 -- Records of stocks
 -- ----------------------------
-BEGIN;
-INSERT INTO `stocks` VALUES ('1', '1', '30'), ('2', '13', '1');
-COMMIT;
+TRUNCATE TABLE `stocks`;
 
 -- ----------------------------
 -- Table structure for `transfer_products`
@@ -380,16 +411,14 @@ INDEX `products.transfer_products` (`product_id`) USING BTREE
 )
 ENGINE=InnoDB
 DEFAULT CHARACTER SET=utf8mb4 COLLATE=utf8mb4_general_ci
-AUTO_INCREMENT=2
+AUTO_INCREMENT=1
 
 ;
 
 -- ----------------------------
 -- Records of transfer_products
 -- ----------------------------
-BEGIN;
-INSERT INTO `transfer_products` VALUES ('1', '1', '1', '49', 'PAN-NET', 'CJ688TGBL', 'TX6 PLUS JACK MODULE WITH ENHANCED GIGA TX TERMINATION STYLE T567 A/B WIRING, RJ45 PATENT #RE38, 519 BLACK');
-COMMIT;
+TRUNCATE TABLE `transfer_products`;
 
 -- ----------------------------
 -- Table structure for `transfers`
@@ -419,16 +448,14 @@ INDEX `deliveryDate.transfers` (`delivery_date`) USING BTREE
 )
 ENGINE=InnoDB
 DEFAULT CHARACTER SET=utf8mb4 COLLATE=utf8mb4_general_ci
-AUTO_INCREMENT=2
+AUTO_INCREMENT=1
 
 ;
 
 -- ----------------------------
 -- Records of transfers
 -- ----------------------------
-BEGIN;
-INSERT INTO `transfers` VALUES ('1', '6', '7', '5', '6', '3', '3', '3', '6');
-COMMIT;
+TRUNCATE TABLE `transfers`;
 
 -- ----------------------------
 -- Table structure for `units`
@@ -438,7 +465,7 @@ CREATE TABLE `units` (
 `unit_id`  int(11) NOT NULL AUTO_INCREMENT ,
 `unit_name`  varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL ,
 PRIMARY KEY (`unit_id`),
-INDEX `units.products` (`unit_name`) USING BTREE 
+UNIQUE INDEX `unique_unit_name` (`unit_name`) USING BTREE 
 )
 ENGINE=InnoDB
 DEFAULT CHARACTER SET=utf8mb4 COLLATE=utf8mb4_general_ci
@@ -447,86 +474,97 @@ AUTO_INCREMENT=1
 ;
 
 -- ----------------------------
--- Records of stocks
+-- Records of units
 -- ----------------------------
-TRUNCATE TABLE `stocks`;
+BEGIN;
+COMMIT;
 
 -- ----------------------------
 -- Auto increment value for `companies`
 -- ----------------------------
-ALTER TABLE `companies` AUTO_INCREMENT=9;
+ALTER TABLE `companies` AUTO_INCREMENT=11;
 
 -- ----------------------------
 -- Auto increment value for `dates`
 -- ----------------------------
-ALTER TABLE `dates` AUTO_INCREMENT=9;
+ALTER TABLE `dates` AUTO_INCREMENT=1;
 
 -- ----------------------------
 -- Auto increment value for `delivery_receipts`
 -- ----------------------------
-ALTER TABLE `delivery_receipts` AUTO_INCREMENT=5;
+ALTER TABLE `delivery_receipts` AUTO_INCREMENT=1;
 
 -- ----------------------------
 -- Auto increment value for `employees`
 -- ----------------------------
-ALTER TABLE `employees` AUTO_INCREMENT=5;
+ALTER TABLE `employees` AUTO_INCREMENT=9;
 
 -- ----------------------------
 -- Auto increment value for `genders`
 -- ----------------------------
-ALTER TABLE `genders` AUTO_INCREMENT=4;
+ALTER TABLE `genders` AUTO_INCREMENT=9;
 
 -- ----------------------------
 -- Auto increment value for `invoice_products`
 -- ----------------------------
-ALTER TABLE `invoice_products` AUTO_INCREMENT=4;
+ALTER TABLE `invoice_products` AUTO_INCREMENT=1;
 
 -- ----------------------------
 -- Auto increment value for `invoices`
 -- ----------------------------
-ALTER TABLE `invoices` AUTO_INCREMENT=4;
+ALTER TABLE `invoices` AUTO_INCREMENT=1;
+
+-- ----------------------------
+-- Auto increment value for `permissions`
+-- ----------------------------
+ALTER TABLE `permissions` AUTO_INCREMENT=18;
 
 -- ----------------------------
 -- Auto increment value for `products`
 -- ----------------------------
-ALTER TABLE `products` AUTO_INCREMENT=33;
+ALTER TABLE `products` AUTO_INCREMENT=1;
 
 -- ----------------------------
 -- Auto increment value for `purchase_orders`
 -- ----------------------------
-ALTER TABLE `purchase_orders` AUTO_INCREMENT=5;
+ALTER TABLE `purchase_orders` AUTO_INCREMENT=1;
 
 -- ----------------------------
 -- Auto increment value for `reference_pos`
 -- ----------------------------
-ALTER TABLE `reference_pos` AUTO_INCREMENT=5;
+ALTER TABLE `reference_pos` AUTO_INCREMENT=1;
+
+-- ----------------------------
+-- Auto increment value for `rolepermissions`
+-- ----------------------------
+ALTER TABLE `rolepermissions` AUTO_INCREMENT=49;
 
 -- ----------------------------
 -- Auto increment value for `roles`
 -- ----------------------------
-ALTER TABLE `roles` AUTO_INCREMENT=13;
+ALTER TABLE `roles` AUTO_INCREMENT=25;
 
 -- ----------------------------
 -- Auto increment value for `statuses`
 -- ----------------------------
-ALTER TABLE `statuses` AUTO_INCREMENT=8;
+ALTER TABLE `statuses` AUTO_INCREMENT=10;
 
 -- ----------------------------
 -- Auto increment value for `stocks`
 -- ----------------------------
-ALTER TABLE `stocks` AUTO_INCREMENT=3;
+ALTER TABLE `stocks` AUTO_INCREMENT=1;
 
 -- ----------------------------
 -- Auto increment value for `transfer_products`
 -- ----------------------------
-ALTER TABLE `transfer_products` AUTO_INCREMENT=2;
+ALTER TABLE `transfer_products` AUTO_INCREMENT=1;
 
 -- ----------------------------
 -- Auto increment value for `transfers`
 -- ----------------------------
-ALTER TABLE `transfers` AUTO_INCREMENT=2;
+ALTER TABLE `transfers` AUTO_INCREMENT=1;
 
 -- ----------------------------
--- Table structure for `units`
+-- Auto increment value for `units`
 -- ----------------------------
 ALTER TABLE `units` AUTO_INCREMENT=1;

@@ -258,7 +258,6 @@ include '../../includes/session.php';
         <?php include '../../includes/footer.php'; ?>
 
         <?php include '../../includes/script.php'; ?>
-        <script src="../../dist/js/custom-transfer.js"></script>
     </div>
 </body>
 

@@ -66,22 +66,15 @@ include '../../includes/header.php';
                           echo "<td>" . $row["description"] . "</td>";
                           echo "<td>";
 
-                          // Show Edit and Delete buttons only if the user is not a Warehouse Man
-                          if ($userRole != "Warehouse Man") {
-                            echo "<form action='update-product.php' method='post' style='display:inline-block; margin-right:5px;'>";
-                            echo "<input type='hidden' name='product_id' value='" . $row["product_id"] . "'>";
-                            echo "<input type='submit' value='Edit' class='btn btn-primary'>";
-                            echo "</form>";
-                            echo "<form action='ctrl-data/delete-product.php' method='post' style='display:inline-block;' onsubmit='return confirmDelete()'>";
-                            echo "<input type='hidden' name='product_id' value='" . $row["product_id"] . "'>";
-                            echo "<input type='submit' value='Delete' class='btn btn-danger'>";
-                            echo "</form>";
-                          } else {
-                            echo "<form action='#' method='post' style='display:inline-block;'>";
-                            echo "<input type='hidden' name='product_id' value='" . $row["product_id"] . "'>";
-                            echo "<input type='submit' value='View' class='btn btn-primary'>";
-                            echo "</form>";
-                          }
+                          // Remove the condition restricting "Warehouse Man"
+                          echo "<form action='update-product.php' method='post' style='display:inline-block; margin-right:5px;'>";
+                          echo "<input type='hidden' name='product_id' value='" . $row["product_id"] . "'>";
+                          echo "<input type='submit' value='Edit' class='btn btn-primary'>";
+                          echo "</form>";
+                          echo "<form action='ctrl-data/delete-product.php' method='post' style='display:inline-block;' onsubmit='return confirmDelete()'>";
+                          echo "<input type='hidden' name='product_id' value='" . $row["product_id"] . "'>";
+                          echo "<button type='button' class='btn btn-danger' onclick='deleteProductModal(" . $row["product_id"] . ")'>Delete</button>";
+                          echo "</form>";
 
                           echo "</td>";
                           echo "</tr>";
@@ -93,12 +86,6 @@ include '../../includes/header.php';
                       mysqli_close($conn);
                       ?>
                     </tbody>
-                    <!-- JavaScript for Confirmation -->
-                    <script>
-                      function confirmDelete() {
-                        return confirm("Are you sure you want to delete this product?");
-                      }
-                    </script>
                   </table>
                 </div>
                 <!-- /.card-body -->
@@ -112,6 +99,32 @@ include '../../includes/header.php';
         <!-- /.container-fluid -->
       </section>
       <!-- /.content -->
+
+      <!-- Delete Confirmation Modal -->
+      <div class="modal fade" id="productDeleteModal" tabindex="-1" aria-labelledby="deleteModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header bg-danger">
+              <h5 class="modal-title text-white" id="deleteModalLabel">Confirm Deletion</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              Are you sure you want to delete this product? This action cannot be undone.
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              <form id="deleteForm" action="ctrl-data/delete-product.php" method="post">
+                <input type="hidden" name="product_id" id="product_id_to_delete">
+                <button type="submit" class="btn btn-danger">Delete</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
     <!-- /.content-wrapper -->
     <?php include '../../includes/footer.php'; ?>

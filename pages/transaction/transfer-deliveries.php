@@ -119,7 +119,7 @@ include '../../includes/session.php';
                                                             echo "<td>{$delivery_date}</td>";
                                                             echo "<td><span class='badge {$statusClass}'>{$status}</span></td>";
                                                             echo "<td>";
-                                                            if ($_SESSION['role'] == 'President') {
+                                                            if ($_SESSION['role'] == 'Super Admin') {
                                                                 echo "<button class='btn btn-primary btn-sm view-btn-transfer mr-1' data-id='{$transfer_id}' data-status='{$status}' data-toggle='modal' data-target='#viewModal-transfer'>View</button>";
                                                                 echo "<button class='btn btn-success btn-sm approve-btn mr-1' data-id='{$transfer_id}'>Approve</button>";
                                                                 echo "<button class='btn btn-danger btn-sm reject-btn mr-1' data-id='{$transfer_id}'>Reject</button>";
@@ -127,6 +127,7 @@ include '../../includes/session.php';
                                                                 echo "<button class='btn btn-dark btn-sm cancel-btn mr-1' data-id='{$transfer_id}'>Cancelled</button>";
                                                             } else {
                                                                 echo "<button class='btn btn-primary btn-sm view-btn-transfer mr-1' data-id='{$transfer_id}' data-status='{$status}' data-toggle='modal' data-target='#viewModal-transfer'>View</button>";
+                                                                echo "<button class='btn btn-danger btn-sm transfer-pdf-btn mr-1' data-id='{$transfer_id}'>PDF</button>";
                                                             }
                                                             echo "</td>";
                                                             echo "</tr>";

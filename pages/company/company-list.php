@@ -74,7 +74,7 @@ include '../../includes/header.php';
                                                     echo "</form>";
                                                     echo "<form action='ctrl-company/delete-company.php' method='post' style='display:inline-block;' onsubmit='return confirmDelete()'>";
                                                     echo "<input type='hidden' name='company_id' value='" . $row["company_id"] . "'>";
-                                                    echo "<input type='submit' value='Delete' class='btn btn-danger'>";
+                                                    echo "<button type='button' class='btn btn-danger' onclick='deleteCompanyModal(" . $row['company_id'] . ")'>Delete</button>";
                                                     echo "</form>";
                                                     echo "</td>";
                                                     echo "</tr>";
@@ -86,12 +86,6 @@ include '../../includes/header.php';
                                             mysqli_close($conn);
                                             ?>
                                         </tbody>
-                                        <!-- JavaScript for Confirmation -->
-                                        <script>
-                                            function confirmDelete() {
-                                                return confirm("Are you sure you want to delete this company?");
-                                            }
-                                        </script>
                                     </table>
                                 </div>
                                 <!-- /.card-body -->
@@ -105,6 +99,31 @@ include '../../includes/header.php';
                 <!-- /.container-fluid -->
             </section>
             <!-- /.content -->
+
+            <div class="modal fade" id="companyDeleteModal" tabindex="-1" role="dialog"
+                aria-labelledby="deleteModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header bg-danger">
+                            <h5 class="modal-title text-white" id="deleteModalLabel">Confirm Deletion</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Are you sure you want to delete this company? This action cannot be undone.
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <form id="deleteForm" action="ctrl-company/delete-company.php" method="post">
+                                <input type="hidden" name="company_id" id="company_id_to_delete">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
         <!-- /.content-wrapper -->
         <?php include '../../includes/footer.php'; ?>

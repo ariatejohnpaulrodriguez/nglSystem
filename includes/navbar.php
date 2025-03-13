@@ -67,7 +67,7 @@
             <a class="nav-link d-flex align-items-center" data-toggle="dropdown" href="#">
                 <i class="fas fa-bell" style="color: black; font-size: 20px;"></i>
                 <?php if ($notificationCount > 0): ?>
-                <span class="badge badge-danger navbar-badge"><?php echo htmlspecialchars($notificationCount); ?></span>
+                    <span class="badge badge-danger navbar-badge"><?php echo htmlspecialchars($notificationCount); ?></span>
                 <?php endif; ?>
             </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">

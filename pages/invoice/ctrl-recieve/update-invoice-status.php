@@ -1,5 +1,6 @@
 <?php
-include '../../../includes/conn.php';
+include '../../../includes/conn.php'; // Include database connection
+session_start(); // Start session to handle Toastr notifications
 
 header('Content-Type: application/json');
 error_reporting(E_ALL);
@@ -76,7 +77,8 @@ $invoiceID = is_numeric($_POST['invoice_id']) ? intval($_POST['invoice_id']) : n
 $action = $_POST['action'] ?? null;
 
 if (!is_numeric($invoiceID) || !in_array($action, ['Approve', 'Reject', 'Pending', 'Cancelled'])) {
-    echo json_encode(['status' => 'error', 'message' => 'Invalid data received.']);
+    $_SESSION['error'] = "Invalid data received.";
+    echo json_encode(['status' => 'error', 'message' => $_SESSION['error']]);
     exit;
 }
 
@@ -136,14 +138,16 @@ try {
 
     mysqli_commit($conn);
 
-    echo json_encode(['status' => 'success', 'message' => "Invoice updated to $statusName successfully."]);
+    $_SESSION['success'] = "Invoice updated to $statusName successfully.";
+    echo json_encode(['status' => 'success', 'message' => $_SESSION['success']]);
 
 } catch (Exception $e) {
     mysqli_rollback($conn);
 
     error_log("update-invoice-status.php - Error: " . $e->getMessage() . "\nData: " . json_encode($_POST));
 
-    echo json_encode(['status' => 'error', 'message' => 'An error occurred. Please check the logs.']);
+    $_SESSION['error'] = "An error occurred. Please check the logs.";
+    echo json_encode(['status' => 'error', 'message' => $_SESSION['error']]);
 
 } finally {
     mysqli_autocommit($conn, TRUE);

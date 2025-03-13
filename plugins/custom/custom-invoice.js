@@ -146,7 +146,7 @@ $(document).ready(function () {
         });
 
         if (hasErrors) {
-            alert('Please fill in all product details (quantity and code).');
+            toastr.error('Please fill in all product details (quantity and code).');
             return;
         }
 
@@ -186,16 +186,16 @@ $(document).ready(function () {
             dataType: "json",
             success: function (response) {
                 if (response.status === 'success') {
-                    alert(response.message);
+                    toastr.success(response.message);
                     window.location.href = "inv-request-form.php";
                 } else {
                     console.error("Error saving invoice:", response.message);
-                    alert("Error saving invoice: " + response.message + ". Check console for details.");
+                    toastr.error("Error saving invoice: " + response.message + ". Check console for details.");
                 }
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.error("Error saving invoice:", textStatus, errorThrown, jqXHR.responseText);
-                alert("Error saving invoice. Check console for details.");
+                toastr.error("Error saving invoice. Check console for details.");
             }
         });
     });

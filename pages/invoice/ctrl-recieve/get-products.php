@@ -1,6 +1,6 @@
 <?php
-// Include database connection
-include '../../../includes/conn.php';
+include '../../../includes/conn.php'; // Include database connection
+session_start(); // Start session to handle Toastr notifications
 
 // Set response header to JSON
 header('Content-Type: application/json');

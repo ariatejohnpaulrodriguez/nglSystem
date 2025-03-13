@@ -1,5 +1,6 @@
 <?php
 include '../../../includes/conn.php'; // Include database connection
+session_start(); // Start session to handle Toastr notifications
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $role = trim($_POST['role']);
@@ -13,14 +14,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = trim($_POST['password']);
     $confirmPassword = trim($_POST['confirmPassword']);
 
-    // Debugging: Check if correct values are being received
+    // Basic validation
     if (empty($role) || empty($gender) || empty($status)) {
-        die("<script>alert('Invalid role, gender, or status!'); window.history.back();</script>");
+        $_SESSION['error'] = "Invalid role, gender, or status!";
+        header("Location: ../employee.php");
+        exit();
     }
 
     // Check if passwords match
     if ($password !== $confirmPassword) {
-        die("<script>alert('Passwords do not match!'); window.history.back();</script>");
+        $_SESSION['error'] = "Passwords do not match!";
+        header("Location: ../employee.php");
+        exit();
     }
 
     // Hash the password
@@ -33,7 +38,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->execute();
     $result = $stmt->get_result();
     if ($result->num_rows == 0) {
-        die("<script>alert('Invalid role selected!'); window.history.back();</script>");
+        $_SESSION['error'] = "Invalid role selected!";
+        header("Location: ../employee.php");
+        exit();
     }
     $stmt->close();
 
@@ -44,7 +51,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->execute();
     $result = $stmt->get_result();
     if ($result->num_rows == 0) {
-        die("<script>alert('Invalid gender selected!'); window.history.back();</script>");
+        $_SESSION['error'] = "Invalid gender selected!";
+        header("Location: ../employee.php");
+        exit();
     }
     $stmt->close();
 
@@ -55,23 +64,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->execute();
     $result = $stmt->get_result();
     if ($result->num_rows == 0) {
-        die("<script>alert('Invalid status selected!'); window.history.back();</script>");
+        $_SESSION['error'] = "Invalid status selected!";
+        header("Location: ../employee.php");
+        exit();
     }
     $stmt->close();
 
-    // Insert into employees2 table
+    // Insert into employees table
     $stmt = $conn->prepare("INSERT INTO employees (role_id, first_name, last_name, email, phone_number, gender_id, status_id, username, password_hash) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
     $stmt->bind_param("issssiiss", $role, $firstName, $lastName, $email, $phoneNumber, $gender, $status, $username, $hashedPassword);
 
     if ($stmt->execute()) {
-        echo "<script>alert('Employee added successfully!'); window.location.href='../employee-list.php';</script>";
+        $_SESSION['success'] = "Employee added successfully!";
     } else {
-        echo "<script>alert('Error: Unable to add employee.'); window.history.back();</script>";
+        $_SESSION['error'] = "Error: Unable to add employee.";
     }
 
     $stmt->close();
     $conn->close();
+
+    // Redirect to the employee list with Toastr feedback
+    header("Location: ../employee-list.php");
+    exit();
 } else {
+    $_SESSION['error'] = "Invalid request method!";
     header("Location: ../employee.php");
     exit();
 }

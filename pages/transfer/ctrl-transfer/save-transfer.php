@@ -86,7 +86,7 @@ try {
     if (!mysqli_query($conn, $transferQuery)) {
         throw new Exception("Error inserting transfer: " . mysqli_error($conn));
     }
-    $transferID = mysqli_insert_id($conn); // Get invoice ID
+    $transferID = mysqli_insert_id($conn); // Get transfer ID
 
     // Step 7: Loop through the products and insert them into the transfer_products table
     foreach ($products as $product) {
@@ -98,7 +98,7 @@ try {
 
         // Insert product details into transfer_products table
         $transferProductQuery = "INSERT INTO transfer_products (transfer_id, product_id, quantity, code, brand, description)
-                         VALUES ('$transferID', '$productID', '$quantity', '$brand', '$code', '$description')";
+                         VALUES ('$transferID', '$productID', '$quantity', '$code', '$brand', '$description')";
         if (!mysqli_query($conn, $transferProductQuery)) {
             throw new Exception("Error inserting product: " . mysqli_error($conn));
         }
@@ -108,7 +108,7 @@ try {
     mysqli_commit($conn);
 
     // Return success response
-    echo json_encode(array("status" => "success", "message" => "transfer and products saved successfully."));
+    echo json_encode(array("status" => "success", "message" => "Transfers and products saved successfully!"));
 
 } catch (Exception $e) {
     // Rollback the transaction

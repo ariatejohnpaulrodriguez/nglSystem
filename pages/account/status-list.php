@@ -60,7 +60,7 @@ include '../../includes/header.php';
                                                     echo "</form>";
                                                     echo "<form action='ctrl-account/delete-status.php' method='post' style='display:inline-block;' onsubmit='return confirmDelete()'>";
                                                     echo "<input type='hidden' name='status_id' value='" . $row["status_id"] . "'>";
-                                                    echo "<input type='submit' value='Delete' class='btn btn-danger'>";
+                                                    echo "<button type='button' class='btn btn-danger' onclick='deleteStatusModal(" . $row['status_id'] . ")'>Delete</button>";
                                                     echo "</form>";
                                                     echo "</td>";
                                                     echo "</tr>";
@@ -72,12 +72,6 @@ include '../../includes/header.php';
                                             mysqli_close($conn);
                                             ?>
                                         </tbody>
-                                        <!-- JavaScript for Confirmation -->
-                                        <script>
-                                            function confirmDelete() {
-                                                return confirm("Are you sure you want to delete this Status?");
-                                            }
-                                        </script>
                                     </table>
                                 </div>
                                 <!-- /.card-body -->
@@ -91,6 +85,32 @@ include '../../includes/header.php';
                 <!-- /.container-fluid -->
             </section>
             <!-- /.content -->
+
+            <!-- Delete Confirmation Modal -->
+            <div class="modal fade" id="statusDeleteModal" tabindex="-1" aria-labelledby="deleteModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header bg-danger">
+                            <h5 class="modal-title text-white" id="deleteModalLabel">Confirm Deletion</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Are you sure you want to delete this status? This action cannot be undone.
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <form id="deleteForm" action="ctrl-account/delete-status.php" method="post">
+                                <input type="hidden" name="status_id" id="status_id_to_delete">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
         <!-- /.content-wrapper -->
         <?php include '../../includes/footer.php'; ?>

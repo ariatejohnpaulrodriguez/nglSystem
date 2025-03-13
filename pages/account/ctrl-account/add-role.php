@@ -1,25 +1,35 @@
 <?php
-include '../../../includes/conn.php'; // Include database connection
+include '../../../includes/conn.php'; // Database connection
+session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $role = trim($_POST['role']);
 
-    // Prepare SQL statement
-    $stmt = $conn->prepare("INSERT INTO roles (role_name) VALUES (?)");
-    $stmt->bind_param("s", $role);
+    // Check if role already exists
+    $checkStmt = $conn->prepare("SELECT COUNT(*) FROM roles WHERE role_name = ?");
+    $checkStmt->bind_param("s", $role);
+    $checkStmt->execute();
+    $checkStmt->bind_result($roleCount);
+    $checkStmt->fetch();
+    $checkStmt->close();
 
-    // Execute and check success
-    if ($stmt->execute()) {
-        echo "<script>alert('Role added successfully!'); window.location.href='../role.php';</script>";
+    if ($roleCount > 0) {
+        $_SESSION['error'] = "Role already exists!";
     } else {
-        echo "<script>alert('Error: Unable to add president.'); window.history.back();</script>";
+        // Insert new role
+        $stmt = $conn->prepare("INSERT INTO roles (role_name) VALUES (?)");
+        $stmt->bind_param("s", $role);
+
+        if ($stmt->execute()) {
+            $_SESSION['success'] = "Role added successfully!";
+        } else {
+            $_SESSION['error'] = "Error: Unable to add role.";
+        }
+        $stmt->close();
     }
 
-    // Close statement and connection
-    $stmt->close();
     $conn->close();
-} else {
-    header("Location: ../add-role.php");
+    header("Location: ../role.php"); // Redirect after setting session messages
     exit();
 }
 ?>

@@ -52,12 +52,12 @@ include '../../includes/header.php';
                                             <?php
                                             // SQL query to fetch data
                                             $sql = "
-    SELECT e.employee_id, r.role_name, e.first_name, e.last_name, e.email, e.phone_number, g.gender_name, s.status_name
-    FROM employees e
-    JOIN roles r ON e.role_id = r.role_id
-    JOIN genders g ON e.gender_id = g.gender_id
-    JOIN statuses s ON e.status_id = s.status_id
-";
+                                            SELECT e.employee_id, r.role_name, e.first_name, e.last_name, e.email, e.phone_number, g.gender_name, s.status_name
+                                            FROM employees e
+                                            JOIN roles r ON e.role_id = r.role_id
+                                            JOIN genders g ON e.gender_id = g.gender_id
+                                            JOIN statuses s ON e.status_id = s.status_id
+                                            ";
                                             $result = mysqli_query($conn, $sql);
 
                                             // Check if there are any rows returned
@@ -80,7 +80,7 @@ include '../../includes/header.php';
                                                     echo "</form>";
                                                     echo "<form action='ctrl-account/delete-employee.php' method='post' style='display:inline-block;' onsubmit='return confirmDelete()'>";
                                                     echo "<input type='hidden' name='employee_id' value='" . $row["employee_id"] . "'>";
-                                                    echo "<input type='submit' value='Delete' class='btn btn-danger'>";
+                                                    echo "<button type='button' class='btn btn-danger' onclick='deleteEmployeeModal(" . $row["employee_id"] . ")'>Delete</button>";
                                                     echo "</form>";
                                                     echo "</td>";
                                                     echo "</tr>";
@@ -92,12 +92,6 @@ include '../../includes/header.php';
                                             mysqli_close($conn);
                                             ?>
                                         </tbody>
-                                        <!-- JavaScript for Confirmation -->
-                                        <script>
-                                            function confirmDelete() {
-                                                return confirm("Are you sure you want to delete this employee?");
-                                            }
-                                        </script>
                                     </table>
                                 </div>
                                 <!-- /.card-body -->
@@ -111,6 +105,32 @@ include '../../includes/header.php';
                 <!-- /.container-fluid -->
             </section>
             <!-- /.content -->
+
+            <!-- Delete Confirmation Modal -->
+            <div class="modal fade" id="employeeDeleteModal" tabindex="-1" aria-labelledby="deleteModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header bg-danger">
+                            <h5 class="modal-title text-white" id="deleteModalLabel">Confirm Deletion</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Are you sure you want to delete this employee? This action cannot be undone.
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <form id="deleteForm" action="ctrl-account/delete-employee.php" method="post">
+                                <input type="hidden" name="employee_id" id="employee_id_to_delete">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
         <!-- /.content-wrapper -->
         <?php include '../../includes/footer.php'; ?>

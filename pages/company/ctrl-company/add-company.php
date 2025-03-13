@@ -1,5 +1,6 @@
 <?php
 include '../../../includes/conn.php'; // Include database connection
+session_start(); // Start session to handle Toastr notifications
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $companyName = trim($_POST['companyName']);
@@ -20,13 +21,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Validate if file is an image
     $check = getimagesize($_FILES["image"]["tmp_name"]);
     if ($check === false) {
-        echo "<script>alert('File is not an image.'); window.history.back();</script>";
+        $_SESSION['error'] = "File is not an image.";
         $uploadOk = 0;
     }
 
     // Allow only specific formats
     if (!in_array($imageFileType, ['jpg', 'jpeg', 'png', 'gif'])) {
-        echo "<script>alert('Only JPG, JPEG, PNG & GIF files are allowed.'); window.history.back();</script>";
+        $_SESSION['error'] = "Only JPG, JPEG, PNG & GIF files are allowed.";
         $uploadOk = 0;
     }
 
@@ -40,20 +41,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Prepare the SQL query
     $stmt = $conn->prepare("INSERT INTO companies (name, address, phone_number, email, plant, plant_name, attention, image) 
                             VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-
     $stmt->bind_param("ssssssss", $companyName, $companyAddress, $phoneNumber, $email, $plant, $plant_name, $attention, $image_path);
 
     // Execute and check success
     if ($stmt->execute()) {
-        echo "<script>alert('Company added successfully!'); window.location.href='../company-list.php';</script>";
+        $_SESSION['success'] = "Company added successfully!";
     } else {
-        echo "<script>alert('Error: Unable to add Company.'); window.history.back();</script>";
+        $_SESSION['error'] = "Error: Unable to add Company.";
     }
 
     // Close statement and connection
     $stmt->close();
     $conn->close();
+
+    // Redirect to the company list page with feedback
+    header("Location: ../company-list.php");
+    exit();
 } else {
+    $_SESSION['error'] = "Invalid request method.";
     header("Location: ../company-list.php");
     exit();
 }

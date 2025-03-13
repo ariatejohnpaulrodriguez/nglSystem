@@ -31,19 +31,6 @@ include '../../includes/session.php';
                             <div class="card">
                                 <div class="card-header">
                                     <h3 class="card-title">List</h3>
-
-                                    <div class="card-tools">
-                                        <div class="input-group input-group-sm" style="width: 150px;">
-                                            <input type="text" name="table_search" class="form-control float-right"
-                                                placeholder="Search">
-
-                                            <div class="input-group-append">
-                                                <button type="submit" class="btn btn-default">
-                                                    <i class="fas fa-search"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
 
                                 <div class="card-body table-responsive p-0" style="height: 500px;">
@@ -96,7 +83,7 @@ include '../../includes/session.php';
                                                             echo "<td>{$delivery_date}</td>";
                                                             echo "<td>";
                                                             echo "<button class='btn btn-primary btn-sm view-btn mr-1' data-id='{$invoice_id}' data-toggle='modal' data-target='#viewModal'>View</button>";
-                                                            echo "<button class='btn btn-danger btn-sm pdf-btn mr-1' data-id='{$invoice_id}'>PDF</button>";
+                                                            echo "<button class='btn btn-danger btn-sm invoice-pdf-btn mr-1' data-id='{$invoice_id}'>PDF</button>";
                                                             echo "</td>";
                                                             echo "</tr>";
                                                         }
