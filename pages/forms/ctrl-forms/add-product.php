@@ -7,10 +7,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $product_code = trim($_POST['code']);
     $product_brand = trim($_POST['brand']);
     $description = trim($_POST['description']);
+    $unit = trim($_POST['unit']);
 
     // Prepare SQL query to insert into the database
-    $query = "INSERT INTO products (code, brand, description) 
-              VALUES ('$product_code', '$product_brand', '$description')";
+    $query = "INSERT INTO products (code, brand, description, unit_id) 
+              VALUES ('$product_code', '$product_brand', '$description', '$unit')";
 
     // Execute query and handle feedback
     if (mysqli_query($conn, $query)) {

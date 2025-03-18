@@ -36,25 +36,35 @@ include '../../includes/session.php';
                                 <div class="card-header">
                                     <h5 class="card-title">Update Product</h5>
                                 </div>
+                                <?php
+                                include '../../includes/conn.php';
+
+                                if (isset($_POST['product_id'])) {
+                                    $product_id = $_POST['product_id'];
+                                } else {
+                                    die("Product ID is missing.");
+                                }
+
+                                // Fetch product details including unit_id
+                                $query = "SELECT p.*, u.unit_name 
+                                FROM products p
+                                LEFT JOIN units u ON p.unit_id = u.unit_id
+                                WHERE p.product_id = ?";
+
+                                $stmt = $conn->prepare($query);
+                                $stmt->bind_param("i", $product_id);
+                                $stmt->execute();
+                                $result = $stmt->get_result();
+                                $product = $result->fetch_assoc();
+                                $selected_unit_id = $product['unit_id'] ?? '';
+
+                                // Fetch available units for dropdown
+                                $unitQuery = "SELECT * FROM units ORDER BY unit_name ASC";
+                                $unitResult = $conn->query($unitQuery);
+                                ?>
+
                                 <form action="ctrl-data/update-ctrl-product.php" method="POST">
                                     <div class="card-body">
-                                        <?php
-                                        include '../../includes/conn.php';
-
-                                        if (isset($_POST['product_id'])) {
-                                            $product_id = $_POST['product_id']; // Retrieve product_id from form submission
-                                        } else {
-                                            die("Product ID is missing.");
-                                        }
-
-                                        $query = "SELECT * FROM products WHERE product_id = ?";
-                                        $stmt = $conn->prepare($query);
-                                        $stmt->bind_param("i", $product_id);
-                                        $stmt->execute();
-                                        $result = $stmt->get_result();
-                                        $product = $result->fetch_assoc();
-                                        ?>
-
                                         <label for="product_id">Product ID</label>
                                         <input class="form-control" type="text" id="product_id" name="product_id"
                                             value="<?php echo htmlspecialchars($product['product_id']); ?>" required
@@ -76,6 +86,17 @@ include '../../includes/session.php';
                                             value="<?php echo htmlspecialchars($product['description']); ?>" required>
                                         <br>
 
+                                        <label for="unit_id">Unit</label>
+                                        <select class="form-control" id="unit_id" name="unit_id" required>
+                                            <option value="">-- Select Unit --</option>
+                                            <?php while ($unit = $unitResult->fetch_assoc()): ?>
+                                                <option value="<?php echo $unit['unit_id']; ?>" 
+                                                    <?php echo ($unit['unit_id'] == $selected_unit_id) ? 'selected' : ''; ?>>
+                                                    <?php echo htmlspecialchars($unit['unit_name']); ?>
+                                                </option>
+                                            <?php endwhile; ?>
+                                        </select>
+                                        <br>
                                     </div>
                                     <div class="card-footer">
                                         <button type="submit" class="btn btn-primary">Update</button>

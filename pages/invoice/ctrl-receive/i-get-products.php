@@ -1,6 +1,6 @@
 <?php
-include '../../../includes/conn.php'; // Include database connection
-session_start(); // Start session to handle Toastr notifications
+// Include database connection
+include '../../../includes/conn.php';
 
 // Set response header to JSON
 header('Content-Type: application/json');
@@ -10,8 +10,12 @@ ini_set("log_errors", 1);
 ini_set("error_log", "../../php-error.log");
 
 try {
-    // Prepare the SQL statement
-    $sql = "SELECT product_id, code, brand, description FROM products";
+    // Prepare the SQL statement to include unit information
+    //Use COALESCE to provide a default value if unit_name is null
+    $sql = "SELECT p.product_id, p.code, p.brand, p.description, COALESCE(u.unit_name, 'N/A') AS unit_name, p.unit_id
+            FROM products p
+            LEFT JOIN units u ON p.unit_id = u.unit_id;";
+
     $stmt = $conn->prepare($sql);
 
     if (!$stmt) {
@@ -44,7 +48,7 @@ try {
 
 } catch (Exception $e) {
     // Log the error
-    error_log("Error in get_products.php: " . $e->getMessage());
+    error_log("Error in get-products.php: " . $e->getMessage());
 
     // Send an error response
     echo json_encode(array("error" => true, "message" => "Error fetching products. Please check the logs."));

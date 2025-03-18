@@ -12,29 +12,33 @@ error_reporting(E_ALL);
 // Get invoice_id from GET request, using null coalescing operator
 $invoiceId = $_GET['invoice_id'] ?? null;
 
+// Initialize the response array
+$response = [];
+
 // Check if invoice ID is valid
 if (!is_numeric($invoiceId)) {
-    echo json_encode(['error' => 'Invalid invoice ID']);
+    $response['error'] = 'Invalid invoice ID';
+    echo json_encode($response);
     exit;
 }
 
 try {
     // Prepare the SQL statement
     $sql = "
-        SELECT 
-            invoices.invoice_id, 
+        SELECT
+            invoices.invoice_id,
             posting_dates.date_value AS posting_date,
             delivery_dates.date_value AS delivery_date,
-            invoices.dr_id, 
-            invoices.po_id, 
-            invoices.reference_po_id, 
-            from_company.name AS from_company_name, 
-            from_company.address AS from_company_address, 
-            from_company.phone_number AS from_company_phone, 
+            invoices.dr_id,
+            invoices.po_id,
+            invoices.reference_po_id,
+            from_company.name AS from_company_name,
+            from_company.address AS from_company_address,
+            from_company.phone_number AS from_company_phone,
             from_company.attention AS from_company_attention,
-            to_company.name AS to_company_name, 
-            to_company.address AS to_company_address, 
-            to_company.phone_number AS to_company_phone, 
+            to_company.name AS to_company_name,
+            to_company.address AS to_company_address,
+            to_company.phone_number AS to_company_phone,
             to_company.attention AS to_company_attention,
             delivery_receipts.dr_number AS dr_number,
             purchase_orders.po_number AS po_number,
@@ -45,7 +49,8 @@ try {
             invoice_products.quantity,
             invoice_products.code,
             invoice_products.brand,
-            invoice_products.description
+            invoice_products.description,
+            units.unit_name  -- Include the unit name
         FROM invoices
         INNER JOIN companies AS from_company ON invoices.from_company_id = from_company.company_id
         INNER JOIN companies AS to_company ON invoices.to_company_id = to_company.company_id
@@ -55,6 +60,8 @@ try {
         LEFT JOIN dates AS posting_dates ON invoices.posting_date = posting_dates.date_id
         LEFT JOIN dates AS delivery_dates ON invoices.delivery_date = delivery_dates.date_id
         LEFT JOIN invoice_products ON invoices.invoice_id = invoice_products.invoice_id
+        LEFT JOIN products ON invoice_products.product_id = products.product_id -- Join with products table
+        LEFT JOIN units ON products.unit_id = units.unit_id -- Join with units table
         WHERE invoices.invoice_id = ?
         ORDER BY invoices.invoice_id DESC, invoice_products.invoice_product_id ASC
     ";
@@ -112,27 +119,34 @@ try {
                 "quantity" => $row["quantity"],
                 "code" => $row["code"],
                 "brand" => $row["brand"],
-                "description" => $row["description"]
+                "description" => $row["description"],
+                "unit_name" => $row["unit_name"] // Retrieve the unit name
             ];
         }
 
-        // Return JSON data
-        echo json_encode($invoiceData);
+        // Add the data to the response array
+        $response['invoice'] = $invoiceData["invoice"];
+        $response['products'] = $invoiceData["products"];
+
     } else {
         // If no data is found, return an error message
-        echo json_encode(["error" => "No data found for invoice ID: " . $invoiceId]);
+        $response['error'] = "No data found for invoice ID: " . $invoiceId;
     }
 
     // Close the statement
     $stmt->close();
+
 } catch (Exception $e) {
     // Handle exceptions
+    $response['error'] = "An error occurred while fetching invoice data: " . $e->getMessage();
     error_log("view-invoice-status.php - Error: " . $e->getMessage());
-    echo json_encode(["error" => "An error occurred while fetching invoice data. Please check the server logs."]);
 } finally {
     // Close the connection
     if (isset($conn)) {
         $conn->close();
     }
+
+    // Return JSON data
+    echo json_encode($response);
 }
 ?>

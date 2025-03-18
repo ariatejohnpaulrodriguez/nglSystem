@@ -36,6 +36,14 @@ include '../../includes/session.php';
                                 <div class="card-header">
                                     <h5 class="card-title">Add Product</h5>
                                 </div>
+                                <?php
+                                // Fetch unit from the database
+                                
+                                include '../../includes/conn.php';
+
+                                $unitQuery = "SELECT unit_id, unit_name FROM units";
+                                $unitResult = $conn->query($unitQuery);
+                                ?>
                                 <form action="ctrl-forms/add-product.php" method="POST">
                                     <div class="card-body">
                                         <label for="code">Product Code</label>
@@ -50,6 +58,17 @@ include '../../includes/session.php';
                                         <textarea class="form-control" id="description" name="description" rows="4"
                                             placeholder="Enter Description" required></textarea>
                                         <br>
+                                        <label for="role">Unit Type</label>
+                                        <select class="form-control" id="unit" name="unit" required>
+                                            <option value="" disabled selected>-- Select Unit--</option>
+                                            <?php
+                                            if ($unitResult->num_rows > 0) {
+                                                while ($row = $unitResult->fetch_assoc()) {
+                                                    echo "<option value='" . $row['unit_id'] . "'>" . $row['unit_name'] . "</option>";
+                                                }
+                                            }
+                                            ?>
+                                        </select>
                                     </div>
                                     <div class="card-footer">
                                         <button type="submit" class="btn btn-primary">Submit</button>

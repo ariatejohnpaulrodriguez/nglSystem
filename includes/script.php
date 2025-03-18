@@ -1,6 +1,10 @@
 <!-- REQUIRED SCRIPTS -->
 <!-- jQuery -->
 <script src="../../plugins/jquery/jquery.min.js"></script>
+
+<script src="../../plugins/custom/custom-invoice.js"></script>
+<script src="../../plugins/custom/custom-transfer.js"></script>
+
 <!-- Bootstrap -->
 <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- overlayScrollbars -->
@@ -51,10 +55,9 @@
 <!-- Summernote -->
 <script src="../../plugins/summernote/summernote-bs4.min.js"></script>
 
-<!-- jsGrid -->
-<script src="../../plugins/jsgrid/demos/db.js"></script>
 <script src="../../plugins/jsgrid/jsgrid.min.js"></script>
 <script src="../../plugins/toastr/toastr.min.js"></script>
+
 
 <script>
     function deleteRoleModal(role_id) {
@@ -128,9 +131,6 @@
     <?php endif; ?>
 </script>
 
-<script src="../../plugins/custom/custom-invoice.js"></script>
-<script src="../../plugins/custom/custom-transfer.js"></script>
-
 <script>
     $(document).on('click', '.invoice-pdf-btn', function () {
         let invoiceId = $(this).data('id');
@@ -144,37 +144,6 @@
         let transferID = $(this).data('id');
         console.log("PDF button clicked for transfer ID: " + transferID);
         window.open('../../pages/transfer/transfer-print.php?transfer_id=' + transferID, '_blank');
-    });
-</script>
-
-<script>
-    $(document).ready(function () {
-        $("#datepicker3").datepicker({
-            dateFormat: "yy-mm-dd",
-            onSelect: function (dateText) {
-                $(this).val(dateText);
-            }
-        });
-
-        $("#calendar-icon").click(function () {
-            $("#datepicker").datepicker("show");
-        });
-    });
-</script>
-
-<script>
-    // Initialize DataTable
-    $('#invoiceTable').DataTable({
-        "paging": false,           // Enable pagination
-        "lengthChange": false,    // Disable page size change
-        "searching": false,        // Enable search box
-        "ordering": true,         // Enable sorting
-        "info": false,             // Show table info
-        "autoWidth": false,       // Disable auto column width
-        "order": [[0, 'desc']],   // Default sort by Invoice ID (Descending)
-        "columnDefs": [
-            { "orderable": false, "targets": [5] } // Disable sorting for the "Action" column
-        ]
     });
 </script>
 

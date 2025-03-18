@@ -46,31 +46,38 @@ include '../../includes/header.php';
                         <th>Code</th>
                         <th>Brand</th>
                         <th>Description</th>
+                        <th>Unit</th> <!-- Show unit_name instead of unit_id -->
                         <th>Actions</th>
                       </tr>
                     </thead>
                     <tbody>
                       <?php
-                      // SQL query to fetch data
-                      $sql = "SELECT product_id, code, brand, description FROM products";
+                      include '../../includes/conn.php';
+
+                      // Fetch products with unit names using LEFT JOIN
+                      $sql = "SELECT p.product_id, p.code, p.brand, p.description, u.unit_name 
+                    FROM products p
+                    LEFT JOIN units u ON p.unit_id = u.unit_id"; // Join with units table
+                      
                       $result = mysqli_query($conn, $sql);
 
-                      // Check if there are any rows returned
                       if (mysqli_num_rows($result) > 0) {
-                        // Loop through the rows and display them in the table
                         while ($row = mysqli_fetch_assoc($result)) {
                           echo "<tr>";
                           echo "<td>" . $row["product_id"] . "</td>";
                           echo "<td>" . $row["code"] . "</td>";
                           echo "<td>" . $row["brand"] . "</td>";
                           echo "<td>" . $row["description"] . "</td>";
+                          echo "<td>" . htmlspecialchars($row["unit_name"] ?? 'N/A') . "</td>"; // Show unit name
                           echo "<td>";
 
-                          // Remove the condition restricting "Warehouse Man"
+                          // Edit button
                           echo "<form action='update-product.php' method='post' style='display:inline-block; margin-right:5px;'>";
                           echo "<input type='hidden' name='product_id' value='" . $row["product_id"] . "'>";
-                          echo "<input type='submit' value='Edit' class='btn btn-primary'>";
+                          echo "<input type='submit' value='Edit' class='btn btn-primary mb-1'>";
                           echo "</form>";
+
+                          // Delete button
                           echo "<form action='ctrl-data/delete-product.php' method='post' style='display:inline-block;' onsubmit='return confirmDelete()'>";
                           echo "<input type='hidden' name='product_id' value='" . $row["product_id"] . "'>";
                           echo "<button type='button' class='btn btn-danger' onclick='deleteProductModal(" . $row["product_id"] . ")'>Delete</button>";
@@ -80,7 +87,7 @@ include '../../includes/header.php';
                           echo "</tr>";
                         }
                       } else {
-                        echo "<tr><td colspan='6'>No data found</td></tr>";
+                        echo "<tr><td colspan='6' class='text-center'>No products found</td></tr>";
                       }
 
                       mysqli_close($conn);

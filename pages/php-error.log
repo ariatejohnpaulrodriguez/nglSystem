@@ -67,3 +67,726 @@ Data: {"products":[{"product_id":"4","quantity":"10","brand":"PAN-NET","code":"C
 [13-Mar-2025 05:18:26 Europe/Berlin] Error in save_invoice.php: Duplicate entry '3534' for key 'reference_po'
 Data: {"products":[{"product_id":"5","quantity":"2","brand":"123","code":"123","description":"123asd"}],"posting_date":"2025-03-13","delivery_date":"2025-03-14","from_company_id":"6","to_company_id":"3","po_number":"3453","reference_po":"3534","dr_number":"636"}
 [13-Mar-2025 08:37:44 Europe/Berlin] PHP Warning:  Undefined array key "success" in D:\XAMPPDATA\htdocs\nglDashboard\pages\transfer\ctrl-transfer\save-transfer.php on line 116
+[13-Mar-2025 14:24:14 Europe/Berlin] Error in save_invoice.php: Duplicate entry '' for key 'po_number'
+Data: {"products":[],"posting_date":"","delivery_date":"","from_company_id":"1","to_company_id":"1","po_number":"","reference_po":"","dr_number":""}
+[13-Mar-2025 14:24:27 Europe/Berlin] Error in save_invoice.php: Duplicate entry '' for key 'po_number'
+Data: {"products":[],"posting_date":"","delivery_date":"","from_company_id":"1","to_company_id":"1","po_number":"","reference_po":"","dr_number":""}
+[13-Mar-2025 14:24:56 Europe/Berlin] Error in save_invoice.php: Duplicate entry '' for key 'po_number'
+Data: {"products":[],"posting_date":"","delivery_date":"","from_company_id":"1","to_company_id":"1","po_number":"","reference_po":"","dr_number":""}
+[13-Mar-2025 14:25:18 Europe/Berlin] Error in save_invoice.php: Duplicate entry '' for key 'po_number'
+Data: {"products":[],"posting_date":"","delivery_date":"","from_company_id":"1","to_company_id":"1","po_number":"","reference_po":"","dr_number":""}
+[13-Mar-2025 14:29:23 Europe/Berlin] Error in save_invoice.php: Duplicate entry '' for key 'po_number'
+Data: {"products":[],"posting_date":"","delivery_date":"","from_company_id":"1","to_company_id":"1","po_number":"","reference_po":"","dr_number":""}
+[13-Mar-2025 14:30:04 Europe/Berlin] Error in save_invoice.php: Duplicate entry '' for key 'po_number'
+Data: {"products":[],"posting_date":"","delivery_date":"","from_company_id":"1","to_company_id":"1","po_number":"","reference_po":"","dr_number":""}
+[13-Mar-2025 14:32:44 Europe/Berlin] Error in save_invoice.php: Duplicate entry '' for key 'po_number'
+Data: {"products":[],"posting_date":"","delivery_date":"","from_company_id":"1","to_company_id":"1","po_number":"","reference_po":"","dr_number":""}
+[13-Mar-2025 14:33:58 Europe/Berlin] Error in save_invoice.php: Duplicate entry '' for key 'po_number'
+Data: {"products":[],"posting_date":"","delivery_date":"","from_company_id":"1","to_company_id":"1","po_number":"","reference_po":"","dr_number":""}
+[13-Mar-2025 14:47:02 Europe/Berlin] Error in save_invoice.php: Duplicate entry '' for key 'po_number'
+Data: {"products":[],"posting_date":"","delivery_date":"","from_company_id":"1","to_company_id":"1","po_number":"","reference_po":"","dr_number":""}
+[14-Mar-2025 01:45:13 Europe/Berlin] Error in save_invoice.php: Duplicate entry '' for key 'po_number'
+Data: {"products":[],"posting_date":"","delivery_date":"","from_company_id":"1","to_company_id":"1","po_number":"","reference_po":"","dr_number":""}
+[14-Mar-2025 01:57:59 Europe/Berlin] Error in save_invoice.php: Duplicate entry '' for key 'po_number'
+Data: {"products":[],"posting_date":"","delivery_date":"","from_company_id":"5","to_company_id":"6","po_number":"","reference_po":"","dr_number":""}
+[14-Mar-2025 02:19:17 Europe/Berlin] Error in save_transfer.php: Duplicate entry '2346346' for key 'reference_po'
+Data: {"products":[{"product_id":"5","quantity":"1","brand":"123","code":"123","description":"123asd"}],"posting_date":"","delivery_date":"","from_company_id":"3","to_company_id":"5","plant":"plant3","po_number":"34562","reference_po":"2346346","dr_number":"725","plant_name":"New Gen Plant 3","status_id":"5"}
+[14-Mar-2025 02:28:42 Europe/Berlin] Error in save_transfer.php: Duplicate entry '' for key 'po_number'
+Data: {"products":[],"posting_date":"","delivery_date":"","from_company_id":"1","to_company_id":"1","plant":"","po_number":"","reference_po":"","dr_number":"","plant_name":"","status_id":"2"}
+[14-Mar-2025 02:28:57 Europe/Berlin] Error in save_transfer.php: Duplicate entry '' for key 'po_number'
+Data: {"products":[],"posting_date":"","delivery_date":"","from_company_id":"1","to_company_id":"1","plant":"","po_number":"","reference_po":"","dr_number":"","plant_name":"","status_id":"2"}
+[18-Mar-2025 03:23:18 Europe/Berlin] Error in save_invoice.php: Cannot add or update a child row: a foreign key constraint fails (`ngldb9`.`stocks`, CONSTRAINT `stocks_ibfk_2` FOREIGN KEY (`unit_id`) REFERENCES `units` (`unit_id`) ON DELETE NO ACTION ON UPDATE NO ACTION)
+Data: {"products":[{"product_id":"3","quantity":"1","brand":"COMMSCOPE","code":"1427071-4","description":"CAT5 U\/UTP","unit":"roll(s)"}],"posting_date":"2025-03-18","delivery_date":"2025-03-19","from_company_id":"5","to_company_id":"3","po_number":"wt42g","reference_po":"345612","dr_number":"er34652"}
+[18-Mar-2025 03:57:30 Europe/Berlin] PHP Warning:  Undefined variable $conn in D:\XAMPPDATA\htdocs\nglDashboard\pages\invoice\ctrl-receive\i-get-products.php on line 20
+[18-Mar-2025 03:57:30 Europe/Berlin] PHP Warning:  Undefined variable $conn in D:\XAMPPDATA\htdocs\nglDashboard\pages\invoice\ctrl-receive\i-get-products.php on line 58
+[18-Mar-2025 03:57:30 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in D:\XAMPPDATA\htdocs\nglDashboard\pages\invoice\ctrl-receive\i-get-products.php:20
+Stack trace:
+#0 {main}
+
+Next Error: Call to a member function close() on null in D:\XAMPPDATA\htdocs\nglDashboard\pages\invoice\ctrl-receive\i-get-products.php:58
+Stack trace:
+#0 {main}
+  thrown in D:\XAMPPDATA\htdocs\nglDashboard\pages\invoice\ctrl-receive\i-get-products.php on line 58
+[18-Mar-2025 03:59:30 Europe/Berlin] Error decoding JSON: Syntax error
+[18-Mar-2025 04:00:01 Europe/Berlin] Error in get_stock.php: Invalid product ID.
+[18-Mar-2025 04:13:39 Europe/Berlin] Error decoding JSON: Syntax error
+[18-Mar-2025 04:16:12 Europe/Berlin] JSON data received: 
+[18-Mar-2025 04:16:12 Europe/Berlin] Error decoding JSON: Syntax error
+[18-Mar-2025 04:16:19 Europe/Berlin] JSON data received: 
+[18-Mar-2025 04:16:19 Europe/Berlin] Error decoding JSON: Syntax error
+[18-Mar-2025 04:16:50 Europe/Berlin] JSON data received: 
+[18-Mar-2025 04:16:50 Europe/Berlin] Error decoding JSON: Syntax error
+[18-Mar-2025 04:18:46 Europe/Berlin] JSON data received: {"products":[{"product_id":"3","quantity":"1","brand":"COMMSCOPE","code":"1427071-4","description":"CAT5 U/UTP","unit":"roll(s)"}],"posting_date":"2025-03-18","delivery_date":"2025-03-19","from_company_id":"6","to_company_id":"6","po_number":"f123r12","reference_po":"1521f","dr_number":"2351f"}
+[18-Mar-2025 04:18:46 Europe/Berlin] Decoded data: Array
+(
+    [products] => Array
+        (
+            [0] => Array
+                (
+                    [product_id] => 3
+                    [quantity] => 1
+                    [brand] => COMMSCOPE
+                    [code] => 1427071-4
+                    [description] => CAT5 U/UTP
+                    [unit] => roll(s)
+                )
+
+        )
+
+    [posting_date] => 2025-03-18
+    [delivery_date] => 2025-03-19
+    [from_company_id] => 6
+    [to_company_id] => 6
+    [po_number] => f123r12
+    [reference_po] => 1521f
+    [dr_number] => 2351f
+)
+
+[18-Mar-2025 04:18:46 Europe/Berlin] Error in save_invoice.php: Cannot add or update a child row: a foreign key constraint fails (`ngldb9`.`stocks`, CONSTRAINT `stocks_ibfk_2` FOREIGN KEY (`unit_id`) REFERENCES `units` (`unit_id`) ON DELETE NO ACTION ON UPDATE NO ACTION)
+Data: {"products":[{"product_id":"3","quantity":"1","brand":"COMMSCOPE","code":"1427071-4","description":"CAT5 U\/UTP","unit":"roll(s)"}],"posting_date":"2025-03-18","delivery_date":"2025-03-19","from_company_id":"6","to_company_id":"6","po_number":"f123r12","reference_po":"1521f","dr_number":"2351f"}
+[18-Mar-2025 05:33:08 Europe/Berlin] JSON data received: {"products":[{"product_id":"3","quantity":"1","brand":"COMMSCOPE","code":"1427071-4","description":"CAT5 U/UTP","unit":"roll(s)"}],"posting_date":"2025-03-18","delivery_date":"2025-03-19","from_company_id":"6","to_company_id":"5","po_number":"weF3","reference_po":"AF5","dr_number":"fF23"}
+[18-Mar-2025 05:33:08 Europe/Berlin] Decoded data: Array
+(
+    [products] => Array
+        (
+            [0] => Array
+                (
+                    [product_id] => 3
+                    [quantity] => 1
+                    [brand] => COMMSCOPE
+                    [code] => 1427071-4
+                    [description] => CAT5 U/UTP
+                    [unit] => roll(s)
+                )
+
+        )
+
+    [posting_date] => 2025-03-18
+    [delivery_date] => 2025-03-19
+    [from_company_id] => 6
+    [to_company_id] => 5
+    [po_number] => weF3
+    [reference_po] => AF5
+    [dr_number] => fF23
+)
+
+[18-Mar-2025 05:49:04 Europe/Berlin] JSON data received: {"products":[{"product_id":"1","quantity":"1","brand":"PAN-NET","code":"CJ688TGBL","description":"TX6 JACK MODULE WITH ENHANCED GIGA TX TERMINATION STYLE T567 A/B WIRING, RJ45 PATENT #RE38, 519 BLACK","unit":"piece(s)","unit_id":3}],"posting_date":"2025-03-18","delivery_date":"2025-03-19","from_company_id":"6","to_company_id":"3","po_number":"2352f2r","reference_po":"23f234","dr_number":"fwer21"}
+[18-Mar-2025 05:49:04 Europe/Berlin] Decoded data: Array
+(
+    [products] => Array
+        (
+            [0] => Array
+                (
+                    [product_id] => 1
+                    [quantity] => 1
+                    [brand] => PAN-NET
+                    [code] => CJ688TGBL
+                    [description] => TX6 JACK MODULE WITH ENHANCED GIGA TX TERMINATION STYLE T567 A/B WIRING, RJ45 PATENT #RE38, 519 BLACK
+                    [unit] => piece(s)
+                    [unit_id] => 3
+                )
+
+        )
+
+    [posting_date] => 2025-03-18
+    [delivery_date] => 2025-03-19
+    [from_company_id] => 6
+    [to_company_id] => 3
+    [po_number] => 2352f2r
+    [reference_po] => 23f234
+    [dr_number] => fwer21
+)
+
+[18-Mar-2025 06:25:52 Europe/Berlin] JSON data received: {"products":[{"product_id":"1","quantity":"1","brand":"PAN-NET","code":"CJ688TGBL","description":"TX6 JACK MODULE WITH ENHANCED GIGA TX TERMINATION STYLE T567 A/B WIRING, RJ45 PATENT #RE38, 519 BLACK","unit":"piece(s)","unit_id":3},{"product_id":"3","quantity":"1","brand":"COMMSCOPE","code":"1427071-4","description":"CAT5 U/UTP","unit":"roll(s)","unit_id":2},{"product_id":"1","quantity":"1","brand":"PAN-NET","code":"CJ688TGBL","description":"TX6 JACK MODULE WITH ENHANCED GIGA TX TERMINATION STYLE T567 A/B WIRING, RJ45 PATENT #RE38, 519 BLACK","unit":"piece(s)","unit_id":3},{"product_id":"3","quantity":"1","brand":"COMMSCOPE","code":"1427071-4","description":"CAT5 U/UTP","unit":"roll(s)","unit_id":2},{"product_id":"1","quantity":"1","brand":"PAN-NET","code":"CJ688TGBL","description":"TX6 JACK MODULE WITH ENHANCED GIGA TX TERMINATION STYLE T567 A/B WIRING, RJ45 PATENT #RE38, 519 BLACK","unit":"piece(s)","unit_id":3},{"product_id":"3","quantity":"1","brand":"COMMSCOPE","code":"1427071-4","description":"CAT5 U/UTP","unit":"roll(s)","unit_id":2},{"product_id":"1","quantity":"1","brand":"PAN-NET","code":"CJ688TGBL","description":"TX6 JACK MODULE WITH ENHANCED GIGA TX TERMINATION STYLE T567 A/B WIRING, RJ45 PATENT #RE38, 519 BLACK","unit":"piece(s)","unit_id":3},{"product_id":"3","quantity":"1","brand":"COMMSCOPE","code":"1427071-4","description":"CAT5 U/UTP","unit":"roll(s)","unit_id":2},{"product_id":"1","quantity":"1","brand":"PAN-NET","code":"CJ688TGBL","description":"TX6 JACK MODULE WITH ENHANCED GIGA TX TERMINATION STYLE T567 A/B WIRING, RJ45 PATENT #RE38, 519 BLACK","unit":"piece(s)","unit_id":3},{"product_id":"3","quantity":"1","brand":"COMMSCOPE","code":"1427071-4","description":"CAT5 U/UTP","unit":"roll(s)","unit_id":2},{"product_id":"1","quantity":"1","brand":"PAN-NET","code":"CJ688TGBL","description":"TX6 JACK MODULE WITH ENHANCED GIGA TX TERMINATION STYLE T567 A/B WIRING, RJ45 PATENT #RE38, 519 BLACK","unit":"piece(s)","unit_id":3},{"product_id":"3","quantity":"1","brand":"COMMSCOPE","code":"1427071-4","description":"CAT5 U/UTP","unit":"roll(s)","unit_id":2},{"product_id":"1","quantity":"1","brand":"PAN-NET","code":"CJ688TGBL","description":"TX6 JACK MODULE WITH ENHANCED GIGA TX TERMINATION STYLE T567 A/B WIRING, RJ45 PATENT #RE38, 519 BLACK","unit":"piece(s)","unit_id":3},{"product_id":"3","quantity":"1","brand":"COMMSCOPE","code":"1427071-4","description":"CAT5 U/UTP","unit":"roll(s)","unit_id":2},{"product_id":"3","quantity":"1","brand":"COMMSCOPE","code":"1427071-4","description":"CAT5 U/UTP","unit":"roll(s)","unit_id":2},{"product_id":"1","quantity":"1","brand":"PAN-NET","code":"CJ688TGBL","description":"TX6 JACK MODULE WITH ENHANCED GIGA TX TERMINATION STYLE T567 A/B WIRING, RJ45 PATENT #RE38, 519 BLACK","unit":"piece(s)","unit_id":3},{"product_id":"3","quantity":"1","brand":"COMMSCOPE","code":"1427071-4","description":"CAT5 U/UTP","unit":"roll(s)","unit_id":2},{"product_id":"3","quantity":"1","brand":"COMMSCOPE","code":"1427071-4","description":"CAT5 U/UTP","unit":"roll(s)","unit_id":2}],"posting_date":"2025-03-19","delivery_date":"2025-03-20","from_company_id":"1","to_company_id":"3","po_number":"21tv","reference_po":"341t3","dr_number":"asd 312135"}
+[18-Mar-2025 06:25:52 Europe/Berlin] Decoded data: Array
+(
+    [products] => Array
+        (
+            [0] => Array
+                (
+                    [product_id] => 1
+                    [quantity] => 1
+                    [brand] => PAN-NET
+                    [code] => CJ688TGBL
+                    [description] => TX6 JACK MODULE WITH ENHANCED GIGA TX TERMINATION STYLE T567 A/B WIRING, RJ45 PATENT #RE38, 519 BLACK
+                    [unit] => piece(s)
+                    [unit_id] => 3
+                )
+
+            [1] => Array
+                (
+                    [product_id] => 3
+                    [quantity] => 1
+                    [brand] => COMMSCOPE
+                    [code] => 1427071-4
+                    [description] => CAT5 U/UTP
+                    [unit] => roll(s)
+                    [unit_id] => 2
+                )
+
+            [2] => Array
+                (
+                    [product_id] => 1
+                    [quantity] => 1
+                    [brand] => PAN-NET
+                    [code] => CJ688TGBL
+                    [description] => TX6 JACK MODULE WITH ENHANCED GIGA TX TERMINATION STYLE T567 A/B WIRING, RJ45 PATENT #RE38, 519 BLACK
+                    [unit] => piece(s)
+                    [unit_id] => 3
+                )
+
+            [3] => Array
+                (
+                    [product_id] => 3
+                    [quantity] => 1
+                    [brand] => COMMSCOPE
+                    [code] => 1427071-4
+                    [description] => CAT5 U/UTP
+                    [unit] => roll(s)
+                    [unit_id] => 2
+                )
+
+            [4] => Array
+                (
+                    [product_id] => 1
+                    [quantity] => 1
+                    [brand] => PAN-NET
+                    [code] => CJ688TGBL
+                    [description] => TX6 JACK MODULE WITH ENHANCED GIGA TX TERMINATION STYLE T567 A/B WIRING, RJ45 PATENT #RE38, 519 BLACK
+                    [unit] => piece(s)
+                    [unit_id] => 3
+                )
+
+            [5] => Array
+                (
+                    [product_id] => 3
+                    [quantity] => 1
+                    [brand] => COMMSCOPE
+                    [code] => 1427071-4
+                    [description] => CAT5 U/UTP
+                    [unit] => roll(s)
+                    [unit_id] => 2
+                )
+
+            [6] => Array
+                (
+                    [product_id] => 1
+                    [quantity] => 1
+                    [brand] => PAN-NET
+                    [code] => CJ688TGBL
+                    [description] => TX6 JACK MODULE WITH ENHANCED GIGA TX TERMINATION STYLE T567 A/B WIRING, RJ45 PATENT #RE38, 519 BLACK
+                    [unit] => piece(s)
+                    [unit_id] => 3
+                )
+
+            [7] => Array
+                (
+                    [product_id] => 3
+                    [quantity] => 1
+                    [brand] => COMMSCOPE
+                    [code] => 1427071-4
+                    [description] => CAT5 U/UTP
+                    [unit] => roll(s)
+                    [unit_id] => 2
+                )
+
+            [8] => Array
+                (
+                    [product_id] => 1
+                    [quantity] => 1
+                    [brand] => PAN-NET
+                    [code] => CJ688TGBL
+                    [description] => TX6 JACK MODULE WITH ENHANCED GIGA TX TERMINATION STYLE T567 A/B WIRING, RJ45 PATENT #RE38, 519 BLACK
+                    [unit] => piece(s)
+                    [unit_id] => 3
+                )
+
+            [9] => Array
+                (
+                    [product_id] => 3
+                    [quantity] => 1
+                    [brand] => COMMSCOPE
+                    [code] => 1427071-4
+                    [description] => CAT5 U/UTP
+                    [unit] => roll(s)
+                    [unit_id] => 2
+                )
+
+            [10] => Array
+                (
+                    [product_id] => 1
+                    [quantity] => 1
+                    [brand] => PAN-NET
+                    [code] => CJ688TGBL
+                    [description] => TX6 JACK MODULE WITH ENHANCED GIGA TX TERMINATION STYLE T567 A/B WIRING, RJ45 PATENT #RE38, 519 BLACK
+                    [unit] => piece(s)
+                    [unit_id] => 3
+                )
+
+            [11] => Array
+                (
+                    [product_id] => 3
+                    [quantity] => 1
+                    [brand] => COMMSCOPE
+                    [code] => 1427071-4
+                    [description] => CAT5 U/UTP
+                    [unit] => roll(s)
+                    [unit_id] => 2
+                )
+
+            [12] => Array
+                (
+                    [product_id] => 1
+                    [quantity] => 1
+                    [brand] => PAN-NET
+                    [code] => CJ688TGBL
+                    [description] => TX6 JACK MODULE WITH ENHANCED GIGA TX TERMINATION STYLE T567 A/B WIRING, RJ45 PATENT #RE38, 519 BLACK
+                    [unit] => piece(s)
+                    [unit_id] => 3
+                )
+
+            [13] => Array
+                (
+                    [product_id] => 3
+                    [quantity] => 1
+                    [brand] => COMMSCOPE
+                    [code] => 1427071-4
+                    [description] => CAT5 U/UTP
+                    [unit] => roll(s)
+                    [unit_id] => 2
+                )
+
+            [14] => Array
+                (
+                    [product_id] => 3
+                    [quantity] => 1
+                    [brand] => COMMSCOPE
+                    [code] => 1427071-4
+                    [description] => CAT5 U/UTP
+                    [unit] => roll(s)
+                    [unit_id] => 2
+                )
+
+            [15] => Array
+                (
+                    [product_id] => 1
+                    [quantity] => 1
+                    [brand] => PAN-NET
+                    [code] => CJ688TGBL
+                    [description] => TX6 JACK MODULE WITH ENHANCED GIGA TX TERMINATION STYLE T567 A/B WIRING, RJ45 PATENT #RE38, 519 BLACK
+                    [unit] => piece(s)
+                    [unit_id] => 3
+                )
+
+            [16] => Array
+                (
+                    [product_id] => 3
+                    [quantity] => 1
+                    [brand] => COMMSCOPE
+                    [code] => 1427071-4
+                    [description] => CAT5 U/UTP
+                    [unit] => roll(s)
+                    [unit_id] => 2
+                )
+
+            [17] => Array
+                (
+                    [product_id] => 3
+                    [quantity] => 1
+                    [brand] => COMMSCOPE
+                    [code] => 1427071-4
+                    [description] => CAT5 U/UTP
+                    [unit] => roll(s)
+                    [unit_id] => 2
+                )
+
+        )
+
+    [posting_date] => 2025-03-19
+    [delivery_date] => 2025-03-20
+    [from_company_id] => 1
+    [to_company_id] => 3
+    [po_number] => 21tv
+    [reference_po] => 341t3
+    [dr_number] => asd 312135
+)
+
+[18-Mar-2025 06:28:44 Europe/Berlin] JSON data received: {"products":[{"product_id":"1","quantity":"1","brand":"PAN-NET","code":"CJ688TGBL","description":"TX6 JACK MODULE WITH ENHANCED GIGA TX TERMINATION STYLE T567 A/B WIRING, RJ45 PATENT #RE38, 519 BLACK","unit":"piece(s)","unit_id":3},{"product_id":"3","quantity":"1","brand":"COMMSCOPE","code":"1427071-4","description":"CAT5 U/UTP","unit":"roll(s)","unit_id":2},{"product_id":"1","quantity":"1","brand":"PAN-NET","code":"CJ688TGBL","description":"TX6 JACK MODULE WITH ENHANCED GIGA TX TERMINATION STYLE T567 A/B WIRING, RJ45 PATENT #RE38, 519 BLACK","unit":"piece(s)","unit_id":3},{"product_id":"1","quantity":"1","brand":"PAN-NET","code":"CJ688TGBL","description":"TX6 JACK MODULE WITH ENHANCED GIGA TX TERMINATION STYLE T567 A/B WIRING, RJ45 PATENT #RE38, 519 BLACK","unit":"piece(s)","unit_id":3},{"product_id":"3","quantity":"1","brand":"COMMSCOPE","code":"1427071-4","description":"CAT5 U/UTP","unit":"roll(s)","unit_id":2},{"product_id":"1","quantity":"1","brand":"PAN-NET","code":"CJ688TGBL","description":"TX6 JACK MODULE WITH ENHANCED GIGA TX TERMINATION STYLE T567 A/B WIRING, RJ45 PATENT #RE38, 519 BLACK","unit":"piece(s)","unit_id":3},{"product_id":"3","quantity":"1","brand":"COMMSCOPE","code":"1427071-4","description":"CAT5 U/UTP","unit":"roll(s)","unit_id":2},{"product_id":"3","quantity":"1","brand":"COMMSCOPE","code":"1427071-4","description":"CAT5 U/UTP","unit":"roll(s)","unit_id":2},{"product_id":"3","quantity":"1","brand":"COMMSCOPE","code":"1427071-4","description":"CAT5 U/UTP","unit":"roll(s)","unit_id":2},{"product_id":"1","quantity":"1","brand":"PAN-NET","code":"CJ688TGBL","description":"TX6 JACK MODULE WITH ENHANCED GIGA TX TERMINATION STYLE T567 A/B WIRING, RJ45 PATENT #RE38, 519 BLACK","unit":"piece(s)","unit_id":3},{"product_id":"1","quantity":"1","brand":"PAN-NET","code":"CJ688TGBL","description":"TX6 JACK MODULE WITH ENHANCED GIGA TX TERMINATION STYLE T567 A/B WIRING, RJ45 PATENT #RE38, 519 BLACK","unit":"piece(s)","unit_id":3},{"product_id":"3","quantity":"1","brand":"COMMSCOPE","code":"1427071-4","description":"CAT5 U/UTP","unit":"roll(s)","unit_id":2},{"product_id":"1","quantity":"1","brand":"PAN-NET","code":"CJ688TGBL","description":"TX6 JACK MODULE WITH ENHANCED GIGA TX TERMINATION STYLE T567 A/B WIRING, RJ45 PATENT #RE38, 519 BLACK","unit":"piece(s)","unit_id":3},{"product_id":"3","quantity":"1","brand":"COMMSCOPE","code":"1427071-4","description":"CAT5 U/UTP","unit":"roll(s)","unit_id":2},{"product_id":"3","quantity":"1","brand":"COMMSCOPE","code":"1427071-4","description":"CAT5 U/UTP","unit":"roll(s)","unit_id":2},{"product_id":"1","quantity":"1","brand":"PAN-NET","code":"CJ688TGBL","description":"TX6 JACK MODULE WITH ENHANCED GIGA TX TERMINATION STYLE T567 A/B WIRING, RJ45 PATENT #RE38, 519 BLACK","unit":"piece(s)","unit_id":3},{"product_id":"1","quantity":"1","brand":"PAN-NET","code":"CJ688TGBL","description":"TX6 JACK MODULE WITH ENHANCED GIGA TX TERMINATION STYLE T567 A/B WIRING, RJ45 PATENT #RE38, 519 BLACK","unit":"piece(s)","unit_id":3},{"product_id":"3","quantity":"1","brand":"COMMSCOPE","code":"1427071-4","description":"CAT5 U/UTP","unit":"roll(s)","unit_id":2},{"product_id":"3","quantity":"1","brand":"COMMSCOPE","code":"1427071-4","description":"CAT5 U/UTP","unit":"roll(s)","unit_id":2},{"product_id":"3","quantity":"1","brand":"COMMSCOPE","code":"1427071-4","description":"CAT5 U/UTP","unit":"roll(s)","unit_id":2},{"product_id":"1","quantity":"1","brand":"PAN-NET","code":"CJ688TGBL","description":"TX6 JACK MODULE WITH ENHANCED GIGA TX TERMINATION STYLE T567 A/B WIRING, RJ45 PATENT #RE38, 519 BLACK","unit":"piece(s)","unit_id":3},{"product_id":"3","quantity":"1","brand":"COMMSCOPE","code":"1427071-4","description":"CAT5 U/UTP","unit":"roll(s)","unit_id":2},{"product_id":"3","quantity":"1","brand":"COMMSCOPE","code":"1427071-4","description":"CAT5 U/UTP","unit":"roll(s)","unit_id":2},{"product_id":"1","quantity":"1","brand":"PAN-NET","code":"CJ688TGBL","description":"TX6 JACK MODULE WITH ENHANCED GIGA TX TERMINATION STYLE T567 A/B WIRING, RJ45 PATENT #RE38, 519 BLACK","unit":"piece(s)","unit_id":3},{"product_id":"1","quantity":"1","brand":"PAN-NET","code":"CJ688TGBL","description":"TX6 JACK MODULE WITH ENHANCED GIGA TX TERMINATION STYLE T567 A/B WIRING, RJ45 PATENT #RE38, 519 BLACK","unit":"piece(s)","unit_id":3},{"product_id":"3","quantity":"1","brand":"COMMSCOPE","code":"1427071-4","description":"CAT5 U/UTP","unit":"roll(s)","unit_id":2},{"product_id":"3","quantity":"1","brand":"COMMSCOPE","code":"1427071-4","description":"CAT5 U/UTP","unit":"roll(s)","unit_id":2},{"product_id":"3","quantity":"1","brand":"COMMSCOPE","code":"1427071-4","description":"CAT5 U/UTP","unit":"roll(s)","unit_id":2},{"product_id":"1","quantity":"1","brand":"PAN-NET","code":"CJ688TGBL","description":"TX6 JACK MODULE WITH ENHANCED GIGA TX TERMINATION STYLE T567 A/B WIRING, RJ45 PATENT #RE38, 519 BLACK","unit":"piece(s)","unit_id":3},{"product_id":"3","quantity":"1","brand":"COMMSCOPE","code":"1427071-4","description":"CAT5 U/UTP","unit":"roll(s)","unit_id":2},{"product_id":"3","quantity":"1","brand":"COMMSCOPE","code":"1427071-4","description":"CAT5 U/UTP","unit":"roll(s)","unit_id":2},{"product_id":"3","quantity":"1","brand":"COMMSCOPE","code":"1427071-4","description":"CAT5 U/UTP","unit":"roll(s)","unit_id":2},{"product_id":"3","quantity":"1","brand":"COMMSCOPE","code":"1427071-4","description":"CAT5 U/UTP","unit":"roll(s)","unit_id":2}],"posting_date":"2025-03-18","delivery_date":"2025-03-19","from_company_id":"7","to_company_id":"6","po_number":"2v2wef","reference_po":"252trqw2","dr_number":"wqd123451"}
+[18-Mar-2025 06:28:44 Europe/Berlin] Decoded data: Array
+(
+    [products] => Array
+        (
+            [0] => Array
+                (
+                    [product_id] => 1
+                    [quantity] => 1
+                    [brand] => PAN-NET
+                    [code] => CJ688TGBL
+                    [description] => TX6 JACK MODULE WITH ENHANCED GIGA TX TERMINATION STYLE T567 A/B WIRING, RJ45 PATENT #RE38, 519 BLACK
+                    [unit] => piece(s)
+                    [unit_id] => 3
+                )
+
+            [1] => Array
+                (
+                    [product_id] => 3
+                    [quantity] => 1
+                    [brand] => COMMSCOPE
+                    [code] => 1427071-4
+                    [description] => CAT5 U/UTP
+                    [unit] => roll(s)
+                    [unit_id] => 2
+                )
+
+            [2] => Array
+                (
+                    [product_id] => 1
+                    [quantity] => 1
+                    [brand] => PAN-NET
+                    [code] => CJ688TGBL
+                    [description] => TX6 JACK MODULE WITH ENHANCED GIGA TX TERMINATION STYLE T567 A/B WIRING, RJ45 PATENT #RE38, 519 BLACK
+                    [unit] => piece(s)
+                    [unit_id] => 3
+                )
+
+            [3] => Array
+                (
+                    [product_id] => 1
+                    [quantity] => 1
+                    [brand] => PAN-NET
+                    [code] => CJ688TGBL
+                    [description] => TX6 JACK MODULE WITH ENHANCED GIGA TX TERMINATION STYLE T567 A/B WIRING, RJ45 PATENT #RE38, 519 BLACK
+                    [unit] => piece(s)
+                    [unit_id] => 3
+                )
+
+            [4] => Array
+                (
+                    [product_id] => 3
+                    [quantity] => 1
+                    [brand] => COMMSCOPE
+                    [code] => 1427071-4
+                    [description] => CAT5 U/UTP
+                    [unit] => roll(s)
+                    [unit_id] => 2
+                )
+
+            [5] => Array
+                (
+                    [product_id] => 1
+                    [quantity] => 1
+                    [brand] => PAN-NET
+                    [code] => CJ688TGBL
+                    [description] => TX6 JACK MODULE WITH ENHANCED GIGA TX TERMINATION STYLE T567 A/B WIRING, RJ45 PATENT #RE38, 519 BLACK
+                    [unit] => piece(s)
+                    [unit_id] => 3
+                )
+
+            [6] => Array
+                (
+                    [product_id] => 3
+                    [quantity] => 1
+                    [brand] => COMMSCOPE
+                    [code] => 1427071-4
+                    [description] => CAT5 U/UTP
+                    [unit] => roll(s)
+                    [unit_id] => 2
+                )
+
+            [7] => Array
+                (
+                    [product_id] => 3
+                    [quantity] => 1
+                    [brand] => COMMSCOPE
+                    [code] => 1427071-4
+                    [description] => CAT5 U/UTP
+                    [unit] => roll(s)
+                    [unit_id] => 2
+                )
+
+            [8] => Array
+                (
+                    [product_id] => 3
+                    [quantity] => 1
+                    [brand] => COMMSCOPE
+                    [code] => 1427071-4
+                    [description] => CAT5 U/UTP
+                    [unit] => roll(s)
+                    [unit_id] => 2
+                )
+
+            [9] => Array
+                (
+                    [product_id] => 1
+                    [quantity] => 1
+                    [brand] => PAN-NET
+                    [code] => CJ688TGBL
+                    [description] => TX6 JACK MODULE WITH ENHANCED GIGA TX TERMINATION STYLE T567 A/B WIRING, RJ45 PATENT #RE38, 519 BLACK
+                    [unit] => piece(s)
+                    [unit_id] => 3
+                )
+
+            [10] => Array
+                (
+                    [product_id] => 1
+                    [quantity] => 1
+                    [brand] => PAN-NET
+                    [code] => CJ688TGBL
+                    [description] => TX6 JACK MODULE WITH ENHANCED GIGA TX TERMINATION STYLE T567 A/B WIRING, RJ45 PATENT #RE38, 519 BLACK
+                    [unit] => piece(s)
+                    [unit_id] => 3
+                )
+
+            [11] => Array
+                (
+                    [product_id] => 3
+                    [quantity] => 1
+                    [brand] => COMMSCOPE
+                    [code] => 1427071-4
+                    [description] => CAT5 U/UTP
+                    [unit] => roll(s)
+                    [unit_id] => 2
+                )
+
+            [12] => Array
+                (
+                    [product_id] => 1
+                    [quantity] => 1
+                    [brand] => PAN-NET
+                    [code] => CJ688TGBL
+                    [description] => TX6 JACK MODULE WITH ENHANCED GIGA TX TERMINATION STYLE T567 A/B WIRING, RJ45 PATENT #RE38, 519 BLACK
+                    [unit] => piece(s)
+                    [unit_id] => 3
+                )
+
+            [13] => Array
+                (
+                    [product_id] => 3
+                    [quantity] => 1
+                    [brand] => COMMSCOPE
+                    [code] => 1427071-4
+                    [description] => CAT5 U/UTP
+                    [unit] => roll(s)
+                    [unit_id] => 2
+                )
+
+            [14] => Array
+                (
+                    [product_id] => 3
+                    [quantity] => 1
+                    [brand] => COMMSCOPE
+                    [code] => 1427071-4
+                    [description] => CAT5 U/UTP
+                    [unit] => roll(s)
+                    [unit_id] => 2
+                )
+
+            [15] => Array
+                (
+                    [product_id] => 1
+                    [quantity] => 1
+                    [brand] => PAN-NET
+                    [code] => CJ688TGBL
+                    [description] => TX6 JACK MODULE WITH ENHANCED GIGA TX TERMINATION STYLE T567 A/B WIRING, RJ45 PATENT #RE38, 519 BLACK
+                    [unit] => piece(s)
+                    [unit_id] => 3
+                )
+
+            [16] => Array
+                (
+                    [product_id] => 1
+                    [quantity] => 1
+                    [brand] => PAN-NET
+                    [code] => CJ688TGBL
+                    [description] => TX6 JACK MODULE WITH ENHANCED GIGA TX TERMINATION STYLE T567 A/B WIRING, RJ45 PATENT #RE38, 519 BLACK
+                    [unit] => piece(s)
+                    [unit_id] => 3
+                )
+
+            [17] => Array
+                (
+                    [product_id] => 3
+                    [quantity] => 1
+                    [brand] => COMMSCOPE
+                    [code] => 1427071-4
+                    [description] => CAT5 U/UTP
+                    [unit] => roll(s)
+                    [unit_id] => 2
+                )
+
+            [18] => Array
+                (
+                    [product_id] => 3
+                    [quantity] => 1
+                    [brand] => COMMSCOPE
+                    [code] => 1427071-4
+                    [description] => CAT5 U/UTP
+                    [unit] => roll(s)
+                    [unit_id] => 2
+                )
+
+            [19] => Array
+                (
+                    [product_id] => 3
+                    [quantity] => 1
+                    [brand] => COMMSCOPE
+                    [code] => 1427071-4
+                    [description] => CAT5 U/UTP
+                    [unit] => roll(s)
+                    [unit_id] => 2
+                )
+
+            [20] => Array
+                (
+                    [product_id] => 1
+                    [quantity] => 1
+                    [brand] => PAN-NET
+                    [code] => CJ688TGBL
+                    [description] => TX6 JACK MODULE WITH ENHANCED GIGA TX TERMINATION STYLE T567 A/B WIRING, RJ45 PATENT #RE38, 519 BLACK
+                    [unit] => piece(s)
+                    [unit_id] => 3
+                )
+
+            [21] => Array
+                (
+                    [product_id] => 3
+                    [quantity] => 1
+                    [brand] => COMMSCOPE
+                    [code] => 1427071-4
+                    [description] => CAT5 U/UTP
+                    [unit] => roll(s)
+                    [unit_id] => 2
+                )
+
+            [22] => Array
+                (
+                    [product_id] => 3
+                    [quantity] => 1
+                    [brand] => COMMSCOPE
+                    [code] => 1427071-4
+                    [description] => CAT5 U/UTP
+                    [unit] => roll(s)
+                    [unit_id] => 2
+                )
+
+            [23] => Array
+                (
+                    [product_id] => 1
+                    [quantity] => 1
+                    [brand] => PAN-NET
+                    [code] => CJ688TGBL
+                    [description] => TX6 JACK MODULE WITH ENHANCED GIGA TX TERMINATION STYLE T567 A/B WIRING, RJ45 PATENT #RE38, 519 BLACK
+                    [unit] => piece(s)
+                    [unit_id] => 3
+                )
+
+            [24] => Array
+                (
+                    [product_id] => 1
+                    [quantity] => 1
+                    [brand] => PAN-NET
+                    [code] => CJ688TGBL
+                    [description] => TX6 JACK MODULE WITH ENHANCED GIGA TX TERMINATION STYLE T567 A/B WIRING, RJ45 PATENT #RE38, 519 BLACK
+                    [unit] => piece(s)
+                    [unit_id] => 3
+                )
+
+            [25] => Array
+                (
+                    [product_id] => 3
+                    [quantity] => 1
+                    [brand] => COMMSCOPE
+                    [code] => 1427071-4
+                    [description] => CAT5 U/UTP
+                    [unit] => roll(s)
+                    [unit_id] => 2
+                )
+
+            [26] => Array
+                (
+                    [product_id] => 3
+                    [quantity] => 1
+                    [brand] => COMMSCOPE
+                    [code] => 1427071-4
+                    [description] => CAT5 U/UTP
+                    [unit] => roll(s)
+                    [unit_id] => 2
+                )
+
+            [27] => Array
+                (
+                    [product_id] => 3
+                    [quantity] => 1
+                    [brand] => COMMSCOPE
+                    [code] => 1427071-4
+                    [description] => CAT5 U/UTP
+                    [unit] => roll(s)
+                    [unit_id] => 2
+                )
+
+            [28] => Array
+                (
+                    [product_id] => 1
+                    [quantity] => 1
+                    [brand] => PAN-NET
+                    [code] => CJ688TGBL
+                    [description] => TX6 JACK MODULE WITH ENHANCED GIGA TX TERMINATION STYLE T567 A/B WIRING, RJ45 PATENT #RE38, 519 BLACK
+                    [unit] => piece(s)
+                    [unit_id] => 3
+                )
+
+            [29] => Array
+                (
+                    [product_id] => 3
+                    [quantity] => 1
+                    [brand] => COMMSCOPE
+                    [code] => 1427071-4
+                    [description] => CAT5 U/UTP
+                    [unit] => roll(s)
+                    [unit_id] => 2
+                )
+
+            [30] => Array
+                (
+                    [product_id] => 3
+                    [quantity] => 1
+                    [brand] => COMMSCOPE
+                    [code] => 1427071-4
+                    [description] => CAT5 U/UTP
+                    [unit] => roll(s)
+                    [unit_id] => 2
+                )
+
+            [31] => Array
+                (
+                    [product_id] => 3
+                    [quantity] => 1
+                    [brand] => COMMSCOPE
+                    [code] => 1427071-4
+                    [description] => CAT5 U/UTP
+                    [unit] => roll(s)
+                    [unit_id] => 2
+                )
+
+            [32] => Array
+                (
+                    [product_id] => 3
+                    [quantity] => 1
+                    [brand] => COMMSCOPE
+                    [code] => 1427071-4
+                    [description] => CAT5 U/UTP
+                    [unit] => roll(s)
+                    [unit_id] => 2
+                )
+
+        )
+
+    [posting_date] => 2025-03-18
+    [delivery_date] => 2025-03-19
+    [from_company_id] => 7
+    [to_company_id] => 6
+    [po_number] => 2v2wef
+    [reference_po] => 252trqw2
+    [dr_number] => wqd123451
+)
+

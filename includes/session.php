@@ -84,6 +84,18 @@ if (!empty($_SESSION['employee_id'])) {
                     ]
                 ]
             ],
+            'Create Unit Type' => [
+                'name' => 'Manage Unit Type',
+                'url' => '#',
+                'icon' => 'fas fa-cube',
+                'sub_menu' => [
+                    [
+                        'name' => 'Add Unit',
+                        'url' => '../../pages/unit/unit.php',
+                        'icon' => 'fas fa-plus nav-icon'
+                    ]
+                ]
+            ],
             'Status' => [
                 'name' => 'Status',
                 'url' => '#',

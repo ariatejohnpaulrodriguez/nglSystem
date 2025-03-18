@@ -21,43 +21,46 @@ if (!is_numeric($transferId)) {
 try {
     // Prepare the SQL statement
     $sql = "
-        SELECT 
-            transfers.transfer_id, 
-            transfers.posting_date AS posting_date,
-            transfers.delivery_date AS delivery_date,
-            transfers.dr_id, 
-            transfers.po_id, 
-            transfers.reference_po_id, 
-            from_company.name AS from_company_name, 
-            from_company.address AS from_company_address, 
-            from_company.phone_number AS from_company_phone, 
-            from_company.attention AS from_company_attention,
-            to_company.name AS to_company_name, 
-            to_company.address AS to_company_address, 
-            to_company.phone_number AS to_company_phone, 
-            to_company.attention AS to_company_attention,
-            delivery_receipts.dr_number AS dr_number,
-            purchase_orders.po_number AS po_number,
-            reference_pos.reference_po AS reference_po_number,
-            statuses.status_name,
-            transfer_products.transfer_product_id,
-            transfer_products.transfer_id AS product_transfer_id,
-            transfer_products.product_id,
-            transfer_products.quantity,
-            transfer_products.code,
-            transfer_products.brand,
-            transfer_products.description
-        FROM transfers
-        INNER JOIN companies AS from_company ON transfers.from_company_id = from_company.company_id
-        INNER JOIN companies AS to_company ON transfers.to_company_id = to_company.company_id
-        LEFT JOIN delivery_receipts ON transfers.dr_id = delivery_receipts.dr_id
-        LEFT JOIN purchase_orders ON transfers.po_id = purchase_orders.po_id
-        LEFT JOIN reference_pos ON transfers.reference_po_id = reference_pos.reference_po_id
-        LEFT JOIN statuses ON transfers.status_id = statuses.status_id
-        LEFT JOIN transfer_products ON transfers.transfer_id = transfer_products.transfer_id
-        WHERE transfers.transfer_id = ?
-        ORDER BY transfers.transfer_id DESC, transfer_products.transfer_product_id ASC
+    SELECT 
+        transfers.transfer_id, 
+        pd.date_value AS posting_date,
+        dd.date_value AS delivery_date,
+        transfers.dr_id, 
+        transfers.po_id, 
+        transfers.reference_po_id, 
+        from_company.name AS from_company_name, 
+        from_company.address AS from_company_address, 
+        from_company.phone_number AS from_company_phone, 
+        from_company.attention AS from_company_attention,
+        to_company.name AS to_company_name, 
+        to_company.address AS to_company_address, 
+        to_company.phone_number AS to_company_phone, 
+        to_company.attention AS to_company_attention,
+        delivery_receipts.dr_number AS dr_number,
+        purchase_orders.po_number AS po_number,
+        reference_pos.reference_po AS reference_po_number,
+        statuses.status_name,
+        transfer_products.transfer_product_id,
+        transfer_products.transfer_id AS product_transfer_id,
+        transfer_products.product_id,
+        transfer_products.quantity,
+        transfer_products.code,
+        transfer_products.brand,
+        transfer_products.description
+    FROM transfers
+    INNER JOIN companies AS from_company ON transfers.from_company_id = from_company.company_id
+    INNER JOIN companies AS to_company ON transfers.to_company_id = to_company.company_id
+    LEFT JOIN dates AS pd ON transfers.posting_date = pd.date_id
+    LEFT JOIN dates AS dd ON transfers.delivery_date = dd.date_id
+    LEFT JOIN delivery_receipts ON transfers.dr_id = delivery_receipts.dr_id
+    LEFT JOIN purchase_orders ON transfers.po_id = purchase_orders.po_id
+    LEFT JOIN reference_pos ON transfers.reference_po_id = reference_pos.reference_po_id
+    LEFT JOIN statuses ON transfers.status_id = statuses.status_id
+    LEFT JOIN transfer_products ON transfers.transfer_id = transfer_products.transfer_id
+    WHERE transfers.transfer_id = ?
+    ORDER BY transfers.transfer_id DESC, transfer_products.transfer_product_id ASC
     ";
+
 
     $stmt = $conn->prepare($sql);
 

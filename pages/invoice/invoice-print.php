@@ -169,7 +169,7 @@ if (isset($_GET['invoice_id']) && is_numeric($_GET['invoice_id'])) {
         $pdf->SetTextColor(255, 255, 255); // White text color
 
         // Define table headers and column widths
-        $headers = ['Code', 'Brand', 'Description', 'Quantity'];
+        $headers = ['Quantity', 'Unit', 'Description', 'Remarks'];
         $widths = [25, 20, 114, 20];
 
         // Function to print table headers
@@ -187,8 +187,16 @@ if (isset($_GET['invoice_id']) && is_numeric($_GET['invoice_id'])) {
         // Print table headers on the first page
         printTableHeaders($pdf, $headers, $widths);
 
-        // Fetch invoice product details
-        $queryProducts = "SELECT code, brand, description, quantity FROM invoice_products WHERE invoice_id = ?";
+        // Fetch invoice product details with unit_name
+        $queryProducts = "SELECT 
+                        ip.quantity AS quantity, 
+                        p.description AS description, 
+                        u.unit_name AS unit -- Get the unit_name instead of unit_id
+                        FROM invoice_products ip
+                        INNER JOIN products p ON ip.product_id = p.product_id
+                        INNER JOIN units u ON p.unit_id = u.unit_id -- Join units table to get unit_name
+                        WHERE ip.invoice_id = ?";
+
         $stmtProducts = $conn->prepare($queryProducts);
         $stmtProducts->bind_param("i", $invoiceId);
         $stmtProducts->execute();
@@ -220,18 +228,33 @@ if (isset($_GET['invoice_id']) && is_numeric($_GET['invoice_id'])) {
 
                 // Align columns with calculated row height
                 $pdf->SetXY(16, $startY);
-                foreach (['code', 'brand', 'description', 'quantity'] as $i => $key) {
+                foreach (['quantity', 'unit', 'description'] as $i => $key) {
                     $cellWidth = $widths[$i];
                     $pdf->SetFont('helvetica', '', 6); // Reset font size
                     resizeText($pdf, $product[$key], $cellWidth); // Resize text if needed
                     $pdf->Cell($cellWidth, 6, $product[$key], 1, 0, 'C');
                 }
+
+                // Add an empty cell for "Remarks"
+                $pdf->Cell($widths[3], 6, '', 1, 0, 'C');
+
                 $pdf->Ln(); // Move to the next line for the next row
             }
         } else {
             $pdf->Cell(array_sum($widths), 10, 'No products found.', 1, 1, 'C');
         }
 
+        // Function to ensure enough space before adding content
+        function checkAndAddPageBreak($pdf, $requiredSpace)
+        {
+            if ($pdf->GetY() + $requiredSpace > 270) { // Adjust 270 based on your footer margin
+                $pdf->AddPage();
+                $pdf->SetXY(15, 20); // Reset the position for the new page
+            }
+        }
+
+        // Example usage before "Reference PO" section
+        checkAndAddPageBreak($pdf, 50); // Estimate the height needed for "Reference PO" and following content
 
         $pdf->SetXY(15, 220);
         $pdf->SetFont('helvetica', 'B', 10); // Set bold font

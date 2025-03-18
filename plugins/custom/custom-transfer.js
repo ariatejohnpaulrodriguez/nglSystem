@@ -25,10 +25,10 @@ $(document).ready(function () {
     }
 
     // Company Selection - Reuse updateCompanyDetails
-    var companyFrom = $("#company-from");
-    var companyFromDetails = $("#company-from-details");
-    var companyTo = $("#company-to");
-    var companyToDetails = $("#company-to-details");
+    var companyFrom = $("#t-company-from");
+    var companyFromDetails = $("#t-company-from-details");
+    var companyTo = $("#t-company-to");
+    var companyToDetails = $("#t-company-to-details");
 
     if (companyFrom.length && companyFromDetails.length) {
         companyFrom.on("click change", function () {
@@ -45,22 +45,22 @@ $(document).ready(function () {
     }
 
     // Datepicker - Update Selectors to #datepicker3 and #datepicker4
-    $("#datepicker3, #datepicker4").datepicker({ // UPDATED SELECTORS
+    $("#t-datepicker3, #t-datepicker4").datepicker({ // UPDATED SELECTORS
         showAnim: "fadeIn",
         dateFormat: "yy-mm-dd"
     });
 
-    $("#calendar-icon").click(function () { // Keep
-        $("#datepicker3").datepicker("show"); // Updated
+    $("#t-calendar-icon").click(function () { // Keep
+        $("#t-datepicker3").datepicker("show"); // Updated
     });
 
-    $("#calendar-icon2").click(function () { // Keep
-        $("#datepicker4").datepicker("show"); // Updated
+    $("#t-calendar-icon2").click(function () { // Keep
+        $("#t-datepicker4").datepicker("show"); // Updated
     });
 
     // Function: addProductRow - Major Changes Needed
     function addProductRow() {
-        var tbody = $("#product-table-body");
+        var tbody = $("#t-product-table-body");
         var tr = $("<tr>");
 
         var quantityCell = $("<td>").append($("<input>", {
@@ -145,7 +145,7 @@ $(document).ready(function () {
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.error("Error fetching product data:", textStatus, errorThrown);
-                alert('Error fetching product data. Check console for details.');
+                toastr.error('Error fetching product data. Check console for details.');
             }
         });
 
@@ -157,7 +157,7 @@ $(document).ready(function () {
     }
 
     // Update add-products to add-t-products
-    $("#add-t-products").click(addProductRow); // UPDATED SELECTOR
+    $("#t-add-products").click(addProductRow); // UPDATED SELECTOR
 
     $("#transfer-form").submit(function (e) {
         e.preventDefault();
@@ -182,6 +182,7 @@ $(document).ready(function () {
         }
     
         var productData = [];
+        
         quantities.each(function (index) {
             var qty = $(this).val();
             var productId = productCodes.eq(index).val();
@@ -199,15 +200,15 @@ $(document).ready(function () {
     
         var data = {
             products: productData,
-            posting_date: $("#datepicker3").val(),
-            delivery_date: $("#datepicker4").val(),
-            from_company_id: $("#company-from").val(),
-            to_company_id: $("#company-to").val(),
-            plant: $("#plant").val(),
-            po_number: $("#poNumber").val(),
-            reference_po: $("#reference-po").val(),
-            dr_number: $("#drNumber").val(),
-            plant_name: $("#plantName").val(),
+            posting_date: $("#t-datepicker3").val(),
+            delivery_date: $("#t-datepicker4").val(),
+            from_company_id: $("#t-company-from").val(),
+            to_company_id: $("#t-company-to").val(),
+            plant: $("#t-plant").val(),
+            po_number: $("#t-poNumber").val(),
+            reference_po: $("#t-reference-po").val(),
+            dr_number: $("#t-drNumber").val(),
+            plant_name: $("#t-plantName").val(),
             status_id: $("#status").val()
         };
     
@@ -219,46 +220,50 @@ $(document).ready(function () {
             dataType: "json",
             success: function (response) {
                 if (response.status === 'success') {
-                    toastr.success(response.message); // Show success notification
-                    window.location.href = "transfer-request-form.php"; // Redirect on success
+                    toastr.success(response.message);  // Show success message with Toastr
+                    window.location.href = "transfer-request-form.php";
                 } else {
                     console.error("Error saving transfer:", response.message);
-                    toastr.error("Error saving transfer: " + response.message + ". Check console for details."); // Show error notification
+                    toastr.error("Error saving transfer: " + response.message); // Show error message with Toastr
                 }
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.error("Error saving transfer:", textStatus, errorThrown, jqXHR.responseText);
-                toastr.error("Error saving transfer. Check console for details."); // Show error notification
+                let errorMessage = "Error saving transfer: " + textStatus;
+                if (jqXHR.status === 0) {
+                    errorMessage += ".  Possible CORS issue or server is down.";
+                }
+                toastr.error(errorMessage); // Show AJAX error message with Toastr
             }
         });
     });        
     
     
-    $("#company-from").change(function () { //Updated selector to company-from
+    $("#t-company-from").change(function () { //Updated selector to company-from
         var companyID = $(this).val();
 
-        $("#plant").val('');
-        $("#plantName").val('');
+        $("#t-plant").val('');
+        $("#t-plantName").val('');
 
         if (companyID) {
-            var selectedCompany = $("#company-from option[value='" + companyID + "']"); //Updated selector to company-from
+            var selectedCompany = $("#t-company-from option[value='" + companyID + "']"); //Updated selector to company-from
 
             var plant = selectedCompany.data('plant');
             var plantName = selectedCompany.data('plant-name');
 
-            $("#plant").val(plant);
-            $("#plantName").val(plantName);
+            $("#t-plant").val(plant);
+            $("#t-plantName").val(plantName);
 
             var companyDetails = `
                 <p><strong>Address:</strong> ${selectedCompany.data('address')}</p>
                 <p><strong>Attention:</strong> ${selectedCompany.data('attention')}</p>
                 <p><strong>Phone:</strong> ${selectedCompany.data('phone')}</p>
             `;
-            $("#company-from-details").html(companyDetails); //Updated selector to company-from
+            $("#t-company-from-details").html(companyDetails); //Updated selector to company-from
         } else {
-            $("#plant").val('');
-            $("#plantName").val('');
-            $("#company-from-details").empty(); //Updated selector to company-from
+            $("#t-plant").val('');
+            $("#t-plantName").val('');
+            $("#t-company-from-details").empty(); //Updated selector to company-from
         }
     });
 
@@ -403,5 +408,19 @@ $(document).ready(function () {
                 }
             });            
         });
+    });
+
+    // Initialize DataTable
+    $('#transferTable').DataTable({
+        "paging": false,           // Enable pagination
+        "lengthChange": false,    // Disable page size change
+        "searching": false,        // Enable search box
+        "ordering": true,         // Enable sorting
+        "info": false,             // Show table info
+        "autoWidth": false,       // Disable auto column width
+        "order": [[0, 'desc']],   // Default sort by Invoice ID (Descending)
+        "columnDefs": [
+            { "orderable": false, "targets": [4] } // Disable sorting for the "Action" column
+        ]
     });
 });

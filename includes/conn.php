@@ -3,7 +3,7 @@ $servername = "localhost";
 $userName = "root";
 $passWord = "";
 //$dbname = "ngldatabase";
-$dbname = "ngldb8";
+$dbname = "ngldb9";
 $port = 3308;
 
 // Connection  <= to MYSQL

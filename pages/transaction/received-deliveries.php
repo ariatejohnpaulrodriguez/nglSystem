@@ -186,6 +186,7 @@ include '../../includes/session.php';
                                                                         <th>Code</th>
                                                                         <th>Brand</th>
                                                                         <th>Description</th>
+                                                                        <th>Unit</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody id="product-list">

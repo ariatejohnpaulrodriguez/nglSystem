@@ -11,6 +11,10 @@ ini_set("error_log", "../../php-error.log");
 
 // Get JSON data from the request
 $json_data = file_get_contents("php://input");
+
+// Log raw JSON data received
+error_log("JSON data received: " . $json_data);
+
 $data = json_decode($json_data, true);
 
 // Check if JSON decoding failed
@@ -20,6 +24,9 @@ if ($data === null && json_last_error() !== JSON_ERROR_NONE) {
     echo json_encode(array("status" => "error", "message" => $_SESSION['error']));
     exit;
 }
+
+// Log decoded data
+error_log("Decoded data: " . print_r($data, true));
 
 // Function to sanitize data
 function sanitize($conn, $data)
@@ -95,6 +102,7 @@ try {
         $brand = sanitize($conn, $product['brand']);
         $code = sanitize($conn, $product['code']);
         $description = sanitize($conn, $product['description']);
+        $unitId = intval($product['unit_id']); // Get the unit_id
 
         // Insert product details into invoice_products table
         $queryProduct = "INSERT INTO invoice_products (invoice_id, product_id, quantity, brand, code, description)
@@ -115,7 +123,7 @@ try {
             }
         } else {
             // If it doesn't, insert a new row
-            $insertStockQuery = "INSERT INTO stocks (product_id, current_quantity) VALUES ('$productID', '$quantity')";
+            $insertStockQuery = "INSERT INTO stocks (product_id, current_quantity, unit_id) VALUES ('$productID', '$quantity', '$unitId')"; //include unit_id
             if (!mysqli_query($conn, $insertStockQuery)) {
                 throw new Exception("Error inserting stock: " . mysqli_error($conn));
             }

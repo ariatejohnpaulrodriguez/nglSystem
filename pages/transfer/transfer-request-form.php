@@ -76,7 +76,7 @@ include '../../includes/session.php';
                                                             <h3 class="card-title">From Company</h3>
                                                         </div>
                                                         <div class="card-body">
-                                                            <select id="company-from" name="company_from_id"
+                                                            <select id="t-company-from" name="company_from_id"
                                                                 class="form-control">
                                                                 <?php foreach ($companies as $company): ?>
                                                                     <option value="<?php echo $company['company_id']; ?>"
@@ -89,7 +89,7 @@ include '../../includes/session.php';
                                                                     </option>
                                                                 <?php endforeach; ?>
                                                             </select><br>
-                                                            <address id="company-from-details">
+                                                            <address id="t-company-from-details">
                                                                 <!-- Company details will be populated here based on selection -->
                                                             </address>
                                                         </div>
@@ -102,7 +102,7 @@ include '../../includes/session.php';
                                                             <h3 class="card-title">To Company</h3>
                                                         </div>
                                                         <div class="card-body">
-                                                            <select id="company-to" name="company_to_id"
+                                                            <select id="t-company-to" name="company_to_id"
                                                                 class="form-control">
                                                                 <?php foreach ($companies as $company): ?>
                                                                     <option value="<?php echo $company['company_id']; ?>"
@@ -113,7 +113,7 @@ include '../../includes/session.php';
                                                                     </option>
                                                                 <?php endforeach; ?>
                                                             </select><br>
-                                                            <address id="company-to-details">
+                                                            <address id="t-company-to-details">
                                                                 <!-- Company details will be populated here based on selection -->
                                                             </address>
                                                         </div>
@@ -136,12 +136,12 @@ include '../../includes/session.php';
                                                                 <div class="col-md-6">
                                                                     <label for="postingDate">Posting Date</label>
                                                                     <div class="input-group">
-                                                                        <input type="text" id="datepicker3"
+                                                                        <input type="text" id="t-datepicker3"
                                                                             class="form-control form-control-sm"
                                                                             name="postingDate" readonly>
                                                                         <div class="input-group-append">
                                                                             <span class="input-group-text"
-                                                                                id="calendar-icon"
+                                                                                id="t-calendar-icon"
                                                                                 style="cursor:pointer;">
                                                                                 <i class="fas fa-calendar-alt"></i>
                                                                             </span>
@@ -149,15 +149,15 @@ include '../../includes/session.php';
                                                                     </div>
 
                                                                     <label for="plant">Plant:</label>
-                                                                    <input type="text" id="plant" name="plant"
+                                                                    <input type="text" id="t-plant" name="plant"
                                                                         class="form-control form-control-sm" readonly>
 
-                                                                    <label for="poNumber">PO #:</label>
-                                                                    <input type="text" id="poNumber"
+                                                                    <label for="t-poNumber">PO #:</label>
+                                                                    <input type="text" id="t-poNumber"
                                                                         class="form-control form-control-sm">
 
-                                                                    <label for="reference-po">Reference PO:</label>
-                                                                    <input type="text" id="reference-po"
+                                                                    <label for="t-reference-po">Reference PO:</label>
+                                                                    <input type="text" id="t-reference-po"
                                                                         class="form-control form-control-sm">
                                                                 </div>
 
@@ -165,26 +165,26 @@ include '../../includes/session.php';
                                                                 <div class="col-md-6">
                                                                     <label for="deliveryDate">Delivery Date</label>
                                                                     <div class="input-group">
-                                                                        <input type="text" id="datepicker4"
+                                                                        <input type="text" id="t-datepicker4"
                                                                             name="deliveryDate"
                                                                             class="form-control form-control-sm"
                                                                             readonly>
                                                                         <div class="input-group-append">
                                                                             <span class="input-group-text"
-                                                                                id="calendar-icon2"
+                                                                                id="t-calendar-icon2"
                                                                                 style="cursor:pointer;">
                                                                                 <i class="fas fa-calendar-alt"></i>
                                                                             </span>
                                                                         </div>
                                                                     </div>
 
-                                                                    <label for="drNumber">DR #:</label>
-                                                                    <input type="text" id="drNumber"
+                                                                    <label for="t-drNumber">DR #:</label>
+                                                                    <input type="text" id="t-drNumber"
                                                                         class="form-control form-control-sm">
 
                                                                     <!-- Plant Name field -->
                                                                     <label for="plantName">Plant Name:</label>
-                                                                    <input type="text" id="plantName" name="plantName"
+                                                                    <input type="text" id="t-plantName" name="plantName"
                                                                         class="form-control form-control-sm" readonly>
 
                                                                     <!-- Status field -->
@@ -224,12 +224,12 @@ include '../../includes/session.php';
                                                         </tr>
                                                     </thead>
 
-                                                    <tbody id="product-table-body"></tbody>
+                                                    <tbody id="t-product-table-body"></tbody>
                                                     <!-- Table rows will be dynamically added here -->
                                                     <tfoot>
                                                         <tr>
                                                             <td colspan="6" class="text-center">
-                                                                <button type="button" id="add-t-products"
+                                                                <button type="button" id="t-add-products"
                                                                     class="btn btn-primary btn-sm">
                                                                     <i class="fas fa-plus"></i> Add Product
                                                                 </button>

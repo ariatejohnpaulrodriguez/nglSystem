@@ -1,6 +1,6 @@
 <?php
-// Include database connection
 include '../../../includes/conn.php';
+session_start();
 
 // Set response header to JSON
 header('Content-Type: application/json');
@@ -16,7 +16,8 @@ $data = json_decode($json_data, true);
 // Check if JSON decoding failed
 if ($data === null && json_last_error() !== JSON_ERROR_NONE) {
     error_log("Error decoding JSON: " . json_last_error_msg());
-    echo json_encode(array("status" => "error", "message" => "Invalid JSON data."));
+    $_SESSION['error'] = "Invalid JSON data.";
+    echo json_encode(array("status" => "error", "message" => $_SESSION['error']));
     exit;
 }
 
@@ -107,8 +108,11 @@ try {
     // Commit the transaction
     mysqli_commit($conn);
 
+    // Store success message in session
+    $_SESSION['success'] = "Transfer and products saved successfully!";
+
     // Return success response
-    echo json_encode(array("status" => "success", "message" => "Transfers and products saved successfully!"));
+    echo json_encode(array("status" => "success", "message" => $_SESSION['success']));
 
 } catch (Exception $e) {
     // Rollback the transaction
@@ -117,8 +121,11 @@ try {
     // Log the error
     error_log("Error in save_transfer.php: " . $e->getMessage() . "\nData: " . json_encode($data));
 
+    // Store error message in session
+    $_SESSION['error'] = "Error saving transfer. Please check the logs.";
+
     // Send an error response
-    echo json_encode(array("status" => "error", "message" => "Error saving transfer. Please check the logs."));
+    echo json_encode(array("status" => "error", "message" => $_SESSION['error']));
 
 } finally {
     // Reset autocommit and close the connection
