@@ -4,6 +4,7 @@ include '../../../includes/conn.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $unit_name = trim($_POST['unit_name']);
+    $unit_type = $_POST['unit_type'];
 
     if (empty($unit_name)) {
         $_SESSION['error'] = "Unit name cannot be empty!";
@@ -21,10 +22,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($result->num_rows > 0) {
         $_SESSION['error'] = "Unit already exists!";
     } else {
-        // Insert new unit
-        $insertQuery = "INSERT INTO units (unit_name) VALUES (?)";
+        // Insert new unit with unit_type
+        $insertQuery = "INSERT INTO units (unit_name, unit_type) VALUES (?, ?)";
         $stmt = $conn->prepare($insertQuery);
-        $stmt->bind_param("s", $unit_name);
+        $stmt->bind_param("ss", $unit_name, $unit_type);
 
         if ($stmt->execute()) {
             $_SESSION['success'] = "Unit added successfully!";

@@ -169,7 +169,7 @@ if (isset($_GET['transfer_id']) && is_numeric($_GET['transfer_id'])) {
         $pdf->SetTextColor(255, 255, 255); // White text color
 
         // Define table headers and column widths
-        $headers = ['Code', 'Brand', 'Description', 'Quantity'];
+        $headers = ['Quantity', 'Unit', 'Description', 'Remarks'];
         $widths = [25, 20, 114, 20];
 
         // Function to print table headers
@@ -187,8 +187,16 @@ if (isset($_GET['transfer_id']) && is_numeric($_GET['transfer_id'])) {
         // Print table headers on the first page
         printTableHeaders($pdf, $headers, $widths);
 
-        // Fetch transfer product details
-        $queryProducts = "SELECT code, brand, description, quantity FROM transfer_products WHERE transfer_id = ?";
+        // Fetch transfer product details with unit_name
+        $queryProducts = "SELECT 
+                        tp.quantity AS quantity, 
+                        p.description AS description, 
+                        u.unit_name AS unit -- Get the unit_name instead of unit_id
+                        FROM transfer_products tp
+                        INNER JOIN products p ON tp.product_id = p.product_id
+                        INNER JOIN units u ON p.unit_id = u.unit_id -- Join units table to get unit_name
+                        WHERE tp.transfer_id = ?";
+
         $stmtProducts = $conn->prepare($queryProducts);
         $stmtProducts->bind_param("i", $transferID);
         $stmtProducts->execute();
@@ -220,12 +228,16 @@ if (isset($_GET['transfer_id']) && is_numeric($_GET['transfer_id'])) {
 
                 // Align columns with calculated row height
                 $pdf->SetXY(16, $startY);
-                foreach (['code', 'brand', 'description', 'quantity'] as $i => $key) {
+                foreach (['quantity', 'unit', 'description'] as $i => $key) {
                     $cellWidth = $widths[$i];
                     $pdf->SetFont('helvetica', '', 6); // Reset font size
                     resizeText($pdf, $product[$key], $cellWidth); // Resize text if needed
                     $pdf->Cell($cellWidth, 6, $product[$key], 1, 0, 'C');
                 }
+
+                // Add an empty cell for "Remarks"
+                $pdf->Cell($widths[3], 6, '', 1, 0, 'C');
+
                 $pdf->Ln(); // Move to the next line for the next row
             }
         } else {

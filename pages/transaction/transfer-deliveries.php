@@ -1,6 +1,7 @@
 <?php
 include '../../includes/header.php';
 include '../../includes/session.php';
+include '../../includes/check-permission.php';
 ?>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -29,21 +30,11 @@ include '../../includes/session.php';
                     <div class="row">
                         <div class="col-12">
                             <div class="card">
-                                <div class="card-header">
-                                    <h3 class="card-title">List</h3>
-
-                                    <div class="card-tools">
-                                        <div class="input-group input-group-sm" style="width: 150px;">
-                                            <input type="text" name="table_search" class="form-control float-right"
-                                                placeholder="Search">
-
-                                            <div class="input-group-append">
-                                                <button type="submit" class="btn btn-default">
-                                                    <i class="fas fa-search"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div class="card-header"
+                                    style="display: flex; justify-content: flex-end; align-items: center;">
+                                    <h3 class="card-title" style="margin-right: auto;">List</h3>
+                                    <a href="../../pages/transfer/transfer-request-form.php"
+                                        class="btn btn-primary btn-xs">Delivery Request Form</a>
                                 </div>
 
                                 <div class="card-body table-responsive p-0" style="height: 500px;">
@@ -119,16 +110,42 @@ include '../../includes/session.php';
                                                             echo "<td>{$delivery_date}</td>";
                                                             echo "<td><span class='badge {$statusClass}'>{$status}</span></td>";
                                                             echo "<td>";
-                                                            if ($_SESSION['role'] == 'Super Admin') {
-                                                                echo "<button class='btn btn-primary btn-sm view-btn-transfer mr-1' data-id='{$transfer_id}' data-status='{$status}' data-toggle='modal' data-target='#viewModal-transfer'>View</button>";
-                                                                echo "<button class='btn btn-success btn-sm approve-btn mr-1' data-id='{$transfer_id}'>Approve</button>";
-                                                                echo "<button class='btn btn-danger btn-sm reject-btn mr-1' data-id='{$transfer_id}'>Reject</button>";
-                                                                echo "<button class='btn btn-warning btn-sm pending-btn mr-1' data-id='{$transfer_id}'>Pending</button>";
-                                                                echo "<button class='btn btn-dark btn-sm cancel-btn mr-1' data-id='{$transfer_id}'>Cancelled</button>";
-                                                            } else {
-                                                                echo "<button class='btn btn-primary btn-sm view-btn-transfer mr-1' data-id='{$transfer_id}' data-status='{$status}' data-toggle='modal' data-target='#viewModal-transfer'>View</button>";
-                                                                echo "<button class='btn btn-danger btn-sm transfer-pdf-btn mr-1' data-id='{$transfer_id}'>PDF</button>";
+                                                            // Fetch allowed statuses for the current user's role
+                                                            $role_id = $_SESSION['role_id']; // Assuming role_id is stored in the session
+                                                            $statusPermissionsSql = "SELECT s.status_name 
+                         FROM role_status_permissions rsp
+                         JOIN statuses s ON rsp.status_id = s.status_id
+                         WHERE rsp.role_id = ?";
+                                                            $statusStmt = $conn->prepare($statusPermissionsSql);
+                                                            $statusStmt->bind_param("i", $role_id);
+                                                            $statusStmt->execute();
+                                                            $statusResult = $statusStmt->get_result();
+
+                                                            $allowedStatuses = [];
+                                                            while ($statusRow = $statusResult->fetch_assoc()) {
+                                                                $allowedStatuses[] = $statusRow['status_name'];
                                                             }
+
+                                                            $statusStmt->close();
+
+                                                            echo "<button class='btn btn-primary btn-sm view-btn-transfer mr-1' data-id='{$transfer_id}' data-status='{$status}' data-toggle='modal' data-target='#viewModal-transfer'>View</button>";
+
+                                                            if (in_array("Approved", $allowedStatuses)) {
+                                                                echo "<button class='btn btn-success btn-sm approve-btn mr-1' data-id='{$transfer_id}'>Approve</button>";
+                                                            }
+                                                            if (in_array("Rejected", $allowedStatuses)) {
+                                                                echo "<button class='btn btn-danger btn-sm reject-btn mr-1' data-id='{$transfer_id}'>Reject</button>";
+                                                            }
+                                                            if (in_array("Pending", $allowedStatuses)) {
+                                                                echo "<button class='btn btn-warning btn-sm pending-btn mr-1' data-id='{$transfer_id}'>Pending</button>";
+                                                            }
+                                                            if (in_array("Cancelled", $allowedStatuses)) {
+                                                                echo "<button class='btn btn-dark btn-sm cancel-btn mr-1' data-id='{$transfer_id}'>Cancelled</button>";
+                                                            }
+
+                                                            // PDF option remains accessible to all
+                                                            echo "<button class='btn btn-danger btn-sm transfer-pdf-btn mr-1' data-id='{$transfer_id}'>PDF</button>";
+
                                                             echo "</td>";
                                                             echo "</tr>";
                                                         }
@@ -172,7 +189,7 @@ include '../../includes/session.php';
                                                     <!-- The banner status will display here -->
                                                     <div class="callout callout-info">
                                                         <h5><i class="fas fa-info"></i> Note:</h5>
-                                                        This page has been processed by Warehouse Staff, requesting
+                                                        This page has been processed, requesting
                                                         for
                                                         confirmation.
                                                     </div>

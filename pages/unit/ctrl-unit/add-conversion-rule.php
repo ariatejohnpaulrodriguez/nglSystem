@@ -8,7 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $conversion_factor = $_POST['conversion_factor'];
 
     if ($base_unit_id !== $target_unit_id && $conversion_factor > 0) {
-        $stmt = $conn->prepare("INSERT INTO unit_rules (base_unit_id, target_unit_id, conversion_factor) VALUES (?, ?, ?)");
+        $stmt = $conn->prepare("INSERT INTO unit_conversions (base_unit_id, target_unit_id, conversion_factor) VALUES (?, ?, ?)");
         $stmt->bind_param("iid", $base_unit_id, $target_unit_id, $conversion_factor);
 
         if ($stmt->execute()) {
@@ -21,6 +21,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['error'] = "Invalid data. Ensure different units and positive conversion factor.";
     }
 }
+
+// Redirect after processing
 header("Location: ../unit.php");
 exit();
 ?>

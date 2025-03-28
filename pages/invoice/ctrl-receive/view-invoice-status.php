@@ -25,46 +25,46 @@ if (!is_numeric($invoiceId)) {
 try {
     // Prepare the SQL statement
     $sql = "
-        SELECT
-            invoices.invoice_id,
-            posting_dates.date_value AS posting_date,
-            delivery_dates.date_value AS delivery_date,
-            invoices.dr_id,
-            invoices.po_id,
-            invoices.reference_po_id,
-            from_company.name AS from_company_name,
-            from_company.address AS from_company_address,
-            from_company.phone_number AS from_company_phone,
-            from_company.attention AS from_company_attention,
-            to_company.name AS to_company_name,
-            to_company.address AS to_company_address,
-            to_company.phone_number AS to_company_phone,
-            to_company.attention AS to_company_attention,
-            delivery_receipts.dr_number AS dr_number,
-            purchase_orders.po_number AS po_number,
-            reference_pos.reference_po AS reference_po_number,
-            invoice_products.invoice_product_id,
-            invoice_products.invoice_id AS product_invoice_id,
-            invoice_products.product_id,
-            invoice_products.quantity,
-            invoice_products.code,
-            invoice_products.brand,
-            invoice_products.description,
-            units.unit_name  -- Include the unit name
-        FROM invoices
-        INNER JOIN companies AS from_company ON invoices.from_company_id = from_company.company_id
-        INNER JOIN companies AS to_company ON invoices.to_company_id = to_company.company_id
-        LEFT JOIN delivery_receipts ON invoices.dr_id = delivery_receipts.dr_id
-        LEFT JOIN purchase_orders ON invoices.po_id = purchase_orders.po_id
-        LEFT JOIN reference_pos ON invoices.reference_po_id = reference_pos.reference_po_id
-        LEFT JOIN dates AS posting_dates ON invoices.posting_date = posting_dates.date_id
-        LEFT JOIN dates AS delivery_dates ON invoices.delivery_date = delivery_dates.date_id
-        LEFT JOIN invoice_products ON invoices.invoice_id = invoice_products.invoice_id
-        LEFT JOIN products ON invoice_products.product_id = products.product_id -- Join with products table
-        LEFT JOIN units ON products.unit_id = units.unit_id -- Join with units table
-        WHERE invoices.invoice_id = ?
-        ORDER BY invoices.invoice_id DESC, invoice_products.invoice_product_id ASC
-    ";
+            SELECT
+        invoices.invoice_id,
+        posting_dates.date_value AS posting_date,
+        delivery_dates.date_value AS delivery_date,
+        invoices.dr_id,
+        invoices.po_id,
+        invoices.reference_po_id,
+        from_company.name AS from_company_name,
+        from_company.address AS from_company_address,
+        from_company.phone_number AS from_company_phone,
+        from_company.attention AS from_company_attention,
+        to_company.name AS to_company_name,
+        to_company.address AS to_company_address,
+        to_company.phone_number AS to_company_phone,
+        to_company.attention AS to_company_attention,
+        delivery_receipts.dr_number AS dr_number,
+        purchase_orders.po_number AS po_number,
+        reference_pos.reference_po AS reference_po_number,
+        invoice_products.invoice_product_id,
+        invoice_products.invoice_id AS product_invoice_id,
+        invoice_products.product_id,
+        invoice_products.quantity,
+        invoice_products.code,
+        invoice_products.brand,
+        invoice_products.description,
+        products.unit_id,
+        units.unit_name
+    FROM invoices
+    INNER JOIN companies AS from_company ON invoices.from_company_id = from_company.company_id
+    INNER JOIN companies AS to_company ON invoices.to_company_id = to_company.company_id
+    LEFT JOIN delivery_receipts ON invoices.dr_id = delivery_receipts.dr_id
+    LEFT JOIN purchase_orders ON invoices.po_id = purchase_orders.po_id
+    LEFT JOIN reference_pos ON invoices.reference_po_id = reference_pos.reference_po_id
+    LEFT JOIN dates AS posting_dates ON invoices.posting_date = posting_dates.date_id
+    LEFT JOIN dates AS delivery_dates ON invoices.delivery_date = delivery_dates.date_id
+    LEFT JOIN invoice_products ON invoices.invoice_id = invoice_products.invoice_id
+    LEFT JOIN products ON invoice_products.product_id = products.product_id -- Join with products table
+    LEFT JOIN units ON products.unit_id = units.unit_id -- Join with units table
+    WHERE invoices.invoice_id = ?
+    ORDER BY invoices.invoice_id DESC, invoice_products.invoice_product_id ASC;";
 
     $stmt = $conn->prepare($sql);
 
@@ -120,8 +120,10 @@ try {
                 "code" => $row["code"],
                 "brand" => $row["brand"],
                 "description" => $row["description"],
-                "unit_name" => $row["unit_name"] // Retrieve the unit name
+                "unit_id" => $row["unit_id"], // Include unit_id
+                "unit_name" => $row["unit_name"] // Already included
             ];
+
         }
 
         // Add the data to the response array

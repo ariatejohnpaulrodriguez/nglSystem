@@ -1,6 +1,7 @@
 <?php
 include '../../includes/header.php';
 include '../../includes/session.php';
+include '../../includes/check-permission.php';
 ?>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -29,8 +30,11 @@ include '../../includes/session.php';
                     <div class="row">
                         <div class="col-12">
                             <div class="card">
-                                <div class="card-header">
-                                    <h3 class="card-title">List</h3>
+                                <div class="card-header"
+                                    style="display: flex; justify-content: flex-end; align-items: center;">
+                                    <h3 class="card-title" style="margin-right: auto;">List</h3>
+                                    <a href="../../pages/invoice/inv-request-form.php"
+                                        class="btn btn-primary btn-xs">ReStock Form</a>
                                 </div>
 
                                 <div class="card-body table-responsive p-0" style="height: 500px;">
@@ -191,7 +195,7 @@ include '../../includes/session.php';
                                                                 </thead>
                                                                 <tbody id="product-list">
                                                                     <tr>
-                                                                        <td colspan="4">No products found.</td>
+                                                                        <td colspan="5">No products found.</td>
                                                                     </tr>
                                                                 </tbody>
                                                             </table>

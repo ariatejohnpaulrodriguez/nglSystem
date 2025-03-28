@@ -27,6 +27,24 @@ function sanitize($conn, $data)
     return mysqli_real_escape_string($conn, trim($data));
 }
 
+function getStatusID($conn, $statusName)
+{
+    $query = "SELECT status_id FROM statuses WHERE status_name = ?";
+    $stmt = $conn->prepare($query);
+    if ($stmt === false) {
+        throw new Exception("Error preparing status query: " . $conn->error);
+    }
+    $stmt->bind_param("s", $statusName);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        return intval($row['status_id']);
+    } else {
+        throw new Exception("Status '$statusName' not found.");
+    }
+}
+
 try {
     // Extract data from the JSON data
     $products = $data['products'];
@@ -37,7 +55,7 @@ try {
     $poNumber = sanitize($conn, $data['po_number']);
     $referencePo = sanitize($conn, $data['reference_po']);
     $drNumber = sanitize($conn, $data['dr_number']);
-    $statusID = intval($data['status_id']); // Convert to integer
+    $statusID = getStatusID($conn, 'Pending'); // Set initial status as 'Pending'
 
     // --------------------------------------------------------------------
     //  DATABASE INSERTION SECTION
@@ -89,22 +107,21 @@ try {
     }
     $transferID = mysqli_insert_id($conn); // Get transfer ID
 
-    // Step 7: Loop through the products and insert them into the transfer_products table
+    // **STEP 7: Insert products into transfer_products table**
     foreach ($products as $product) {
-        $productID = intval($product['product_id']); // Convert to integer
-        $quantity = intval($product['quantity']); // Convert to integer
-        $brand = sanitize($conn, $product['brand']);
-        $code = sanitize($conn, $product['code']);
-        $description = sanitize($conn, $product['description']);
+        $productID = intval($product['product_id']);  //Sanitize: Ensure it's an integer
+        $quantity = intval($product['quantity']);      //Sanitize: Ensure it's an integer
+        $code = sanitize($conn, $product['code']);      //Sanitize
+        $brand = sanitize($conn, $product['brand']);    //Sanitize
+        $description = sanitize($conn, $product['description']); //Sanitize
 
-        // Insert product details into transfer_products table
         $transferProductQuery = "INSERT INTO transfer_products (transfer_id, product_id, quantity, code, brand, description)
-                         VALUES ('$transferID', '$productID', '$quantity', '$code', '$brand', '$description')";
+                                VALUES ('$transferID', '$productID', '$quantity', '$code', '$brand', '$description')";
+
         if (!mysqli_query($conn, $transferProductQuery)) {
-            throw new Exception("Error inserting product: " . mysqli_error($conn));
+            throw new Exception("Error inserting transfer product: " . mysqli_error($conn));
         }
     }
-
     // Commit the transaction
     mysqli_commit($conn);
 

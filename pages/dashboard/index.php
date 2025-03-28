@@ -140,8 +140,19 @@ if ($stmtTransferAttentionCount) {
         <div class="container-fluid">
           <div class="col-md-13">
             <div class="card">
-              <div class="card-header bg-primary">
-                <h3 class="card-title"><i class="fas fa-info-circle"></i> <strong>Note:</strong> Stocks Status</h3>
+              <div class="card-header bg-primary d-flex align-items-center">
+                <h3 class="card-title mb-0">
+                  <i class="fas fa-info-circle"></i>
+                  <strong>Note:</strong> Stocks Status
+                </h3>
+                <!-- Export as CSV Button -->
+                <div class="ms-auto">
+                  <div>
+                    <a href="csvExport/export-stock-xlsx.php" class="btn btn-success btn-sm ml-1">
+                      <i class="fas fa-file-csv"></i> Export as xlsx
+                    </a>
+                  </div>
+                </div>
               </div>
 
               <?php
@@ -223,35 +234,90 @@ if ($stmtTransferAttentionCount) {
                           echo "</div>";
                           echo "<div class='card-body'>";
 
-                          // Two-column centered layout with card bodies
+                          // Fetch transactions where transaction type is 'invoices' (for Re Stock Info)
+                          $queryInvoices = "SELECT t.transaction_id, t.created_at, t.transaction_type, t.quantity, t.posting_date, t.delivery_date, 
+                          c1.name AS from_company, c2.name AS to_company, 
+                          p.code AS product_code, p.description AS product_description, 
+                          u.unit_name
+                          FROM transactions t
+                          JOIN companies c1 ON t.from_company_id = c1.company_id
+                          JOIN companies c2 ON t.to_company_id = c2.company_id
+                          JOIN products p ON t.product_id = p.product_id
+                          JOIN units u ON t.unit_id = u.unit_id
+                          WHERE t.product_id = " . $row['product_id'] . " AND t.transaction_type = 'invoices'"; // Only invoices
+                      
+                          $resultInvoices = mysqli_query($conn, $queryInvoices);
+
+                          // Fetch transactions where transaction type is 'transfers' (for Delivery Info)
+                          $queryTransfers = "SELECT t.transaction_id, t.created_at, t.transaction_type, t.quantity, t.posting_date, t.delivery_date, 
+                            c1.name AS from_company, c2.name AS to_company, 
+                            p.code AS product_code, p.description AS product_description, 
+                            u.unit_name
+                          FROM transactions t
+                          JOIN companies c1 ON t.from_company_id = c1.company_id
+                          JOIN companies c2 ON t.to_company_id = c2.company_id
+                          JOIN products p ON t.product_id = p.product_id
+                          JOIN units u ON t.unit_id = u.unit_id
+                          WHERE t.product_id = " . $row['product_id'] . " AND t.transaction_type = 'transfers'"; // Only transfers
+                      
+                          $resultTransfers = mysqli_query($conn, $queryTransfers);
+
                           echo "<div class='row d-flex justify-content-center text-center'>";
 
-                          // Column 1
+                          // Column 1: Re Stock Info (Invoices Only)
                           echo "<div class='col-12 col-md-6 mb-3'>";
                           echo "<div class='card h-500'>";
                           echo "<div class='card-header bg-info text-white'>Re Stock Info</div>";
                           echo "<div class='card-body'>";
-                          echo "<p>Content for the first column...</p>";
+                          echo "<ul class='list-group list-group-flush'>";
+
+                          if (mysqli_num_rows($resultInvoices) > 0) {
+                            while ($row = mysqli_fetch_assoc($resultInvoices)) {
+                              echo "<li class='list-group-item p-2' style='font-size: 0.85rem;'>";
+                              echo "<i class='fas fa-id-card'></i> <strong>" . $row['transaction_id'] . "</strong> | ";
+                              echo "<i class='fas fa-clock'></i> " . date("d F y", strtotime($row['created_at'])) . " | ";
+                              echo "<i class='fas fa-box'></i> Qty: " . $row['quantity'] . " | ";
+                              echo "<i class='fas fa-tag'></i> " . $row['product_code'] . " | ";
+                              echo "<i class='fas fa-cube'></i> " . $row['unit_name'];
+                              echo "</li>";
+                            }
+                          } else {
+                            echo "<li class='list-group-item p-2'>No restock transactions found.</li>";
+                          }
+
+                          echo "</ul>";
                           echo "</div>"; // End of card-body
                           echo "</div>"; // End of card
-                          echo "</div>"; // End of col-md-5
+                          echo "</div>"; // End of col-md-6
                       
-                          // Column 2
+                          // Column 2: Delivery Info (Transfers Only)
                           echo "<div class='col-12 col-md-6 mb-3'>";
                           echo "<div class='card h-500'>";
                           echo "<div class='card-header bg-purple text-white'>Delivery Info</div>";
                           echo "<div class='card-body'>";
-                          echo "<p>Content for the second column...</p>";
+                          echo "<ul class='list-group list-group-flush'>";
+
+                          if (mysqli_num_rows($resultTransfers) > 0) {
+                            while ($row = mysqli_fetch_assoc($resultTransfers)) {
+                              echo "<li class='list-group-item p-2' style='font-size: 0.85rem;'>";
+                              echo "<i class='fas fa-id-card'></i> <strong>" . $row['transaction_id'] . "</strong> | ";
+                              echo "<i class='fas fa-clock'></i> " . date("d F y", strtotime($row['created_at'])) . " | ";
+                              echo "<i class='fas fa-box'></i> Qty: " . $row['quantity'] . " | ";
+                              echo "<i class='fas fa-tag'></i> " . $row['product_code'] . " | ";
+                              echo "<i class='fas fa-cube'></i> " . $row['unit_name'];
+                              echo "</li>";
+                            }
+                          } else {
+                            echo "<li class='list-group-item p-2'>No delivery transactions found.</li>";
+                          }
+
+                          echo "</ul>";
                           echo "</div>"; // End of card-body
                           echo "</div>"; // End of card
-                          echo "</div>"; // End of col-md-5
+                          echo "</div>"; // End of col-md-6
                       
                           echo "</div>"; // End of row
                       
-                          echo "</div>"; // End of main card-body
-                          echo "</div>"; // End of main card wrapper
-                          echo "</td>";
-                          echo "</tr>";
                         }
                       } else {
                         echo "<tr><td colspan='12'>No records found.</td></tr>";

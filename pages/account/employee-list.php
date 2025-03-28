@@ -1,5 +1,6 @@
 <?php
 include '../../includes/conn.php';
+include '../../includes/check-permission.php';
 ?>
 
 <?php include '../../includes/session.php'; ?>
@@ -74,14 +75,28 @@ include '../../includes/header.php';
                                                     echo "<td>" . $row["gender_name"] . "</td>";
                                                     echo "<td>" . $row["status_name"] . "</td>";
                                                     echo "<td>";
-                                                    echo "<form action='update-employee.php' method='post' style='display:inline-block; margin-right:5px;'>";
-                                                    echo "<input type='hidden' name='employee_id' value='" . $row["employee_id"] . "'>";
-                                                    echo "<input type='submit' value='Edit' class='btn btn-primary'>";
-                                                    echo "</form>";
-                                                    echo "<form action='ctrl-account/delete-employee.php' method='post' style='display:inline-block;' onsubmit='return confirmDelete()'>";
-                                                    echo "<input type='hidden' name='employee_id' value='" . $row["employee_id"] . "'>";
-                                                    echo "<button type='button' class='btn btn-danger' onclick='deleteEmployeeModal(" . $row["employee_id"] . ")'>Delete</button>";
-                                                    echo "</form>";
+
+                                                    // Super Admin: Can edit everyone, delete everyone
+                                                    if (isset($_SESSION['role']) && $_SESSION['role'] == 'Super Admin') {
+                                                        echo "<form action='update-employee.php' method='post' style='display:inline-block; margin-right:5px; margin-bottom:5px;'>";
+                                                        echo "<input type='hidden' name='employee_id' value='" . $row["employee_id"] . "'>";
+                                                        echo "<input type='submit' value='Edit' class='btn btn-primary btn-sm'>"; // Super Admin gets "Edit"
+                                                        echo "</form>";
+
+                                                        echo "<form action='ctrl-account/delete-employee.php' method='post' style='display:inline-block; onsubmit='return confirmDelete()'>";
+                                                        echo "<input type='hidden' name='employee_id' value='" . $row["employee_id"] . "'>";
+                                                        echo "<button type='button' class='btn btn-danger btn-sm' onclick='deleteEmployeeModal(" . $row["employee_id"] . ")'>Delete</button>";
+                                                        echo "</form>";
+                                                    } else {
+                                                        // Regular users: Can view all, edit only themselves
+                                                        echo "<form action='update-employee.php' method='post' style='display:inline-block; margin-right:5px; margin-bottom:5px;'>";
+                                                        echo "<input type='hidden' name='employee_id' value='" . $row["employee_id"] . "'>";
+                                                        if ($_SESSION['employee_id'] == $row["employee_id"]) {
+                                                            echo "<input type='submit' value='Edit' class='btn btn-primary'>"; // Edit only themselves
+                                                        }
+                                                        echo "</form>";
+                                                    }
+
                                                     echo "</td>";
                                                     echo "</tr>";
                                                 }

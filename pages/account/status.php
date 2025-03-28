@@ -1,7 +1,8 @@
 <?php
 include '../../includes/header.php';
-include '../../includes/session.php'
-    ?>
+include '../../includes/session.php';
+include '../../includes/check-permission.php';
+?>
 
 <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">

@@ -1,6 +1,7 @@
 <?php
 include '../../includes/conn.php';
 include '../../includes/session.php';
+include '../../includes/check-permission.php';
 
 // Check user's role
 $userRole = $_SESSION['role'];

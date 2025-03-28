@@ -1,5 +1,6 @@
 <?php
 include '../../includes/conn.php';
+include '../../includes/check-permission.php';
 
 // Set headers to force download as CSV
 header('Content-Type: text/csv; charset=utf-8');

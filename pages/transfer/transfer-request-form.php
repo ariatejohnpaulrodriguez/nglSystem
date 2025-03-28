@@ -1,6 +1,7 @@
 <?php
 include '../../includes/header.php';
 include '../../includes/session.php';
+include '../../includes/check-permission.php';
 ?>
 
 <body class="hold-transition sidebar-mini">
@@ -16,7 +17,7 @@ include '../../includes/session.php';
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1>Transfer Page</h1>
+                            <h1>Delivery Receipt Page</h1>
                         </div>
                     </div>
                 </div><!-- /.container-fluid -->
@@ -32,10 +33,14 @@ include '../../includes/session.php';
 
                             <!-- Form Element sizes -->
                             <div class="card card-gray">
-                                <div class="card-header">
-                                    <h5 class="card-title"><i class="fas fa-file-invoice"></i> Request Transfer Delivery
-                                        Form</h5>
+                                <div class="card-header" style="display: flex; align-items: center;">
+                                    <h5 class="card-title" style="margin-right: auto;">
+                                        <i class="fas fa-file-invoice"></i> Delivery Form
+                                    </h5>
+                                    <a href="../../pages/transaction/transfer-deliveries.php"
+                                        class="btn btn-primary btn-xs">Delivery List</a>
                                 </div>
+
 
                                 <?php
 
@@ -193,7 +198,8 @@ include '../../includes/session.php';
                                                                         class="form-control form-control-sm">
                                                                         <?php foreach ($statuses as $status): ?>
                                                                             <option
-                                                                                value="<?php echo htmlspecialchars($status['status_id']); ?>">
+                                                                                value="<?php echo htmlspecialchars($status['status_id']); ?>"
+                                                                                <?php echo ($status['status_name'] === 'Pending') ? 'selected' : ''; ?>>
                                                                                 <?php echo htmlspecialchars($status['status_name']); ?>
                                                                             </option>
                                                                         <?php endforeach; ?>

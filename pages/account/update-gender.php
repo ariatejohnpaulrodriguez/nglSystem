@@ -1,6 +1,7 @@
 <?php
 include '../../includes/header.php';
 include '../../includes/session.php';
+include '../../includes/check-permission.php';
 ?>
 
 <link rel="stylesheet" href="../../../plugins/fontawesome-free/css/all.min.css">

@@ -1,6 +1,7 @@
 <?php
 include '../../includes/header.php';
 include '../../includes/session.php';
+include '../../includes/check-permission.php';
 ?>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -32,9 +33,12 @@ include '../../includes/session.php';
 
                             <!-- Form Element sizes -->
                             <div class="card card-gray">
-                                <div class="card-header">
-                                    <h5 class="card-title"><i class="fas fa-file-invoice"></i> Request ReStock Delivery
-                                        Form</h5>
+                                <div class="card-header" style="display: flex; align-items: center;">
+                                    <h5 class="card-title" style="margin-right: auto;">
+                                        <i class="fas fa-file-invoice"></i> Request ReStock Delivery Form
+                                    </h5>
+                                    <a href="../../pages/transaction/received-deliveries.php"
+                                        class="btn btn-light btn-xs" style="color: black;">ReStock List</a>
                                 </div>
 
                                 <?php
@@ -194,7 +198,7 @@ include '../../includes/session.php';
                                                     <thead>
                                                         <tr>
                                                             <th>Qty</th>
-                                                            <th>Unit</th>
+                                                            <th>Unit</th> <!-- Added Unit column -->
                                                             <th>Code</th>
                                                             <th>Brand</th>
                                                             <th>Description</th>
@@ -224,6 +228,7 @@ include '../../includes/session.php';
                                             <button type="submit" class="btn btn-primary">Request Incoming
                                                 Delivery</button>
                                         </div>
+                                    </div>
                                 </form>
                             </div>
                         </div>

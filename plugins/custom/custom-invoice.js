@@ -58,7 +58,7 @@ $(document).ready(function () {
     function addProductRow() {
         var tbody = $("#i-product-table-body");
         var tr = $("<tr>");
-
+    
         var quantityCell = $("<td>").append($("<input>", {
             type: "number",
             class: "form-control form-control-sm",
@@ -66,9 +66,16 @@ $(document).ready(function () {
             min: "1",
             value: "1"
         }));
-
-        var productUnitCell = $("<td class='product-unit'>");
-
+    
+        // Unit Dropdown
+        var unitCell = $("<td>").append($("<select>", {
+            class: "form-control form-control-sm",
+            name: "unit[]"
+        }).append($("<option>", {
+            value: "",
+            text: "Select Unit"
+        })));
+    
         var productCodeCell = $("<td>").append($("<select>", {
             class: "form-control form-control-sm",
             name: "product_code[]"
@@ -76,108 +83,126 @@ $(document).ready(function () {
             value: "",
             text: "Select Code"
         })));
-
+    
         var productBrandCell = $("<td class='product-brand'>");
         var productDescriptionCell = $("<td class='product-description'>");
-
+    
         var removeButtonCell = $("<td>").append($("<button>", {
             type: "button",
             class: "btn btn-danger btn-sm remove-product"
         }).append($("<i>", {
             class: "fas fa-trash"
         })));
-
-        tr.append(quantityCell, productUnitCell, productCodeCell, productBrandCell, productDescriptionCell, removeButtonCell);
-
+    
+        tr.append(quantityCell, unitCell, productCodeCell, productBrandCell, productDescriptionCell, removeButtonCell);
+        tbody.append(tr); // Append row first before making AJAX request
+    
+        // Fetch product list
         $.ajax({
             url: '../../pages/invoice/ctrl-receive/i-get-products.php',
             type: 'GET',
             dataType: 'json',
             success: function (products) {
-                var selectElement = tr.find('select');
+                var productSelect = tr.find("select[name='product_code[]']");
+                var unitSelect = tr.find("select[name='unit[]']");
+    
                 $.each(products, function (index, product) {
                     $("<option>", {
                         value: product.product_id,
                         text: product.code,
                         "data-brand": product.brand,
                         "data-description": product.description,
-                        "data-unit": product.unit_name,
-                        "data-unit-id": product.unit_id // Store unit_id here
-                    }).appendTo(selectElement);
+                        "data-unit": product.unit_name // Store unit name in data attribute
+                    }).appendTo(productSelect);
                 });
     
-                selectElement.change(function () {
+                // Fetch unit list separately
+                $.ajax({
+                    url: '../../pages/invoice/ctrl-receive/i-get-unit.php',
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (units) {
+                        $.each(units, function (index, unit) {
+                            $("<option>", {
+                                value: unit.unit_id,
+                                text: unit.unit_name
+                            }).appendTo(unitSelect);
+                        });
+                    },
+                    error: function () {
+                        console.error("Error fetching unit data.");
+                    }
+                });
+    
+                // Update Brand, Description, and Unit when a product is selected
+                productSelect.change(function () {
                     var selectedOption = $(this).find("option:selected");
-                    var brand = selectedOption.data('brand');
-                    var description = selectedOption.data('description');
-                    var unit = selectedOption.data('unit');
-                    var unitId = selectedOption.data('unit-id'); //Retrieve unit ID
+                    tr.find(".product-brand").text(selectedOption.data('brand'));
+                    tr.find(".product-description").text(selectedOption.data('description'));
     
-                    productBrandCell.text(brand);
-                    productDescriptionCell.text(description);
-                    productUnitCell.text(unit);
+                    // Automatically set the unit dropdown based on selected product
+                    unitSelect.val(selectedOption.data('unit'));
                 });
     
-                selectElement.trigger('change');
+                productSelect.trigger('change'); // Trigger change to populate initial values
             },
-            error: function (jqXHR, textStatus, errorThrown) {
-                console.error("Error fetching product data:", textStatus, errorThrown);
-                toastr.error('Error fetching product data. Check console for details.');
+            error: function () {
+                console.error("Error fetching product data.");
             }
         });
-
+    
+        // Remove row on delete button click
         removeButtonCell.click(function () {
             tr.remove();
         });
-
-        tbody.append(tr);
     }
-
+    
     $("#i-add-products").click(addProductRow);
-
+    
+    // Include the unit ID when constructing product data for submission
     $("#invoice-form").submit(function (e) {
         e.preventDefault();
-
+    
         var quantities = $("input[name='quantity[]']");
         var productCodes = $("select[name='product_code[]']");
-
+        var units = $("select[name='unit[]']");
+    
         var hasErrors = false;
         quantities.each(function (index) {
             var qty = $(this).val();
             var code = productCodes.eq(index).val();
-
-            if (!qty || qty <= 0 || !code) {
+            var unit = units.eq(index).val();
+    
+            if (!qty || qty <= 0 || !code || !unit) {
                 hasErrors = true;
                 return false;
             }
         });
-
+    
         if (hasErrors) {
-            toastr.error('Please fill in all product details (quantity and code).');
+            toastr.error('Please fill in all product details (quantity, code, and unit).');
             return;
         }
-
+    
         var productData = [];
-
+    
         quantities.each(function (index) {
             var qty = $(this).val();
             var productId = productCodes.eq(index).val();
+            var unitId = units.eq(index).val();
             var brand = $(this).closest("tr").find(".product-brand").text().trim();
             var description = $(this).closest("tr").find(".product-description").text().trim();
-            var unit = $(this).closest("tr").find(".product-unit").text().trim();
-            var unitId = productCodes.eq(index).find("option:selected").data('unit-id'); // Get the unit_id
-
-        productData.push({
-            product_id: productId,
-            quantity: qty,
-            brand: brand,
-            code: productCodes.eq(index).find("option:selected").text(),
-            description: description,
-            unit: unit,
-            unit_id: unitId // Include the unit_id in the data
+    
+            productData.push({
+                product_id: productId,
+                quantity: qty,
+                unit_id: unitId, // Include unit ID in payload
+                brand: brand,
+                code: productCodes.eq(index).find("option:selected").text(),
+                description: description,
+            });
         });
-    });
-
+    
         var data = {
             products: productData,
             posting_date: $("#i-datepicker").val(),
@@ -188,9 +213,9 @@ $(document).ready(function () {
             reference_po: $("#i-reference-po").val(),
             dr_number: $("#i-drNumber").val()
         };
-
-        console.log("Data being sent:", data); // Moved this line here!
-
+    
+        console.log("Data being sent:", data);
+    
         $.ajax({
             url: "../../pages/invoice/ctrl-receive/save-invoice.php",
             type: "POST",
@@ -199,20 +224,20 @@ $(document).ready(function () {
             dataType: "json",
             success: function (response) {
                 if (response.status === 'success') {
-                    toastr.success(response.message);  // Show success message with Toastr
+                    toastr.success(response.message);
                     window.location.href = "inv-request-form.php";
                 } else {
                     console.error("Error saving invoice:", response.message);
-                    toastr.error("Error saving invoice: " + response.message); // Show error message with Toastr
+                    toastr.error("Error saving invoice: " + response.message);
                 }
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.error("Error saving invoice:", textStatus, errorThrown, jqXHR.responseText);
                 let errorMessage = "Error saving invoice: " + textStatus;
                 if (jqXHR.status === 0) {
-                    errorMessage += ".  Possible CORS issue or server is down.";
+                    errorMessage += ". Possible CORS issue or server is down.";
                 }
-                toastr.error(errorMessage); // Show AJAX error message with Toastr
+                toastr.error(errorMessage);
             }
         });
     });
@@ -310,7 +335,7 @@ $(document).ready(function () {
                                     <td>${product.code}</td>
                                     <td>${product.brand}</td>
                                     <td>${product.description}</td>
-                                    <td>${product.unit_name}</td>  <!-- Added unit_name -->
+                                    <td>${product.unit_name}</td>
                                 </tr>
                             `;
                         });

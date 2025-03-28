@@ -47,13 +47,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 }
                 exit();
             } else {
-                $_SESSION['login-error'] = 'Incorrect password. Please try again.';
+                $_SESSION['error'] = 'Incorrect password. Please try again.';
                 header("Location: ../login.php");
                 exit();
             }
         }
     } else {
-        $_SESSION['login-error'] = 'No user found with that username.';
+        $_SESSION['error'] = 'No user found with that username.';
         header("Location: ../login.php");
         exit();
     }

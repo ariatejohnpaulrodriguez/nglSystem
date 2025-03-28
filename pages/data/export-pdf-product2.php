@@ -1,6 +1,7 @@
 <?php
 require_once '../../TCPDF-main/tcpdf.php'; // Change path if needed
 include '../../includes/conn.php'; // Include database connection
+include '../../includes/check-permission.php';
 
 $pdf = new TCPDF();
 $pdf->AddPage();

@@ -4,59 +4,7 @@ $error = isset($_SESSION['login-error']) ? $_SESSION['login-error'] : '';
 unset($_SESSION['login-error']); // Clear error after displaying
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>NGL | Log in</title>
-
-  <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
-  <!-- icheck bootstrap -->
-  <link rel="stylesheet" href="../../plugins/icheck-bootstrap/icheck-bootstrap.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
-
-  <style>
-    body,
-    html {
-      height: 100%;
-      margin: 0;
-    }
-
-    .bg-video {
-      position: fixed;
-      right: 0;
-      bottom: 0;
-      min-width: 100%;
-      min-height: 100%;
-      z-index: -1;
-    }
-
-    .login-box {
-      position: relative;
-      z-index: 2;
-    }
-
-    .login-card-body {
-      background: rgba(255, 255, 255, 0.8);
-    }
-  </style>
-
-  <script>
-    window.onload = function () {
-      const error = "<?php echo $error; ?>";
-      if (error) {
-        alert(error);
-      }
-    }
-  </script>
-</head>
+<?php include '../../includes/header.php'; ?>
 
 <body class="hold-transition login-page">
   <video autoplay muted loop class="bg-video">

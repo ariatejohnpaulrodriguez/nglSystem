@@ -1,0 +1,8 @@
+# Ignore the .env file (contains sensitive data)
+.env
+
+# Ignore the vendor folder (Composer dependencies)
+/vendor/
+
+# Ignore the Composer executable (if installed locally)
+composer.phar

@@ -110,6 +110,12 @@
         $('#permissionDeleteModal').modal('show');
     }
 
+    function deleteStatusPermissionModal(role_id, status_id) {
+        document.getElementById("role_id_to_delete_status").value = role_id;
+        document.getElementById("status_id_to_delete").value = status_id;
+        $("#statusPermissionDeleteModal").modal("show");
+    }
+
     // Toastr configuration
     toastr.options = {
         "closeButton": true,

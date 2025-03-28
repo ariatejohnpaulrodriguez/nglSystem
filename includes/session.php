@@ -238,6 +238,19 @@ if (!empty($_SESSION['employee_id'])) {
                     ]
                 ]
             ]
+            ,
+            'Delivery Blank Form' => [
+                'name' => 'Blank Delivery Form',
+                'url' => '#',
+                'icon' => 'fas fa-file-invoice',
+                'sub_menu' => [
+                    [
+                        'name' => 'Generate Delivery Form',
+                        'url' => '../../pages/deliveryBlankForm/deliveryBlankForm.php',
+                        'icon' => 'fas fa-edit nav-icon'
+                    ]
+                ]
+            ]
         ];
 
         // Fetch allowed sidebar permissions for this role

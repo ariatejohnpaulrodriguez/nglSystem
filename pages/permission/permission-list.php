@@ -2,6 +2,7 @@
 include '../../includes/header.php';
 include '../../includes/session.php';
 include '../../includes/conn.php'; // Database connection
+include '../../includes/check-permission.php';
 ?>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -70,7 +71,7 @@ include '../../includes/conn.php'; // Database connection
                                                     <form action='ctrl-permission/remove-permission.php' method='POST' style='display:inline;'>
                                                         <input type='hidden' name='role_id' value='{$row['role_id']}'>
                                                         <input type='hidden' name='permission_id' value='{$row['permission_id']}'>
-                                                        <button type='button' class='btn btn-danger btn-sm' style='padding: 2px 5px; font-size: 12px;' onclick='deletePermissionModal({$row["role_id"]}, {$row["permission_id"]})'>Remove</button>
+                                                        <button type='button' class='btn btn-danger btn-sm' style='padding: 2px 5px; font-size: 10px;' onclick='deletePermissionModal({$row["role_id"]}, {$row["permission_id"]})'>Remove</button>
                                                     </form>
                                                     <br>";
                                             }
@@ -84,6 +85,66 @@ include '../../includes/conn.php'; // Database connection
                             </div>
                         </div>
                     </div>
+
+                    <!-- Second Card: Role Status Permissions -->
+                    <div class="card mt-3">
+                        <div class="card-header">
+                            <h3 class="card-title">Role Status Permissions</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>Position | Role</th>
+                                            <th>Allowed Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        // Query to fetch roles with their allowed statuses
+                                        $query = "
+                                            SELECT r.role_id, r.role_name, s.status_id, s.status_name
+                                            FROM role_status_permissions rsp
+                                            JOIN roles r ON rsp.role_id = r.role_id
+                                            JOIN statuses s ON rsp.status_id = s.status_id
+                                            ORDER BY r.role_name, s.status_name
+                                        ";
+
+                                        $result = $conn->query($query);
+
+                                        if ($result->num_rows > 0) {
+                                            $current_role = null;
+
+                                            while ($row = $result->fetch_assoc()) {
+                                                if ($current_role !== $row['role_name']) {
+                                                    if ($current_role !== null) {
+                                                        echo "</td></tr>";
+                                                    }
+                                                    echo "<tr><td>{$row['role_name']}</td><td>";
+                                                    $current_role = $row['role_name'];
+                                                }
+
+                                                // Display each allowed status
+                                                echo "{$row['status_name']}
+                                                    <form action='ctrl-permission/rrsp.php' method='POST' style='display:inline;'>
+                                                        <input type='hidden' name='role_id' value='{$row['role_id']}'>
+                                                        <input type='hidden' name='status_id' value='{$row['status_id']}'>
+                                                        <button type='button' class='btn btn-danger btn-sm' style='padding: 2px 5px; font-size: 10px;' onclick='deleteStatusPermissionModal({$row["role_id"]}, {$row["status_id"]})'>Remove</button>
+                                                    </form>
+                                                    <br>";
+                                            }
+                                            echo "</td></tr>";
+                                        } else {
+                                            echo "<tr><td colspan='2' class='text-center'>No data available</td></tr>";
+                                        }
+                                        ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
                 </div><!-- /.container-fluid -->
             </section>
 
@@ -106,6 +167,32 @@ include '../../includes/conn.php'; // Database connection
                             <form id="deleteForm" action="ctrl-permission/remove-permission.php" method="post">
                                 <input type="hidden" name="role_id" id="role_id_to_delete">
                                 <input type="hidden" name="permission_id" id="permission_id_to_delete">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Delete Confirmation Modal for Role Status Permissions -->
+            <div class="modal fade" id="statusPermissionDeleteModal" tabindex="-1" aria-labelledby="deleteModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header bg-danger">
+                            <h5 class="modal-title text-white" id="deleteModalLabel">Confirm Deletion</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Are you sure you want to delete this role status permission? This action cannot be undone.
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <form id="deleteStatusForm" action="ctrl-permission/rrsp.php" method="post">
+                                <input type="hidden" name="role_id" id="role_id_to_delete_status">
+                                <input type="hidden" name="status_id" id="status_id_to_delete">
                                 <button type="submit" class="btn btn-danger">Delete</button>
                             </form>
                         </div>

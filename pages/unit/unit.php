@@ -2,6 +2,7 @@
 include '../../includes/header.php';
 include '../../includes/conn.php';
 include '../../includes/session.php'; // Database connection
+include '../../includes/check-permission.php';
 
 // Fetch units
 $unitQuery = "SELECT * FROM units";
@@ -48,6 +49,7 @@ $ruleResult = $conn->query($ruleQuery);
                                             <tr>
                                                 <th>Unit ID</th>
                                                 <th>Unit Name</th>
+                                                <th>Unit Type</th>
                                                 <th>Actions</th>
                                             </tr>
                                         </thead>
@@ -56,6 +58,7 @@ $ruleResult = $conn->query($ruleQuery);
                                                 <tr>
                                                     <td><?php echo $row['unit_id']; ?></td>
                                                     <td><?php echo $row['unit_name']; ?></td>
+                                                    <td><?php echo $row['unit_type']; ?></td>
                                                     <td>
                                                         <!-- Delete Unit Form -->
                                                         <form action="ctrl-unit/delete-unit.php" method="POST"
@@ -90,6 +93,25 @@ $ruleResult = $conn->query($ruleQuery);
                                             <input type="text" class="form-control" id="unit_name" name="unit_name"
                                                 required>
                                         </div>
+                                        <div class="form-group">
+                                            <label>Unit Type</label>
+                                            <select class="form-control" name="unit_type" required>
+                                                <option value="">Select Unit Type</option>
+                                                <?php
+                                                include '../../../includes/conn.php';
+                                                $query = "SHOW COLUMNS FROM units LIKE 'unit_type'";
+                                                $result = $conn->query($query);
+                                                if ($result) {
+                                                    $row = $result->fetch_assoc();
+                                                    $enum_values = str_replace(["enum(", ")", "'"], "", $row["Type"]);
+                                                    $unit_types = explode(",", $enum_values);
+                                                    foreach ($unit_types as $type) {
+                                                        echo "<option value='$type'>$type</option>";
+                                                    }
+                                                }
+                                                ?>
+                                            </select>
+                                        </div>
                                         <button type="submit" class="btn btn-primary">Add Unit</button>
                                     </form>
                                 </div>
@@ -107,7 +129,7 @@ $ruleResult = $conn->query($ruleQuery);
                                     </h3>
                                 </div>
                                 <div class="card-body">
-                                    <form action="ctrl-unit/add-rule.php" method="POST">
+                                    <form action="ctrl-unit/add-conversion-rule.php" method="POST">
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <div class="form-group">
@@ -293,11 +315,11 @@ $ruleResult = $conn->query($ruleQuery);
                                         <tbody>
                                             <?php
                                             $query = "SELECT cr.computation_rule_id, bu.unit_name AS base_unit, 
-                                     cr.operation, tu.unit_name AS target_unit, cr.transaction_type
-                              FROM unit_computations cr
-                              JOIN units bu ON cr.base_unit_id = bu.unit_id
-                              JOIN units tu ON cr.target_unit_id = tu.unit_id
-                              ORDER BY cr.computation_rule_id DESC";
+                                                    cr.operation, tu.unit_name AS target_unit, cr.transaction_type
+                                            FROM unit_computations cr
+                                            JOIN units bu ON cr.base_unit_id = bu.unit_id
+                                            JOIN units tu ON cr.target_unit_id = tu.unit_id
+                                            ORDER BY cr.computation_rule_id DESC";
 
                                             $result = $conn->query($query);
                                             if ($result->num_rows > 0) {

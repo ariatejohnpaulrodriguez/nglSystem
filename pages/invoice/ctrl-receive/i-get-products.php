@@ -10,11 +10,8 @@ ini_set("log_errors", 1);
 ini_set("error_log", "../../php-error.log");
 
 try {
-    // Prepare the SQL statement to include unit information
-    //Use COALESCE to provide a default value if unit_name is null
-    $sql = "SELECT p.product_id, p.code, p.brand, p.description, COALESCE(u.unit_name, 'N/A') AS unit_name, p.unit_id
-            FROM products p
-            LEFT JOIN units u ON p.unit_id = u.unit_id;";
+    $sql = "SELECT product_id, code, brand, description FROM products";
+    ;
 
     $stmt = $conn->prepare($sql);
 
