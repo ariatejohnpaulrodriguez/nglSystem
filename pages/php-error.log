@@ -1353,3 +1353,86 @@
 [27-Mar-2025 16:12:43 Europe/Berlin] Skipping conversion for Product ID: 45 | Base Unit and Target Unit are the same.
 [27-Mar-2025 16:12:43 Europe/Berlin] No Computation Rule Found for Product ID: 45
 [27-Mar-2025 16:12:43 Europe/Berlin] Stock Processing - Product ID: 45 | Final Quantity to Update: 20
+[04-Apr-2025 08:18:55 Europe/Berlin] JSON data received: {"products":[{"product_id":"1","quantity":"10","unit_id":"1","brand":"PAN-NET","code":"CJ688TGBL","description":"TX6 JACK PLUS MODULE WITH ENHANCED GIGA TX TERMINATION STYLE T567 A/B WIRING, RJ45 PATENT #RE38, 519 BLACK"}],"posting_date":"","delivery_date":"","from_company_id":"5","to_company_id":"2","po_number":"PO 123","reference_po":"REF PO 123","dr_number":"DR 123"}
+[04-Apr-2025 08:18:55 Europe/Berlin] Decoded data: Array
+(
+    [products] => Array
+        (
+            [0] => Array
+                (
+                    [product_id] => 1
+                    [quantity] => 10
+                    [unit_id] => 1
+                    [brand] => PAN-NET
+                    [code] => CJ688TGBL
+                    [description] => TX6 JACK PLUS MODULE WITH ENHANCED GIGA TX TERMINATION STYLE T567 A/B WIRING, RJ45 PATENT #RE38, 519 BLACK
+                )
+
+        )
+
+    [posting_date] => 
+    [delivery_date] => 
+    [from_company_id] => 5
+    [to_company_id] => 2
+    [po_number] => PO 123
+    [reference_po] => REF PO 123
+    [dr_number] => DR 123
+)
+
+[04-Apr-2025 08:18:55 Europe/Berlin] Total Products Received: 1
+[04-Apr-2025 08:18:55 Europe/Berlin] Processing Product - Data: Array
+(
+    [product_id] => 1
+    [quantity] => 10
+    [unit_id] => 1
+    [brand] => PAN-NET
+    [code] => CJ688TGBL
+    [description] => TX6 JACK PLUS MODULE WITH ENHANCED GIGA TX TERMINATION STYLE T567 A/B WIRING, RJ45 PATENT #RE38, 519 BLACK
+)
+
+[04-Apr-2025 08:18:55 Europe/Berlin] Product ID: 1 - Base Unit ID: 1
+[04-Apr-2025 08:18:55 Europe/Berlin] Skipping conversion for Product ID: 1 | Base Unit and Target Unit are the same.
+[04-Apr-2025 08:18:55 Europe/Berlin] No Computation Rule Found for Product ID: 1
+[04-Apr-2025 08:18:55 Europe/Berlin] Stock Processing - Product ID: 1 | Final Quantity to Update: 10
+[04-Apr-2025 08:31:00 Europe/Berlin] JSON data received: {"products":[{"product_id":"1","quantity":"1","unit_id":"2","brand":"PAN-NET","code":"CJ688TGBL","description":"TX6 JACK PLUS MODULE WITH ENHANCED GIGA TX TERMINATION STYLE T567 A/B WIRING, RJ45 PATENT #RE38, 519 BLACK"}],"posting_date":"2025-04-03","delivery_date":"2025-04-04","from_company_id":"2","to_company_id":"5","po_number":"PO 456","reference_po":"REF PO 456","dr_number":"DR 456"}
+[04-Apr-2025 08:31:00 Europe/Berlin] Decoded data: Array
+(
+    [products] => Array
+        (
+            [0] => Array
+                (
+                    [product_id] => 1
+                    [quantity] => 1
+                    [unit_id] => 2
+                    [brand] => PAN-NET
+                    [code] => CJ688TGBL
+                    [description] => TX6 JACK PLUS MODULE WITH ENHANCED GIGA TX TERMINATION STYLE T567 A/B WIRING, RJ45 PATENT #RE38, 519 BLACK
+                )
+
+        )
+
+    [posting_date] => 2025-04-03
+    [delivery_date] => 2025-04-04
+    [from_company_id] => 2
+    [to_company_id] => 5
+    [po_number] => PO 456
+    [reference_po] => REF PO 456
+    [dr_number] => DR 456
+)
+
+[04-Apr-2025 08:31:00 Europe/Berlin] Total Products Received: 1
+[04-Apr-2025 08:31:00 Europe/Berlin] Processing Product - Data: Array
+(
+    [product_id] => 1
+    [quantity] => 1
+    [unit_id] => 2
+    [brand] => PAN-NET
+    [code] => CJ688TGBL
+    [description] => TX6 JACK PLUS MODULE WITH ENHANCED GIGA TX TERMINATION STYLE T567 A/B WIRING, RJ45 PATENT #RE38, 519 BLACK
+)
+
+[04-Apr-2025 08:31:00 Europe/Berlin] Product ID: 1 - Base Unit ID: 1
+[04-Apr-2025 08:31:00 Europe/Berlin] Conversion Found - Product ID: 1 | Base Unit: 1 → Target Unit: 2 | Factor: 12
+[04-Apr-2025 08:31:00 Europe/Berlin] Computation Rule Found - Product ID: 1 | Operation: *
+[04-Apr-2025 08:31:00 Europe/Berlin] Computation Applied - Product ID: 1 | Final Quantity: 12
+[04-Apr-2025 08:31:00 Europe/Berlin] Stock Processing - Product ID: 1 | Final Quantity to Update: 12
